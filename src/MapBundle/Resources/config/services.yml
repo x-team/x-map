@@ -1,0 +1,4 @@
+services:
+    map.controller.contents:
+        class: MapBundle\Controller\ContentsController
+        arguments: [@doctrine_mongodb]

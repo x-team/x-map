@@ -1,0 +1,7 @@
+map_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MapBundle:Default:index }
+
+content:
+    resource: "map.controller.contents"
+    type:     rest
