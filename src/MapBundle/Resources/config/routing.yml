@@ -1,7 +1,23 @@
 map_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: MapBundle:Default:index }
+  path: /hello/{name}
+  defaults: { _controller: MapBundle:Default:index }
 
-content:
-    resource: "map.controller.contents"
-    type:     rest
+contents:
+  resource: "map.controller.contents"
+  type: rest
+
+teams:
+  resource: "map.controller.teams"
+  type: rest
+
+organizations:
+  resource: "map.controller.organizations"
+  type: rest
+
+users:
+  resource: "map.controller.users"
+  type: rest
+
+auth:
+  resource: "map.controller.auth"
+  type: rest

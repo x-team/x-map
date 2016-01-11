@@ -1,4 +1,47 @@
 services:
-    map.controller.contents:
-        class: MapBundle\Controller\ContentsController
-        arguments: [@doctrine_mongodb]
+  map.controller.contents:
+    class: MapBundle\Controller\ContentsController
+    arguments: [@doctrine_mongodb]
+
+  map.controller.users:
+    class: MapBundle\Controller\UsersController
+    arguments: [@doctrine_mongodb]
+
+  map.controller.organizations:
+    class: MapBundle\Controller\OrganizationsController
+    arguments: [@doctrine_mongodb]
+
+  map.controller.teams:
+    class: MapBundle\Controller\TeamsController
+    arguments: [@doctrine_mongodb]
+
+  map.controller.auth:
+    class: MapBundle\Controller\AuthController
+
+  encoder.bcrypt:
+    class: Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder
+    arguments: [12]
+
+  validator.encoded_equal_to:
+    class: MapBundle\Validator\Constraints\EncodedEqualToValidator
+    tags:
+      - { name: validator.constraint_validator, alias: encoded_equal_to }
+    arguments: ["@encoder.bcrypt"]
+
+  security.access.user_voter:
+    class:    MapBundle\Security\Authorization\Voter\UserVoter
+    public:   false
+    tags:
+      - { name: security.voter }
+
+  security.access.organization_voter:
+    class:    MapBundle\Security\Authorization\Voter\OrganizationVoter
+    public:   false
+    tags:
+      - { name: security.voter }
+
+  security.access.team_voter:
+    class:    MapBundle\Security\Authorization\Voter\TeamVoter
+    public:   false
+    tags:
+      - { name: security.voter }
