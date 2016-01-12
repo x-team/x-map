@@ -1,19 +1,19 @@
 services:
   map.controller.contents:
     class: MapBundle\Controller\ContentsController
-    arguments: [@doctrine_mongodb]
+    arguments: [@service_container, @doctrine_mongodb]
 
   map.controller.users:
     class: MapBundle\Controller\UsersController
-    arguments: [@doctrine_mongodb]
+    arguments: [@service_container, @doctrine_mongodb]
 
   map.controller.organizations:
     class: MapBundle\Controller\OrganizationsController
-    arguments: [@doctrine_mongodb]
+    arguments: [@service_container, @doctrine_mongodb]
 
   map.controller.teams:
     class: MapBundle\Controller\TeamsController
-    arguments: [@doctrine_mongodb]
+    arguments: [@service_container, @doctrine_mongodb]
 
   map.controller.auth:
     class: MapBundle\Controller\AuthController

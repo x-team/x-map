@@ -4,6 +4,7 @@ use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\Team;
 use MapBundle\Form\Type\TeamType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -13,10 +14,11 @@ class TeamsController extends FOSRestController
 
     protected $repository;
 
-    public function __construct(ManagerRegistry $dm)
+    public function __construct(ContainerInterface $container, ManagerRegistry $registry)
     {
-        $this->dm = $dm;
-        $this->repository = $dm->getRepository('MapBundle:Team');
+        $this->container = $container;
+        $this->dm = $registry->getManager();
+        $this->repository = $registry->getRepository('MapBundle:Team');
     }
 
     /**

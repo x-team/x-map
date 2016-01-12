@@ -5,6 +5,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\Content;
 use MapBundle\Form\Type\ContentType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContentsController extends FOSRestController
@@ -13,10 +14,11 @@ class ContentsController extends FOSRestController
 
     protected $repository;
 
-    public function __construct(ManagerRegistry $dm)
+    public function __construct(ContainerInterface $container, ManagerRegistry $registry)
     {
-        $this->dm = $dm;
-        $this->repository = $dm->getRepository('MapBundle:Content');
+        $this->container = $container;
+        $this->dm = $registry->getManager();
+        $this->repository = $registry->getRepository('MapBundle:Content');
     }
 
     /**

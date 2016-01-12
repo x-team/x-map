@@ -6,6 +6,7 @@ use MapBundle\Document\User;
 use MapBundle\Form\Type\PasswordType;
 use MapBundle\Form\Type\RegisterUserType;
 use MapBundle\Form\Type\UserType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -15,10 +16,11 @@ class UsersController extends FOSRestController
 
     protected $repository;
 
-    public function __construct(ManagerRegistry $dm)
+    public function __construct(ContainerInterface $container, ManagerRegistry $registry)
     {
-        $this->dm = $dm;
-        $this->repository = $dm->getRepository('MapBundle:User');
+        $this->container = $container;
+        $this->dm = $registry->getManager();
+        $this->repository = $registry->getRepository('MapBundle:User');
     }
 
     /**
