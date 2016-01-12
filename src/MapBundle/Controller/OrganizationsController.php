@@ -47,7 +47,7 @@ class OrganizationsController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\Organization",
-     *   input="MapBundle\Document\Organization"
+     *   input="MapBundle\Document\OrganizationType"
      * )
      */
     public function postOrganizationAction(Request $request)
@@ -78,7 +78,7 @@ class OrganizationsController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\Organization",
-     *   input="MapBundle\Document\Organization"
+     *   input="MapBundle\Document\OrganizationType"
      * )
      */
     public function putOrganizationAction(Request $request, $id)

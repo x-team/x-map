@@ -7,6 +7,7 @@ use MapBundle\Form\Type\PasswordType;
 use MapBundle\Form\Type\RegisterUserType;
 use MapBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class UsersController extends FOSRestController
 {
@@ -20,6 +21,16 @@ class UsersController extends FOSRestController
         $this->repository = $dm->getRepository('MapBundle:User');
     }
 
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="array<MapBundle\Document\User>"
+     * )
+     */
     public function getUsersAction()
     {
         $this->denyAccessUnlessGranted('view', new User);
@@ -30,6 +41,17 @@ class UsersController extends FOSRestController
         return $this->handleView($view);
     }
 
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\User",
+     *   input="MapBundle\Document\RegisterUserType"
+     * )
+     */
     public function postUsersAction(Request $request)
     {
         $user = new User;
@@ -51,9 +73,20 @@ class UsersController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function putUserAction(Request $request, $user)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\User",
+     *   input="MapBundle\Document\UserType"
+     * )
+     */
+    public function putUserAction(Request $request, $id)
     {
-        $user = $this->repository->find($user);
+        $user = $this->repository->find($id);
         if (!$user) {
             $view = $this->view(null, 404);
         } else {
@@ -74,9 +107,19 @@ class UsersController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function putUserPasswordAction(Request $request, $user)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   input="MapBundle\Document\PasswordType"
+     * )
+     */
+    public function putUserPasswordAction(Request $request, $id)
     {
-        $user = $this->repository->find($user);
+        $user = $this->repository->find($id);
         if (!$user) {
             $view = $this->view(null, 404);
         } else {
@@ -98,17 +141,26 @@ class UsersController extends FOSRestController
         return $this->handleView($view);
     }
 
-
-    public function getUserAction($user)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\User"
+     * )
+     */
+    public function getUserAction($id)
     {
-        if ($user === 'current') {
+        if ($id === 'current') {
             $user = $this->get('security.context')->getToken()->getUser();
             $view = $user instanceof User ? $this->view($user) : $this->view(null);
 
             return $this->handleView($view);
         }
 
-        $user = $this->repository->find($user);
+        $user = $this->repository->find($id);
         $this->denyAccessUnlessGranted('view', $user);
 
         $view = $user ? $this->view($user) : $this->view(null, 404);
@@ -116,14 +168,34 @@ class UsersController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function putUserAdminAction($user)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\User"
+     * )
+     */
+    public function putUserAdminAction($id)
     {
-        return $this->updateAdmin($user, true);
+        return $this->updateAdmin($id, true);
     }
 
-    public function deleteUserAdminAction($user)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\User"
+     * )
+     */
+    public function deleteUserAdminAction($id)
     {
-        return $this->updateAdmin($user, false);
+        return $this->updateAdmin($id, false);
     }
 
     protected function updateAdmin($user, $isAdmin)
