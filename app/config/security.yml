@@ -27,6 +27,6 @@ security:
     main:
       pattern: ^/
       anonymous: ~
-      stateless:  true
+      stateless:  false
       http_basic:
         realm: "Demo REST API (username: restapi, password: secretpw)"

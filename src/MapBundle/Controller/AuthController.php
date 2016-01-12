@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpNotFoundException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class AuthController extends FOSRestController
 {
@@ -84,9 +85,8 @@ class AuthController extends FOSRestController
     protected function loginUser(User $user)
     {
         $securityContext = $this->get('security.context');
-        $providerKey = $this->container->getParameter('fos_user.firewall_name');
         $roles = $user->getRoles();
-        $token = new UsernamePasswordToken($user, null, $providerKey, $roles);
+        $token = new UsernamePasswordToken($user, null, 'main', $roles);
         $securityContext->setToken($token);
 
         return $securityContext->getToken()->getUser();
