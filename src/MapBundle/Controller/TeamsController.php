@@ -47,7 +47,7 @@ class TeamsController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\Team",
-     *   input="MapBundle\Document\TeamType"
+     *   input="MapBundle\Form\Type\TeamType"
      * )
      */
     public function postTeamAction(Request $request)
@@ -78,7 +78,7 @@ class TeamsController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\Team",
-     *   input="MapBundle\Document\TeamType"
+     *   input="MapBundle\Form\Type\TeamType"
      * )
      */
     public function putTeamAction(Request $request, $id)

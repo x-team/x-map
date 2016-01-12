@@ -49,7 +49,7 @@ class UsersController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\User",
-     *   input="MapBundle\Document\RegisterUserType"
+     *   input="MapBundle\Form\Type\RegisterUserType"
      * )
      */
     public function postUsersAction(Request $request)
@@ -81,7 +81,7 @@ class UsersController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\User",
-     *   input="MapBundle\Document\UserType"
+     *   input="MapBundle\Form\Type\UserType"
      * )
      */
     public function putUserAction(Request $request, $id)
@@ -114,7 +114,7 @@ class UsersController extends FOSRestController
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   },
-     *   input="MapBundle\Document\PasswordType"
+     *   input="MapBundle\Form\Type\PasswordType"
      * )
      */
     public function putUserPasswordAction(Request $request, $id)

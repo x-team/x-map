@@ -65,7 +65,7 @@ class ContentsController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\Content",
-     *   input="MapBundle\Document\ContentType"
+     *   input="MapBundle\Form\Type\ContentType"
      * )
      */
     public function postContentAction(Request $request)
@@ -96,7 +96,7 @@ class ContentsController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\Content",
-     *   input="MapBundle\Document\ContentType"
+     *   input="MapBundle\Form\Type\ContentType"
      * )
      */
     public function putContentAction(Request $request, $key)
