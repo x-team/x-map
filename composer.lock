@@ -2715,16 +2715,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.23.2",
+            "version": "v1.23.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d07c53df79e0c7ff8d78e72d521d46ef0fd80356"
+                "reference": "ae53fc2c312fdee63773b75cb570304f85388b08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d07c53df79e0c7ff8d78e72d521d46ef0fd80356",
-                "reference": "d07c53df79e0c7ff8d78e72d521d46ef0fd80356",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ae53fc2c312fdee63773b75cb570304f85388b08",
+                "reference": "ae53fc2c312fdee63773b75cb570304f85388b08",
                 "shasum": ""
             },
             "require": {
@@ -2772,7 +2772,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-11 13:20:06"
+            "time": "2016-01-11 14:02:19"
         },
         {
             "name": "willdurand/hateoas",

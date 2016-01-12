@@ -69,7 +69,7 @@ class User implements UserInterface {
     /**
      * @MongoDB\Boolean
      */
-    protected $isAdmin = true;
+    protected $isAdmin;
 
     /**
      * @MongoDB\String

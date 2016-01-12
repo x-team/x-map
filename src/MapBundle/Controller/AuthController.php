@@ -1,7 +1,9 @@
 <?php namespace MapBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\User;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpNotFoundException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -10,6 +12,16 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class AuthController extends FOSRestController
 {
+    protected $dm;
+
+    protected $repository;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        $this->dm = $registry->getManager();
+        $this->repository = $registry->getRepository('MapBundle:User');
+    }
+
     /**
      * @ApiDoc(
      *   resource = true,
@@ -25,10 +37,9 @@ class AuthController extends FOSRestController
         $username = $request->get('username');
         $password = $request->get('password');
 
-        $um = $this->get('fos_user.user_manager');
-        $user = $um->findUserByUsername($username);
+        $user = $this->repository->findOneByUsername($username);
         if(!$user){
-            $user = $um->findUserByEmail($username);
+            $user = $this->repository->findOneByEmail($username);
         }
 
         if(!$user instanceof User || !$this->checkUserPassword($user, $password)){

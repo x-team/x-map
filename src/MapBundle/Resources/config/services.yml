@@ -1,22 +1,33 @@
 services:
   map.controller.contents:
     class: MapBundle\Controller\ContentsController
-    arguments: [@service_container, @doctrine_mongodb]
+    arguments: [@doctrine_mongodb]
+    calls:
+          - [setContainer, ["@service_container"]]
 
   map.controller.users:
     class: MapBundle\Controller\UsersController
-    arguments: [@service_container, @doctrine_mongodb]
+    arguments: [@doctrine_mongodb]
+    calls:
+          - [setContainer, ["@service_container"]]
 
   map.controller.organizations:
     class: MapBundle\Controller\OrganizationsController
-    arguments: [@service_container, @doctrine_mongodb]
+    arguments: [@doctrine_mongodb]
+    calls:
+          - [setContainer, ["@service_container"]]
 
   map.controller.teams:
     class: MapBundle\Controller\TeamsController
-    arguments: [@service_container, @doctrine_mongodb]
+    arguments: [@doctrine_mongodb]
+    calls:
+          - [setContainer, ["@service_container"]]
 
   map.controller.auth:
     class: MapBundle\Controller\AuthController
+    arguments: [@doctrine_mongodb]
+    calls:
+      - [setContainer, ["@service_container"]]
 
   encoder.bcrypt:
     class: Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder

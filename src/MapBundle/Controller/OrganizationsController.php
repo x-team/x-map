@@ -6,7 +6,6 @@ use MapBundle\Document\Organization;
 use MapBundle\Document\User;
 use MapBundle\Form\Type\OrganizationType;
 use MapBundle\Form\Type\UserType;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -16,9 +15,8 @@ class OrganizationsController extends FOSRestController
 
     protected $repository;
 
-    public function __construct(ContainerInterface $container, ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->container = $container;
         $this->dm = $registry->getManager();
         $this->repository = $registry->getRepository('MapBundle:Organization');
     }
