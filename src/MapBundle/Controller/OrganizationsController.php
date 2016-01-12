@@ -7,6 +7,7 @@ use MapBundle\Document\User;
 use MapBundle\Form\Type\OrganizationType;
 use MapBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class OrganizationsController extends FOSRestController
 {
@@ -20,6 +21,16 @@ class OrganizationsController extends FOSRestController
         $this->repository = $dm->getRepository('MapBundle:Organization');
     }
 
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "organizations",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="array<MapBundle\Document\Organization>"
+     * )
+     */
     public function getOrganizationsAction()
     {
         $organizations = $this->repository->findAll();
@@ -28,6 +39,17 @@ class OrganizationsController extends FOSRestController
         return $this->handleView($view);
     }
 
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "organizations",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\Organization",
+     *   input="MapBundle\Document\Organization"
+     * )
+     */
     public function postOrganizationAction(Request $request)
     {
         $organization = new Organization;
@@ -48,9 +70,20 @@ class OrganizationsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function putOrganizationAction(Request $request, $organization)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "organizations",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\Organization",
+     *   input="MapBundle\Document\Organization"
+     * )
+     */
+    public function putOrganizationAction(Request $request, $id)
     {
-        $organization = $this->repository->find($organization);
+        $organization = $this->repository->find($id);
         if (!$organization) {
             $view = $this->view(null, 404);
         } else {
@@ -72,9 +105,19 @@ class OrganizationsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function getOrganizationAction($organization)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "organizations",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\Organization",
+     * )
+     */
+    public function getOrganizationAction($id)
     {
-        $organization = $this->repository->find($organization);
+        $organization = $this->repository->find($id);
 
         $this->denyAccessUnlessGranted('view', $organization);
 
@@ -83,12 +126,20 @@ class OrganizationsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function putOrganizationUserAction($organization, $user) {
+    /**
+     * @ApiDoc(
+     *   section = "organizations",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     */
+    public function putOrganizationUserAction($id, $userId) {
+        $organization = $this->repository->find($id);
+
         $userRepository = $this->dm->getRepository('MapBundle:User');
+        $user = $userRepository->find($userId);
 
-        $organization = $this->repository->find($organization);
-
-        $user = $userRepository->find($user);
         if (!$organization || !$user) {
             $view = $this->view(null, 404);
         } else {
@@ -103,12 +154,20 @@ class OrganizationsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function deleteOrganizationUserAction($organization, $user) {
+    /**
+     * @ApiDoc(
+     *   section = "organizations",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     */
+    public function deleteOrganizationUserAction($id, $userId) {
+        $organization = $this->repository->find($id);
+
         $userRepository = $this->dm->getRepository('MapBundle:User');
+        $user = $userRepository->find($userId);
 
-        $organization = $this->repository->find($organization);
-
-        $user = $userRepository->find($user);
         if (!$organization || !$user) {
             $view = $this->view(null, 404);
         } else {
