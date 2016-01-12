@@ -5,6 +5,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\Team;
 use MapBundle\Form\Type\TeamType;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class TeamsController extends FOSRestController
 {
@@ -18,6 +19,16 @@ class TeamsController extends FOSRestController
         $this->repository = $dm->getRepository('MapBundle:Team');
     }
 
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="array<MapBundle\Document\Team>"
+     * )
+     */
     public function getTeamsAction()
     {
         $this->denyAccessUnlessGranted('view', new Team);
@@ -28,6 +39,17 @@ class TeamsController extends FOSRestController
         return $this->handleView($view);
     }
 
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\Team",
+     *   input="MapBundle\Document\Team"
+     * )
+     */
     public function postTeamAction(Request $request)
     {
         $team = new Team;
@@ -48,9 +70,20 @@ class TeamsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function putTeamAction(Request $request, $team)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\Team",
+     *   input="MapBundle\Document\Team"
+     * )
+     */
+    public function putTeamAction(Request $request, $id)
     {
-        $team = $this->repository->find($team);
+        $team = $this->repository->find($id);
 
         $this->denyAccessUnlessGranted('edit', $team);
 
@@ -72,9 +105,19 @@ class TeamsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function getTeamAction($team)
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="MapBundle\Document\Team"
+     * )
+     */
+    public function getTeamAction($id)
     {
-        $team = $this->repository->find($team);
+        $team = $this->repository->find($id);
         $this->denyAccessUnlessGranted('view', $team);
 
         $view = $team ? $this->view($team) : $this->view(null, 404);
@@ -82,11 +125,20 @@ class TeamsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function putTeamUserAction($team, $user) {
+    /**
+     * @ApiDoc(
+     *   resource = false,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     * )
+     */
+    public function putTeamUserAction($id, $userId) {
         $userRepository = $this->dm->getRepository('MapBundle:User');
 
-        $team = $this->repository->find($team);
-        $user = $userRepository->find($user);
+        $team = $this->repository->find($id);
+        $user = $userRepository->find($userId);
 
         if (false && (!$team || !$user)) {
             $view = $this->view(null, 404);
@@ -113,11 +165,20 @@ class TeamsController extends FOSRestController
         return $this->handleView($view);
     }
 
-    public function deleteTeamUserAction($team, $user) {
+    /**
+     * @ApiDoc(
+     *   resource = false,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     * )
+     */
+    public function deleteTeamUserAction($id, $userId) {
         $userRepository = $this->dm->getRepository('MapBundle:User');
 
-        $team = $this->repository->find($team);
-        $user = $userRepository->find($user);
+        $team = $this->repository->find($id);
+        $user = $userRepository->find($userId);
 
         if (!$team || !$user) {
             $view = $this->view(null, 404);

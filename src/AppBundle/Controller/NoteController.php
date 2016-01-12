@@ -39,6 +39,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
+     *   section = "zzz",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   }
@@ -70,6 +71,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   output = "AppBundle\Model\Note",
+     *   section = "zzz",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the note is not found"
@@ -104,6 +106,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
+     *   section = "zzz",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   }
@@ -123,6 +126,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
+     *   section = "zzz",
      *   input = "AppBundle\Form\NoteType",
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -161,6 +165,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
+     *   section = "zzz",
      *   statusCodes={
      *     200 = "Returned when successful",
      *     404 = "Returned when the note is not found"
@@ -193,6 +198,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
+     *   section = "zzz",
      *   input = "AppBundle\Form\NoteType",
      *   statusCodes = {
      *     201 = "Returned when a new resource is created",
@@ -241,6 +247,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
+     *   section = "zzz",
      *   statusCodes={
      *     204="Returned when successful"
      *   }
@@ -265,6 +272,7 @@ class NoteController extends FOSRestController
      *
      * @ApiDoc(
      *   resource = true,
+     *   section = "zzz",
      *   statusCodes={
      *     204="Returned when successful"
      *   }
