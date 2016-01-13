@@ -3,7 +3,6 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
@@ -58,13 +57,7 @@ class User implements UserInterface {
      * @MongoDB\String
      * @Assert\Length(max=64)
      */
-    protected $country;
-
-    /**
-     * @MongoDB\String
-     * @Assert\Length(max=64)
-     */
-    protected $city;
+    protected $nationality;
 
     /**
      * @MongoDB\Boolean
@@ -88,19 +81,21 @@ class User implements UserInterface {
     protected $lng;
 
     /**
-     * @MongoDB\String
-     */
-    protected $organization = 'tmp';
-
-    /**
      * @MongoDB\Collection
      * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Team", mappedBy="users")
      */
     protected $teams;
 
+    /**
+     * @MongoDB\Collection
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Skill", mappedBy="users")
+     */
+    protected $skills;
+
 
     public function __construct() {
         $this->teams = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     /**
@@ -224,50 +219,6 @@ class User implements UserInterface {
     }
 
     /**
-     * Set country
-     *
-     * @param string $country
-     * @return self
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string $country
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return self
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string $city
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
      * Set isAdmin
      *
      * @param string $isAdmin
@@ -311,35 +262,13 @@ class User implements UserInterface {
         return $this->website;
     }
 
-    /**
-     * Set organization
-     *
-     * @param string $organization
-     * @return self
-     */
-    public function setOrganization($organization)
-    {
-        $this->organization = $organization;
-        return $this;
-    }
-
-    /**
-     * Get organization
-     *
-     * @return string $organization
-     */
-    public function getOrganization()
-    {
-        return $this->organization;
-    }
-
     public function getRoles()
     {
-        if ($this->getIsAdmin()) {
-            return (empty($this->getOrganization()) ? ['ROLE_ADMIN', 'ROLE_USER']: ['ROLE_ORGANIZATION_ADMIN', 'ROLE_USER']);
-        } else {
-            return ['ROLE_USER'];
-        }
+        return $this->getIsAdmin() ? ['ROLE_ADMIN'] : ['ROLE_USER'];
+    }
+
+    public function hasRole($role) {
+        return in_array($role, $this->getRoles());
     }
 
     /**
@@ -435,5 +364,57 @@ class User implements UserInterface {
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Set nationality
+     *
+     * @param string $nationality
+     * @return self
+     */
+    public function setNationality($nationality)
+    {
+        $this->nationality = $nationality;
+        return $this;
+    }
+
+    /**
+     * Get nationality
+     *
+     * @return string $nationality
+     */
+    public function getNationality()
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * Add skill
+     *
+     * @param Skill $skill
+     */
+    public function addSkill(Skill $skill)
+    {
+        $this->skills[] = $skill;
+    }
+
+    /**
+     * Remove skill
+     *
+     * @param Skill $skill
+     */
+    public function removeSkill(Skill $skill)
+    {
+        $this->skills->removeElement($skill);
+    }
+
+    /**
+     * Get skills
+     *
+     * @return \Doctrine\Common\Collections\Collection $skills
+     */
+    public function getSkills()
+    {
+        return $this->skills;
     }
 }

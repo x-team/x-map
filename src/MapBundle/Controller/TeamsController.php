@@ -46,23 +46,48 @@ class TeamsController extends FOSRestController
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   },
+     *   output="MapBundle\Document\Team"
+     * )
+     */
+    public function getTeamAction($id)
+    {
+        $this->denyAccessUnlessGranted('view', new Team);
+
+        $team = $this->repository->find($id);
+
+        if (!$team) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('view', $team);
+
+        return $this->handleView($this->view($team));
+    }
+
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
      *   output="MapBundle\Document\Team",
      *   input="MapBundle\Form\Type\TeamType"
      * )
      */
-    public function postTeamAction(Request $request)
+    public function postContentAction(Request $request)
     {
         $team = new Team;
+
+        $this->denyAccessUnlessGranted('create', $team);
 
         $form = $this->createForm(new TeamType, $team);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->denyAccessUnlessGranted('create', $team);
             $this->dm->persist($team);
             $this->dm->flush();
-            $view = $this->view($team, 201);
-
+            $view = $this->view($team);
         } else {
             $view = $this->view($form, 400);
         }
@@ -81,25 +106,24 @@ class TeamsController extends FOSRestController
      *   input="MapBundle\Form\Type\TeamType"
      * )
      */
-    public function putTeamAction(Request $request, $id)
+    public function putContentAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('edit', new Team);
+
         $team = $this->repository->find($id);
 
-        $this->denyAccessUnlessGranted('edit', $team);
-
         if (!$team) {
-            $view = $this->view(null, 404);
+            throw $this->createNotFoundException();
+        }
+
+        $form = $this->createForm(new TeamType, $team, array('method' => 'PUT'));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->dm->flush();
+            $view = $this->view($team);
         } else {
-            $form = $this->createForm(new TeamType, $team, array('method' => 'PUT'));
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $this->dm->flush();
-                $view = $this->view($team);
-            } else {
-                $view = $this->view($form, 400);
-            }
-
+            $view = $this->view($form, 400);
         }
 
         return $this->handleView($view);
@@ -111,58 +135,25 @@ class TeamsController extends FOSRestController
      *   section = "teams",
      *   statusCodes = {
      *     200 = "Returned when successful"
-     *   },
-     *   output="MapBundle\Document\Team"
+     *   }
      * )
      */
-    public function getTeamAction($id)
+    public function deleteTeamAction($id)
     {
-        $team = $this->repository->find($id);
-        $this->denyAccessUnlessGranted('view', $team);
-
-        $view = $team ? $this->view($team) : $this->view(null, 404);
-
-        return $this->handleView($view);
-    }
-
-    /**
-     * @ApiDoc(
-     *   resource = false,
-     *   section = "teams",
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   },
-     * )
-     */
-    public function putTeamUserAction($id, $userId) {
-        $userRepository = $this->dm->getRepository('MapBundle:User');
+        $this->denyAccessUnlessGranted('delete', new Team);
 
         $team = $this->repository->find($id);
-        $user = $userRepository->find($userId);
 
-        if (false && (!$team || !$user)) {
-            $view = $this->view(null, 404);
-        } else {
-            $this->denyAccessUnlessGranted('join', $team);
-
-            $teams = (array)$user->getTeams();
-            if(!in_array($team->getId(), $teams)) {
-                $teams[] = $team->getId();
-                $user->setTeams($teams);
-            }
-
-            $users = (array)$team->getUsers();
-            if(!in_array($user->getId(), $users)) {
-                $users[] = $user->getId();
-                $team->setUsers($users);
-            }
-
-            $this->dm->flush();
-
-            $view = $this->view();
+        if (!$team) {
+            throw $this->createNotFoundException();
         }
 
-        return $this->handleView($view);
+        $this->dm->remove($team);
+        $this->dm->flush();
+
+        //ToDo: delete users from team
+
+        return $this->handleView($this->view());
     }
 
     /**
@@ -174,32 +165,72 @@ class TeamsController extends FOSRestController
      *   },
      * )
      */
-    public function deleteTeamUserAction($id, $userId) {
+    public function putTeamUserAction($id, $userId)
+    {
         $userRepository = $this->dm->getRepository('MapBundle:User');
 
         $team = $this->repository->find($id);
         $user = $userRepository->find($userId);
 
         if (!$team || !$user) {
-            $view = $this->view(null, 404);
-        } else {
-            $this->denyAccessUnlessGranted('join', $team);
-
-            $teams = (array)$user->getTeams();
-            if(in_array($team->getId(), $teams)) {
-                $user->setTeams(array_diff($teams, [$team->getId()]));
-            }
-
-            $users = (array)$team->getUsers();
-            if(in_array($user->getId(), $users)) {
-                $team->setUsers(array_diff($users, [$user->getId()]));
-            }
-
-            $this->dm->flush();
-
-            $view = $this->view();
+            throw $this->createNotFoundException();
         }
 
-        return $this->handleView($view);
+        $this->denyAccessUnlessGranted('link', $user);
+
+        //ToDo: properly link teams and users
+//        $teams = (array)$user->getTeams();
+//        if (!in_array($team->getId(), $teams)) {
+//            $teams[] = $team->getId();
+//            $user->setTeams($teams);
+//        }
+//
+//        $users = (array)$team->getUsers();
+//        if (!in_array($user->getId(), $users)) {
+//            $users[] = $user->getId();
+//            $team->setUsers($users);
+//        }
+
+        $this->dm->flush();
+
+        return $this->handleView($this->view());
+    }
+
+    /**
+     * @ApiDoc(
+     *   resource = false,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     * )
+     */
+    public function deleteTeamUserAction($id, $userId)
+    {
+        $userRepository = $this->dm->getRepository('MapBundle:User');
+
+        $team = $this->repository->find($id);
+        $user = $userRepository->find($userId);
+
+        if (!$team || !$user) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('unlink', $user);
+
+        //ToDo: properly link teams and users
+//        $teams = (array)$user->getTeams();
+//        if (in_array($team->getId(), $teams)) {
+//            $user->setTeams(array_diff($teams, [$team->getId()]));
+//        }
+//
+//        $users = (array)$team->getUsers();
+//        if (in_array($user->getId(), $users)) {
+//            $team->setUsers(array_diff($users, [$user->getId()]));
+//        }
+
+        $this->dm->flush();
+
+        return $this->handleView($view = $this->view());
     }
 }

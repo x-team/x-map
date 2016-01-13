@@ -8,18 +8,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserVoter implements VoterInterface
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const EDIT_ADMIN = 'edit_admin';
-    const EDIT_PASSWORD = 'edit_password';
-
     public function supportsAttribute($attribute)
     {
         return in_array($attribute, array(
-            self::VIEW,
-            self::EDIT,
-            self::EDIT_ADMIN,
-            self::EDIT_PASSWORD
+            'view',
+            'edit',
+            'create',
+            'delete',
+            'edit_admin',
+            'edit_password',
+            'link',
+            'unlink',
         ));
     }
 
@@ -47,6 +46,7 @@ class UserVoter implements VoterInterface
         if (!$this->supportsAttribute($attribute)) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
+
         $authUser = $token->getUser();
 
         if (!$authUser instanceof UserInterface) {
@@ -54,26 +54,27 @@ class UserVoter implements VoterInterface
         }
 
         switch ($attribute) {
-            case self::VIEW:
+            case 'view':
                 if ($authUser->hasRole('ROLE_USER')) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;
-            case self::EDIT:
-                if ($authUser->hasRole('ROLE_ADMIN') || $user->getId() === $authUser->getId()) {
+            case 'edit':
+            case 'edit_password':
+                if ($authUser->hasRole('ROLE_ADMIN') || $authUser == $user) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;
-            case self::EDIT_PASSWORD:
-                if ($user->getId() === $authUser->getId()) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
-            case self::EDIT_ADMIN:
+            case 'edit_admin':
                 if ($authUser->hasRole('ROLE_ADMIN')) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;
+            case 'link':
+            case 'unlink':
+                if ($authUser->hasRole('ROLE_ADMIN') || $authUser == $user) {
+                    return VoterInterface::ACCESS_GRANTED;
+                }
         }
 
         return VoterInterface::ACCESS_DENIED;

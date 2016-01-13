@@ -16,7 +16,7 @@ class RegisterUserType extends AbstractType
             ->add('country')
             ->add('city')
             ->add('website')
-            //ToDo: organization, coordinates
+            //ToDo: coordinates
         ;
     }
 

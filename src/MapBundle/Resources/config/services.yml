@@ -11,12 +11,6 @@ services:
     calls:
           - [setContainer, ["@service_container"]]
 
-  map.controller.organizations:
-    class: MapBundle\Controller\OrganizationsController
-    arguments: [@doctrine_mongodb]
-    calls:
-          - [setContainer, ["@service_container"]]
-
   map.controller.teams:
     class: MapBundle\Controller\TeamsController
     arguments: [@doctrine_mongodb]
@@ -41,12 +35,6 @@ services:
 
   security.access.user_voter:
     class:    MapBundle\Security\Authorization\Voter\UserVoter
-    public:   false
-    tags:
-      - { name: security.voter }
-
-  security.access.organization_voter:
-    class:    MapBundle\Security\Authorization\Voter\OrganizationVoter
     public:   false
     tags:
       - { name: security.voter }

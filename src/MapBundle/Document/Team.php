@@ -1,10 +1,10 @@
 <?php namespace MapBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Validator\Constraints as Assert;
 
-//ToDo: unique for name+organization
 /**
  * @MongoDB\Document
  * @MongoDBUnique(fields="name")
@@ -30,13 +30,8 @@ class Team
     protected $description;
 
     /**
-     * @MongoDB\String
-     */
-    protected $organization = 'tmp';
-
-    /**
      * @MongoDB\Collection
-     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User", mappedBy="teams")
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User", mappedBy="team")
      */
     protected $users;
 
@@ -95,28 +90,6 @@ class Team
     }
 
     /**
-     * Set organization
-     *
-     * @param string $organization
-     * @return self
-     */
-    public function setOrganization($organization)
-    {
-        $this->organization = $organization;
-        return $this;
-    }
-
-    /**
-     * Get organization
-     *
-     * @return string $organization
-     */
-    public function getOrganization()
-    {
-        return $this->organization;
-    }
-
-    /**
      * Set users
      *
      * @param collection $users
@@ -136,5 +109,30 @@ class Team
     public function getUsers()
     {
         return $this->users;
+    }
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+    
+    /**
+     * Add user
+     *
+     * @param User $user
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param User $user
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
     }
 }

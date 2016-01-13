@@ -8,20 +8,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TeamVoter implements VoterInterface
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const CREATE = 'create';
-    const LINK = 'link';
-    const JOIN = 'join';
-
     public function supportsAttribute($attribute)
     {
         return in_array($attribute, array(
-            self::VIEW,
-            self::EDIT,
-            self::CREATE,
-            self::LINK,
-            self::JOIN
+            'view',
+            'edit',
+            'create',
+            'delete',
         ));
     }
 
@@ -32,16 +25,14 @@ class TeamVoter implements VoterInterface
         return $supportedClass === $class || is_subclass_of($class, $supportedClass);
     }
 
-    public function vote(TokenInterface $token, $team, array $attributes)
+    public function vote(TokenInterface $token, $user, array $attributes)
     {
-        if (!$this->supportsClass(get_class($team))) {
+        if (!$this->supportsClass(get_class($user))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
         if (1 !== count($attributes)) {
-            throw new InvalidArgumentException(
-                'Only one attribute is allowed'
-            );
+            throw new InvalidArgumentException('Only one attribute is allowed');
         }
 
         $attribute = $attributes[0];
@@ -56,24 +47,19 @@ class TeamVoter implements VoterInterface
         }
 
         switch ($attribute) {
-            case self::VIEW:
-            case self::JOIN:
-                if (($authUser->hasRole('ROLE_ORGANIZATION_ADMIN') || $authUser->hasRole('ROLE_USER')) && $authUser->getOrganization() == $team->getOrganization()) {
+            case 'view':
+                if ($authUser->hasRole('ROLE_USER')) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;
-            case self::EDIT:
-            case self::CREATE:
-                //ToDo: check if the same organization
-                if ($authUser->hasRole('ROLE_ORGANIZATION_ADMIN')) {
+            case 'create':
+            case 'edit':
+            case 'delete':
+                if ($authUser->hasRole('ROLE_ADMIN')) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;
-            case self::LINK:
-                if ($authUser->hasRole('ROLE_ORGANIZATION_ADMIN') && $authUser->getOrganization() == $team->getOrganization()) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
+
         }
 
         return VoterInterface::ACCESS_DENIED;

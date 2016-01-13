@@ -10,10 +10,6 @@ teams:
   resource: "map.controller.teams"
   type: rest
 
-organizations:
-  resource: "map.controller.organizations"
-  type: rest
-
 users:
   resource: "map.controller.users"
   type: rest

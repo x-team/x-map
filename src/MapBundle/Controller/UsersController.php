@@ -56,6 +56,8 @@ class UsersController extends FOSRestController
     {
         $user = new User;
 
+        $this->denyAccessUnlessGranted('create', $user);
+
         $form = $this->createForm(new RegisterUserType, $user);
         $form->handleRequest($request);
 
@@ -87,21 +89,21 @@ class UsersController extends FOSRestController
     public function putUserAction(Request $request, $id)
     {
         $user = $this->repository->find($id);
+
         if (!$user) {
-            $view = $this->view(null, 404);
+            throw $this->createAccessDeniedException();
+        }
+
+        $this->denyAccessUnlessGranted('edit', $user);
+
+        $form = $this->createForm(new UserType, $user, array('method' => 'PUT'));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->dm->flush();
+            $view = $this->view();
         } else {
-            $this->denyAccessUnlessGranted('edit', $user);
-
-            $form = $this->createForm(new UserType, $user, array('method' => 'PUT'));
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $this->dm->flush();
-                $view = $this->view();
-            } else {
-                $view = $this->view($form, 400);
-            }
-
+            $view = $this->view($form, 400);
         }
 
         return $this->handleView($view);
@@ -120,22 +122,23 @@ class UsersController extends FOSRestController
     public function putUserPasswordAction(Request $request, $id)
     {
         $user = $this->repository->find($id);
+
         if (!$user) {
-            $view = $this->view(null, 404);
+            throw $this->createAccessDeniedException();
+        }
+
+        $this->denyAccessUnlessGranted('edit', $user);
+
+        $form = $this->createForm(new PasswordType, $user, array('method' => 'PUT'));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $encoder = $this->container->get('security.password_encoder');
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $this->dm->flush();
+            $view = $this->view();
         } else {
-            $this->denyAccessUnlessGranted('edit_password', $user);
-
-            $form = $this->createForm(new PasswordType, $user, array('method' => 'PUT'));
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $encoder = $this->container->get('security.password_encoder');
-                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-                $this->dm->flush();
-                $view = $this->view();
-            } else {
-                $view = $this->view($form, 400);
-            }
+            $view = $this->view($form, 400);
         }
 
         return $this->handleView($view);
@@ -153,6 +156,8 @@ class UsersController extends FOSRestController
      */
     public function getUserAction($id)
     {
+        $this->denyAccessUnlessGranted('view', new User);
+
         if ($id === 'current') {
             $user = $this->get('security.context')->getToken()->getUser();
             $view = $user instanceof User ? $this->view($user) : $this->view(null);
@@ -161,11 +166,12 @@ class UsersController extends FOSRestController
         }
 
         $user = $this->repository->find($id);
-        $this->denyAccessUnlessGranted('view', $user);
 
-        $view = $user ? $this->view($user) : $this->view(null, 404);
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
 
-        return $this->handleView($view);
+        return $this->handleView($this->view($user));
     }
 
     /**
@@ -198,20 +204,19 @@ class UsersController extends FOSRestController
         return $this->updateAdmin($id, false);
     }
 
-    protected function updateAdmin($user, $isAdmin)
+    protected function updateAdmin($userId, $isAdmin)
     {
-        $user = $this->repository->find($user);
+        $this->denyAccessUnlessGranted('edit_admin', new User);
+
+        $user = $this->repository->find($userId);
+
         if (!$user) {
-            $view = $this->view(null, 404);
-        } else {
-            $this->denyAccessUnlessGranted('edit_admin', $user);
-
-            $user->setIsAdmin($isAdmin);
-            $this->dm->flush();
-
-            $view = $this->view();
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->handleView($view);
+        $user->setIsAdmin($isAdmin);
+        $this->dm->flush();
+
+        return $this->handleView($this->view($user));
     }
 }

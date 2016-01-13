@@ -10,7 +10,6 @@ class TeamType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('organization')
         ;
     }
 
