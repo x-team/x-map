@@ -90,7 +90,7 @@ class UsersController extends FOSRestController
         $user = $this->repository->find($id);
 
         if (!$user) {
-            throw $this->createAccessDeniedException();
+            throw $this->createNotFoundException();
         }
 
         $this->denyAccessUnlessGranted('edit', $user);
@@ -123,10 +123,10 @@ class UsersController extends FOSRestController
         $user = $this->repository->find($id);
 
         if (!$user) {
-            throw $this->createAccessDeniedException();
+            throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted('edit', $user);
+        $this->denyAccessUnlessGranted('edit_password', $user);
 
         $form = $this->createForm(new PasswordType, $user, array('method' => 'PUT'));
         $form->handleRequest($request);
@@ -167,7 +167,7 @@ class UsersController extends FOSRestController
         $user = $this->repository->find($id);
 
         if (!$user) {
-            throw $this->createAccessDeniedException();
+            throw $this->createNotFoundException();
         }
 
         return $this->handleView($this->view($user));
@@ -202,7 +202,7 @@ class UsersController extends FOSRestController
         $user = $this->repository->find($id);
 
         if (!$user) {
-            throw $this->createAccessDeniedException();
+            throw $this->createNotFoundException();
         }
 
         $this->denyAccessUnlessGranted('delete', $user);
@@ -235,7 +235,7 @@ class UsersController extends FOSRestController
         $user = $this->repository->find($userId);
 
         if (!$user) {
-            throw $this->createAccessDeniedException();
+            throw $this->createNotFoundException();
         }
 
         $user->setIsAdmin($isAdmin);

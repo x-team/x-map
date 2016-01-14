@@ -115,3 +115,9 @@ doctrine_mongodb:
   document_managers:
     default:
       auto_mapping: true
+
+monolog:
+  handlers:
+    main:
+      formatter: map.log_formatter
+

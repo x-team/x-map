@@ -30,7 +30,8 @@
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
         "codeception/codeception": "*",
-        "doctrine/doctrine-fixtures-bundle": "^2.2"
+        "doctrine/doctrine-fixtures-bundle": "^2.2",
+        "flow/jsonpath": "*"
     },
     "scripts": {
         "post-install-cmd": [

@@ -35,13 +35,10 @@ class AuthController extends FOSRestController
      */
     public function postLoginAction(Request $request)
     {
-        $username = $request->get('username');
+        $email = $request->get('email');
         $password = $request->get('password');
 
-        $user = $this->repository->findOneByUsername($username);
-        if(!$user){
-            $user = $this->repository->findOneByEmail($username);
-        }
+        $user = $this->repository->findOneByEmail($email);
 
         if(!$user instanceof User || !$this->checkUserPassword($user, $password)){
             $this->logoutUser();
@@ -75,7 +72,7 @@ class AuthController extends FOSRestController
      *   }
      * )
      */
-    public function getLogoutAction()
+    public function postLogoutAction()
     {
         $this->logoutUser();
 

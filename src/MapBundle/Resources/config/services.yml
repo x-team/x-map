@@ -56,3 +56,8 @@ services:
     public:   false
     tags:
       - { name: security.voter }
+
+  map.log_formatter:
+    class: Monolog\Formatter\LineFormatter
+    calls:
+      - [includeStacktraces]

@@ -15,8 +15,8 @@ class RegisterUserType extends AbstractType
             ->add('skypeId')
             ->add('nationality')
             ->add('website')
-            ->add('lat', 'float')
-            ->add('lng', 'float')
+            ->add('lat')
+            ->add('lng')
         ;
     }
 
