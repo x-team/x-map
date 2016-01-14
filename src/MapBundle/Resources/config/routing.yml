@@ -14,6 +14,14 @@ users:
   resource: "map.controller.users"
   type: rest
 
+skills:
+  resource: "map.controller.skills"
+  type: rest
+
+events:
+  resource: "map.controller.events"
+  type: rest
+
 auth:
   resource: "map.controller.auth"
   type: rest

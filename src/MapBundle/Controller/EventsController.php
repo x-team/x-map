@@ -2,12 +2,12 @@
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
-use MapBundle\Document\Team;
-use MapBundle\Form\Type\TeamType;
-use Symfony\Component\HttpFoundation\Request;
+use MapBundle\Document\Event;
+use MapBundle\Form\Type\EventType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Request;
 
-class TeamsController extends FOSRestController
+class EventsController extends FOSRestController
 {
     protected $dm;
 
@@ -16,25 +16,49 @@ class TeamsController extends FOSRestController
     public function __construct(ManagerRegistry $registry)
     {
         $this->dm = $registry->getManager();
-        $this->repository = $registry->getRepository('MapBundle:Team');
+        $this->repository = $registry->getRepository('MapBundle:Event');
     }
 
     /**
      * @ApiDoc(
      *   resource = true,
-     *   section = "teams",
+     *   section = "events",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   },
-     *   output="array<MapBundle\Document\Team>"
+     *   output="MapBundle\Document\Event"
      * )
      */
-    public function getTeamsAction()
+    public function getEventAction($id)
     {
-        $this->denyAccessUnlessGranted('view', new Team);
+        $this->denyAccessUnlessGranted('view', new Event);
 
-        $teams = $this->repository->findAll();
-        $view = $this->view($teams);
+        $event = $this->repository->find($id);
+
+        if (!$event) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->handleView($this->view($event));
+    }
+
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "events",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="array<MapBundle\Document\Event>"
+     * )
+     */
+    public function getEventsAction()
+    {
+        $this->denyAccessUnlessGranted('view', new Event);
+
+        $events = $this->repository->findAll();
+
+        $view = $this->view($events);
 
         return $this->handleView($view);
     }
@@ -42,52 +66,27 @@ class TeamsController extends FOSRestController
     /**
      * @ApiDoc(
      *   resource = true,
-     *   section = "teams",
+     *   section = "events",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   },
-     *   output="MapBundle\Document\Team"
+     *   output="MapBundle\Document\Event",
+     *   input="MapBundle\Form\Type\EventType"
      * )
      */
-    public function getTeamAction($id)
+    public function postEventAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('view', new Team);
+        $event = new Event;
 
-        $team = $this->repository->find($id);
+        $this->denyAccessUnlessGranted('create', $event);
 
-        if (!$team) {
-            throw $this->createNotFoundException();
-        }
-
-        $this->denyAccessUnlessGranted('view', $team);
-
-        return $this->handleView($this->view($team));
-    }
-
-    /**
-     * @ApiDoc(
-     *   resource = true,
-     *   section = "teams",
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   },
-     *   output="MapBundle\Document\Team",
-     *   input="MapBundle\Form\Type\TeamType"
-     * )
-     */
-    public function postTeamAction(Request $request)
-    {
-        $team = new Team;
-
-        $this->denyAccessUnlessGranted('create', $team);
-
-        $form = $this->createForm(new TeamType, $team);
+        $form = $this->createForm(new EventType, $event);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->dm->persist($team);
+            $this->dm->persist($event);
             $this->dm->flush();
-            $view = $this->view($team);
+            $view = $this->view($event);
         } else {
             $view = $this->view($form, 400);
         }
@@ -98,30 +97,30 @@ class TeamsController extends FOSRestController
     /**
      * @ApiDoc(
      *   resource = true,
-     *   section = "teams",
+     *   section = "events",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   },
-     *   output="MapBundle\Document\Team",
-     *   input="MapBundle\Form\Type\TeamType"
+     *   output="MapBundle\Document\Event",
+     *   input="MapBundle\Form\Type\EventType"
      * )
      */
-    public function putTeamAction(Request $request, $id)
+    public function putEventAction(Request $request, $id)
     {
-        $this->denyAccessUnlessGranted('edit', new Team);
+        $this->denyAccessUnlessGranted('edit', new Event);
 
-        $team = $this->repository->find($id);
+        $event = $this->repository->find($id);
 
-        if (!$team) {
+        if (!$event) {
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new TeamType, $team, array('method' => 'PUT'));
+        $form = $this->createForm(new EventType, $event, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $this->dm->flush();
-            $view = $this->view($team);
+            $view = $this->view($event);
         } else {
             $view = $this->view($form, 400);
         }
@@ -132,26 +131,24 @@ class TeamsController extends FOSRestController
     /**
      * @ApiDoc(
      *   resource = true,
-     *   section = "teams",
+     *   section = "events",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   }
      * )
      */
-    public function deleteTeamAction($id)
+    public function deleteEventAction($id)
     {
-        $this->denyAccessUnlessGranted('delete', new Team);
+        $this->denyAccessUnlessGranted('delete', new Event);
 
-        $team = $this->repository->find($id);
+        $event = $this->repository->find($id);
 
-        if (!$team) {
+        if (!$event) {
             throw $this->createNotFoundException();
         }
 
-        $this->dm->remove($team);
+        $this->dm->remove($event);
         $this->dm->flush();
-
-        //ToDo: delete users from team
 
         return $this->handleView($this->view());
     }
@@ -159,36 +156,36 @@ class TeamsController extends FOSRestController
     /**
      * @ApiDoc(
      *   resource = false,
-     *   section = "teams",
+     *   section = "events",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   },
      * )
      */
-    public function putTeamUserAction($id, $userId)
+    public function putEventUserAction($id, $userId)
     {
         $userRepository = $this->dm->getRepository('MapBundle:User');
 
-        $team = $this->repository->find($id);
+        $event = $this->repository->find($id);
         $user = $userRepository->find($userId);
 
-        if (!$team || !$user) {
+        if (!$event || !$user) {
             throw $this->createNotFoundException();
         }
 
         $this->denyAccessUnlessGranted('link', $user);
 
-        //ToDo: properly link teams and users
-//        $teams = (array)$user->getTeams();
-//        if (!in_array($team->getId(), $teams)) {
-//            $teams[] = $team->getId();
-//            $user->setTeams($teams);
+        //ToDo: properly link events and users
+//        $events = (array)$user->getEvents();
+//        if (!in_array($event->getId(), $events)) {
+//            $events[] = $event->getId();
+//            $user->setEvents($events);
 //        }
 //
-//        $users = (array)$team->getUsers();
+//        $users = (array)$event->getUsers();
 //        if (!in_array($user->getId(), $users)) {
 //            $users[] = $user->getId();
-//            $team->setUsers($users);
+//            $event->setUsers($users);
 //        }
 
         $this->dm->flush();
@@ -199,34 +196,34 @@ class TeamsController extends FOSRestController
     /**
      * @ApiDoc(
      *   resource = false,
-     *   section = "teams",
+     *   section = "events",
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   },
      * )
      */
-    public function deleteTeamUserAction($id, $userId)
+    public function deleteEventUserAction($id, $userId)
     {
         $userRepository = $this->dm->getRepository('MapBundle:User');
 
-        $team = $this->repository->find($id);
+        $event = $this->repository->find($id);
         $user = $userRepository->find($userId);
 
-        if (!$team || !$user) {
+        if (!$event || !$user) {
             throw $this->createNotFoundException();
         }
 
         $this->denyAccessUnlessGranted('unlink', $user);
 
-        //ToDo: properly link teams and users
-//        $teams = (array)$user->getTeams();
-//        if (in_array($team->getId(), $teams)) {
-//            $user->setTeams(array_diff($teams, [$team->getId()]));
+        //ToDo: properly link events and users
+//        $events = (array)$user->getEvents();
+//        if (in_array($event->getId(), $events)) {
+//            $user->setEvents(array_diff($events, [$event->getId()]));
 //        }
 //
-//        $users = (array)$team->getUsers();
+//        $users = (array)$event->getUsers();
 //        if (in_array($user->getId(), $users)) {
-//            $team->setUsers(array_diff($users, [$user->getId()]));
+//            $event->setUsers(array_diff($users, [$user->getId()]));
 //        }
 
         $this->dm->flush();

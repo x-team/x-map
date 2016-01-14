@@ -195,6 +195,33 @@ class UsersController extends FOSRestController
      *   section = "users",
      *   statusCodes = {
      *     200 = "Returned when successful"
+     *   }
+     * )
+     */
+    public function deleteUserAction($id)
+    {
+        $user = $this->repository->find($id);
+
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $this->denyAccessUnlessGranted('delete', $user);
+
+        $this->dm->remove($user);
+        $this->dm->flush();
+
+        //ToDo: delete user from teams and skills
+
+        return $this->handleView($this->view());
+    }
+
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "users",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\User"
      * )

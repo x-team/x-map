@@ -17,6 +17,18 @@ services:
     calls:
           - [setContainer, ["@service_container"]]
 
+  map.controller.skills:
+    class: MapBundle\Controller\SkillsController
+    arguments: [@doctrine_mongodb]
+    calls:
+          - [setContainer, ["@service_container"]]
+
+  map.controller.events:
+    class: MapBundle\Controller\EventsController
+    arguments: [@doctrine_mongodb]
+    calls:
+          - [setContainer, ["@service_container"]]
+
   map.controller.auth:
     class: MapBundle\Controller\AuthController
     arguments: [@doctrine_mongodb]

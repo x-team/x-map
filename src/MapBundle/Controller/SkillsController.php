@@ -150,8 +150,7 @@ class SkillsController extends FOSRestController
         $this->dm->remove($skill);
         $this->dm->flush();
 
-        //ToDo: delete users from team
-
+        //ToDo: delete users from skills
 
         return $this->handleView($this->view());
     }
