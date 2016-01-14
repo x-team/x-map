@@ -150,8 +150,66 @@ class SkillsController extends FOSRestController
         $this->dm->remove($skill);
         $this->dm->flush();
 
-        //ToDo: delete users from skills
+        return $this->handleView($this->view());
+    }
+
+    /**
+     * @ApiDoc(
+     *   resource = false,
+     *   section = "skills",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     * )
+     */
+    public function putSkillUserAction($id, $userId)
+    {
+        $userRepository = $this->dm->getRepository('MapBundle:User');
+
+        $skill = $this->repository->find($id);
+        $user = $userRepository->find($userId);
+
+        if (!$skill || !$user) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('link', $user);
+
+        $skill->addUser($user);
+        $user->addSkill($skill);
+
+        $this->dm->flush();
 
         return $this->handleView($this->view());
+    }
+
+    /**
+     * @ApiDoc(
+     *   resource = false,
+     *   section = "skills",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     * )
+     */
+    public function deleteSkillUserAction($id, $userId)
+    {
+        $userRepository = $this->dm->getRepository('MapBundle:User');
+
+        $skill = $this->repository->find($id);
+        $user = $userRepository->find($userId);
+
+        if (!$skill || !$user) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('unlink', $user);
+
+        $skill->removeUser($user);
+        $user->removeSkill($skill);
+
+        $this->dm->flush();
+
+        return $this->handleView($view = $this->view());
     }
 }

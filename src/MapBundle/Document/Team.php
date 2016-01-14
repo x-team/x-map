@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @MongoDB\Document
  * @MongoDBUnique(fields="name")
+ * @MongoDB\HasLifecycleCallbacks
  */
 class Team
 {
@@ -134,5 +135,14 @@ class Team
     public function removeUser(User $user)
     {
         $this->users->removeElement($user);
+    }
+
+    /**
+     * @MongoDB\PreRemove
+     */
+    public function unlinkFromRelatedDocuments() {
+        foreach ($this->getUsers() as $user) {
+            $user->removeTeam($this);
+        }
     }
 }

@@ -10,10 +10,8 @@ class UserType extends AbstractType
         $builder
             ->add('aboutMe')
             ->add('skypeId')
-            ->add('country')
-            ->add('city')
+            ->add('nationality')
             ->add('website')
-            //->add('password')
             ->add('lat')
             ->add('lng')
         ;

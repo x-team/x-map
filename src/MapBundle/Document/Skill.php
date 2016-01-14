@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @MongoDB\Document
  * @MongoDBUnique(fields="name")
+ * @MongoDB\HasLifecycleCallbacks
  */
 class Skill {
 
@@ -52,5 +53,14 @@ class Skill {
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @MongoDB\PreRemove
+     */
+    public function unlinkFromRelatedDocuments() {
+        foreach ($this->getUsers() as $user) {
+            $user->removeSkill($this);
+        }
     }
 }

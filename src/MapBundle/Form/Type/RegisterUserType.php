@@ -13,10 +13,10 @@ class RegisterUserType extends AbstractType
             ->add('email')
             ->add('aboutMe')
             ->add('skypeId')
-            ->add('country')
-            ->add('city')
+            ->add('nationality')
             ->add('website')
-            //ToDo: coordinates
+            ->add('lat', 'float')
+            ->add('lng', 'float')
         ;
     }
 

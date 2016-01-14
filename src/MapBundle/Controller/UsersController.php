@@ -66,7 +66,6 @@ class UsersController extends FOSRestController
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
             $this->dm->persist($user);
             $this->dm->flush();
-            //ToDo: hide internal data
             $view = $this->view($user);
         } else {
             $view = $this->view($form, 400);
@@ -210,8 +209,6 @@ class UsersController extends FOSRestController
 
         $this->dm->remove($user);
         $this->dm->flush();
-
-        //ToDo: delete user from teams and skills
 
         return $this->handleView($this->view());
     }

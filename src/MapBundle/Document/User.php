@@ -11,6 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @MongoDB\Document
  * @MongoDBUnique(fields="email")
  * @MongoDBUnique(fields="username")
+ * @MongoDB\HasLifecycleCallbacks
  */
 class User implements UserInterface {
 
@@ -416,5 +417,22 @@ class User implements UserInterface {
     public function getSkills()
     {
         return $this->skills;
+    }
+
+    /**
+     * @MongoDB\PreRemove
+     */
+    public function unlinkFromRelatedDocuments() {
+        foreach ($this->getSkills() as $skill) {
+            $skill->removeUser($this);
+        }
+
+        foreach ($this->getTeams() as $team) {
+            $team->removeUser($this);
+        }
+
+        foreach ($this->getEvents() as $event) {
+            $event->removeUser($this);
+        }
     }
 }

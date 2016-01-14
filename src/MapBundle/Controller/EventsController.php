@@ -175,18 +175,8 @@ class EventsController extends FOSRestController
 
         $this->denyAccessUnlessGranted('link', $user);
 
-        //ToDo: properly link events and users
-//        $events = (array)$user->getEvents();
-//        if (!in_array($event->getId(), $events)) {
-//            $events[] = $event->getId();
-//            $user->setEvents($events);
-//        }
-//
-//        $users = (array)$event->getUsers();
-//        if (!in_array($user->getId(), $users)) {
-//            $users[] = $user->getId();
-//            $event->setUsers($users);
-//        }
+        $user->addEvent($event);
+        $event->addUser($user);
 
         $this->dm->flush();
 
@@ -215,16 +205,8 @@ class EventsController extends FOSRestController
 
         $this->denyAccessUnlessGranted('unlink', $user);
 
-        //ToDo: properly link events and users
-//        $events = (array)$user->getEvents();
-//        if (in_array($event->getId(), $events)) {
-//            $user->setEvents(array_diff($events, [$event->getId()]));
-//        }
-//
-//        $users = (array)$event->getUsers();
-//        if (in_array($user->getId(), $users)) {
-//            $event->setUsers(array_diff($users, [$user->getId()]));
-//        }
+        $user->removeEvent($event);
+        $event->removeUser($user);
 
         $this->dm->flush();
 

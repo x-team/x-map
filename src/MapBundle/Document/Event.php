@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @MongoDB\Document
+ * @MongoDB\HasLifecycleCallbacks
  */
 class Event {
 
@@ -204,5 +205,14 @@ class Event {
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @MongoDB\PreRemove
+     */
+    public function unlinkFromRelatedDocuments() {
+        foreach ($this->getUsers() as $user) {
+            $user->removeEvent($this);
+        }
     }
 }

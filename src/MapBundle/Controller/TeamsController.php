@@ -151,8 +151,6 @@ class TeamsController extends FOSRestController
         $this->dm->remove($team);
         $this->dm->flush();
 
-        //ToDo: delete users from team
-
         return $this->handleView($this->view());
     }
 
@@ -178,19 +176,9 @@ class TeamsController extends FOSRestController
 
         $this->denyAccessUnlessGranted('link', $user);
 
-        //ToDo: properly link teams and users
-//        $teams = (array)$user->getTeams();
-//        if (!in_array($team->getId(), $teams)) {
-//            $teams[] = $team->getId();
-//            $user->setTeams($teams);
-//        }
-//
-//        $users = (array)$team->getUsers();
-//        if (!in_array($user->getId(), $users)) {
-//            $users[] = $user->getId();
-//            $team->setUsers($users);
-//        }
-
+        $team->addUser($user);
+        $user->addTeam($team);
+        
         $this->dm->flush();
 
         return $this->handleView($this->view());
@@ -218,16 +206,8 @@ class TeamsController extends FOSRestController
 
         $this->denyAccessUnlessGranted('unlink', $user);
 
-        //ToDo: properly link teams and users
-//        $teams = (array)$user->getTeams();
-//        if (in_array($team->getId(), $teams)) {
-//            $user->setTeams(array_diff($teams, [$team->getId()]));
-//        }
-//
-//        $users = (array)$team->getUsers();
-//        if (in_array($user->getId(), $users)) {
-//            $team->setUsers(array_diff($users, [$user->getId()]));
-//        }
+        $team->removeUser($user);
+        $user->removeTeam($team);
 
         $this->dm->flush();
 
