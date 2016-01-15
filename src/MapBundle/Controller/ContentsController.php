@@ -29,11 +29,11 @@ class ContentsController extends FOSRestController
      *   output="MapBundle\Document\Content"
      * )
      */
-    public function getContentAction($key)
+    public function getContentAction($idOrKey)
     {
         $this->denyAccessUnlessGranted('view', new Content);
 
-        $content = $this->repository->findByKey($key);
+        $content = $this->repository->find($idOrKey) ?: $this->repository->findByKey($idOrKey);
 
         if (!$content) {
             throw $this->createNotFoundException();
@@ -77,7 +77,6 @@ class ContentsController extends FOSRestController
     public function postContentAction(Request $request)
     {
         $content = new Content;
-
         $this->denyAccessUnlessGranted('create', $content);
 
         $form = $this->createForm(new ContentType, $content);
@@ -105,11 +104,11 @@ class ContentsController extends FOSRestController
      *   input="MapBundle\Form\Type\ContentType"
      * )
      */
-    public function putContentAction(Request $request, $key)
+    public function putContentAction(Request $request, $id)
     {
         $this->denyAccessUnlessGranted('edit', new Content);
 
-        $content = $this->repository->findByKey($key);
+        $content = $this->repository->find($id);
 
         if (!$content) {
             throw $this->createNotFoundException();
@@ -137,11 +136,11 @@ class ContentsController extends FOSRestController
      *   }
      * )
      */
-    public function deleteContentAction($key)
+    public function deleteContentAction($id)
     {
         $this->denyAccessUnlessGranted('delete', new Content);
 
-        $content = $this->repository->findByKey($key);
+        $content = $this->repository->find($id);
 
         if (!$content) {
             throw $this->createNotFoundException();

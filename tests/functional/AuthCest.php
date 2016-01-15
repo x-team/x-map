@@ -26,30 +26,15 @@ class AuthCest
 
     public function tryToLoginAndLogout(FunctionalTester $I)
     {
-        $I->sendPOST('logins.json', [
-            'email' => $this->user1['email'],
-            'password' => $this->user2['password'],
-        ]);
+        $I->login($this->user1['email'], $this->user2['password']);
         $I->seeResponseCodeIs(400);
 
-        $I->sendPOST('logins.json', [
-            'email' => $this->user1['email'],
-            'password' => $this->user2['password'],
-        ]);
-        $I->seeResponseCodeIs(400);
-
-        $I->sendPOST('logins.json', [
-            'email' => $this->user1['email'],
-            'password' => $this->user1['password'],
-        ]);
+        $I->login($this->user1['email'], $this->user1['password']);
         $I->seeResponseCodeIs(200);
 
         $id1 = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendPOST('logins.json', [
-            'email' => $this->user2['email'],
-            'password' => $this->user2['password'],
-        ]);
+        $I->login($this->user2['email'], $this->user2['password']);
         $I->seeResponseCodeIs(200);
 
         $id2 = $I->grabDataFromResponseByJsonPath('$.id')[0];
@@ -60,7 +45,7 @@ class AuthCest
         $I->sendPUT('users/' . $id2 . '/password.json');
         $I->seeResponseCodeIs(400);
 
-        $I->sendPOST('logouts.json');
+        $I->logout();
         $I->seeResponseCodeIs(204);
 
         $I->sendPUT('users/' . $id1 . '/password.json');

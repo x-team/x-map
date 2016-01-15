@@ -10,7 +10,7 @@ class ContentType extends AbstractType
         $builder
             ->add('key')
             ->add('title')
-            ->add('description')
+            ->add('content')
         ;
     }
 

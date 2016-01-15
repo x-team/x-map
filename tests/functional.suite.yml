@@ -14,6 +14,9 @@ modules:
   config:
     MongoDB:
       dsn: mongodb://localhost:27017/test
+      dump: tests/_data/dump.json
+      populate: true
+      cleanup: true
     REST:
       depends: PhpBrowser
-      url: http://x-map.app/
+      url: http://x-map.app/app_test.php/
