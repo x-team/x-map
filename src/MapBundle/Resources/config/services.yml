@@ -63,6 +63,12 @@ services:
     tags:
       - { name: security.voter }
 
+  security.access.skill_voter:
+      class:    MapBundle\Security\Authorization\Voter\SkillVoter
+      public:   false
+      tags:
+        - { name: security.voter }
+
   map.log_formatter:
     class: Monolog\Formatter\LineFormatter
     calls:

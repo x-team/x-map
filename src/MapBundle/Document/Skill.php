@@ -1,5 +1,6 @@
 <?php namespace MapBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,6 +23,12 @@ class Skill {
      * @Assert\Length(min=3,max=64)
      */
     protected $name;
+
+    /**
+     * @MongoDB\Collection
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User", mappedBy="team")
+     */
+    protected $users;
 
     /**
      * Get id
@@ -59,8 +66,44 @@ class Skill {
      * @MongoDB\PreRemove
      */
     public function unlinkFromRelatedDocuments() {
-        foreach ($this->getUsers() as $user) {
-            $user->removeSkill($this);
-        }
+        //ToDo: unlink users from deleted skill
+//        foreach ($this->getUsers() as $user) {
+//            $user->removeSkill($this);
+//        }
+    }
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+    
+    /**
+     * Add user
+     *
+     * @param User $user
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param User $user
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return Collection $users
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

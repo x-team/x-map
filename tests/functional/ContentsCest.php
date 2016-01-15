@@ -51,6 +51,9 @@ class ContentsCest
 
     public function tryToReadContent(FunctionalTester $I)
     {
+        $I->sendGET('contents.json');
+        $I->seeResponseCodeIs(403);
+
         $I->login($this->user['email'], $this->user['password']);
 
         $I->sendGET('contents.json');
