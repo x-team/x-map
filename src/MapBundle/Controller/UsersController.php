@@ -52,7 +52,7 @@ class UsersController extends FOSRestController
      *   input="MapBundle\Form\Type\RegisterUserType"
      * )
      */
-    public function postUsersAction(Request $request)
+    public function postUserAction(Request $request)
     {
         $user = new User;
 
@@ -100,7 +100,7 @@ class UsersController extends FOSRestController
 
         if ($form->isValid()) {
             $this->dm->flush();
-            $view = $this->view();
+            $view = $this->view($user);
         } else {
             $view = $this->view($form, 400);
         }

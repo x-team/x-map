@@ -93,10 +93,16 @@ class User implements UserInterface {
      */
     protected $skills;
 
+    /**
+     * @MongoDB\Collection
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Event", mappedBy="users")
+     */
+    protected $events;
 
     public function __construct() {
         $this->teams = new ArrayCollection();
         $this->skills = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     /**
@@ -423,16 +429,47 @@ class User implements UserInterface {
      * @MongoDB\PreRemove
      */
     public function unlinkFromRelatedDocuments() {
-        foreach ($this->getSkills() as $skill) {
-            $skill->removeUser($this);
-        }
+        //ToDo: unlink documents from deleted user
+//        foreach ($this->getSkills() as $skill) {
+//            $skill->removeUser($this);
+//        }
+//
+//        foreach ($this->getTeams() as $team) {
+//            $team->removeUser($this);
+//        }
+//
+//        foreach ($this->getEvents() as $event) {
+//            $event->removeUser($this);
+//        }
+    }
 
-        foreach ($this->getTeams() as $team) {
-            $team->removeUser($this);
-        }
+    /**
+     * Add event
+     *
+     * @param Event $event
+     */
+    public function addEvent(Event $event)
+    {
+        $this->events[] = $event;
+    }
 
-        foreach ($this->getEvents() as $event) {
-            $event->removeUser($this);
-        }
+    /**
+     * Remove event
+     *
+     * @param Event $event
+     */
+    public function removeEvent(Event $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get events
+     *
+     * @return Collection $events
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }

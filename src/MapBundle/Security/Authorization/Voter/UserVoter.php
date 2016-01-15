@@ -50,7 +50,7 @@ class UserVoter implements VoterInterface
         $authUser = $token->getUser();
 
         if (!$authUser instanceof UserInterface) {
-            return VoterInterface::ACCESS_DENIED;
+            return $attribute === 'create' ? VoterInterface::ACCESS_GRANTED : VoterInterface::ACCESS_DENIED;
         }
 
         switch ($attribute) {
@@ -61,6 +61,7 @@ class UserVoter implements VoterInterface
                 break;
             case 'edit':
             case 'edit_password':
+            case 'delete':
                 if ($authUser->hasRole('ROLE_ADMIN') || $authUser == $user) {
                     return VoterInterface::ACCESS_GRANTED;
                 }

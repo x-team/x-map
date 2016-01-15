@@ -6,14 +6,12 @@ class AuthCest
 {
     protected $user1 = [
         'username' => 'bobbudowniczy1',
-        'usernameCanonical' => 'bobbudowniczy1',
         'password' => 'testtest1',
         'email' => 'bob1@test.pl',
     ];
 
     protected $user2 = [
         'username' => 'bobbudowniczy2',
-        'usernameCanonical' => 'bobbudowniczy2',
         'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];

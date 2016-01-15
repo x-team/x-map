@@ -6,7 +6,6 @@ class SkillsCest
 {
     protected $admin = [
         'username' => 'bobbudowniczy1',
-        'usernameCanonical' => 'bobbudowniczy1',
         'password' => 'testtest1',
         'email' => 'bob1@test.pl',
         'isAdmin' => true
@@ -14,7 +13,6 @@ class SkillsCest
 
     protected $user = [
         'username' => 'bobbudowniczy2',
-        'usernameCanonical' => 'bobbudowniczy2',
         'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];
