@@ -132,7 +132,7 @@ class ContentsController extends FOSRestController
      *   resource = true,
      *   section = "contents",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   }
      * )
      */

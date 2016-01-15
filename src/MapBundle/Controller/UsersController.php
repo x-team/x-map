@@ -113,7 +113,7 @@ class UsersController extends FOSRestController
      *   resource = true,
      *   section = "users",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   },
      *   input="MapBundle\Form\Type\PasswordType"
      * )
@@ -193,7 +193,7 @@ class UsersController extends FOSRestController
      *   resource = true,
      *   section = "users",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   }
      * )
      */

@@ -133,7 +133,7 @@ class SkillsController extends FOSRestController
      *   resource = true,
      *   section = "skills",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   }
      * )
      */
@@ -158,7 +158,7 @@ class SkillsController extends FOSRestController
      *   resource = false,
      *   section = "skills",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   },
      * )
      */
@@ -188,7 +188,7 @@ class SkillsController extends FOSRestController
      *   resource = false,
      *   section = "skills",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   },
      * )
      */

@@ -4,8 +4,8 @@ use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\Team;
 use MapBundle\Form\Type\TeamType;
-use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Request;
 
 class TeamsController extends FOSRestController
 {
@@ -17,26 +17,6 @@ class TeamsController extends FOSRestController
     {
         $this->dm = $registry->getManager();
         $this->repository = $registry->getRepository('MapBundle:Team');
-    }
-
-    /**
-     * @ApiDoc(
-     *   resource = true,
-     *   section = "teams",
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   },
-     *   output="array<MapBundle\Document\Team>"
-     * )
-     */
-    public function getTeamsAction()
-    {
-        $this->denyAccessUnlessGranted('view', new Team);
-
-        $teams = $this->repository->findAll();
-        $view = $this->view($teams);
-
-        return $this->handleView($view);
     }
 
     /**
@@ -59,9 +39,28 @@ class TeamsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted('view', $team);
-
         return $this->handleView($this->view($team));
+    }
+
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   section = "teams",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   },
+     *   output="array<MapBundle\Document\Team>"
+     * )
+     */
+    public function getTeamsAction()
+    {
+        $this->denyAccessUnlessGranted('view', new Team);
+
+        $teams = $this->repository->findAll();
+
+        $view = $this->view($teams);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -134,7 +133,7 @@ class TeamsController extends FOSRestController
      *   resource = true,
      *   section = "teams",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   }
      * )
      */
@@ -159,7 +158,7 @@ class TeamsController extends FOSRestController
      *   resource = false,
      *   section = "teams",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   },
      * )
      */
@@ -178,7 +177,7 @@ class TeamsController extends FOSRestController
 
         $team->addUser($user);
         $user->addTeam($team);
-        
+
         $this->dm->flush();
 
         return $this->handleView($this->view());
@@ -189,7 +188,7 @@ class TeamsController extends FOSRestController
      *   resource = false,
      *   section = "teams",
      *   statusCodes = {
-     *     200 = "Returned when successful"
+     *     204 = "Returned when successful"
      *   },
      * )
      */

@@ -141,8 +141,9 @@ class Team
      * @MongoDB\PreRemove
      */
     public function unlinkFromRelatedDocuments() {
-        foreach ($this->getUsers() as $user) {
-            $user->removeTeam($this);
-        }
+        //ToDo: unlink users from deleted team
+//        foreach ($this->getUsers() as $user) {
+//            $user->removeTeam($this);
+//        }
     }
 }
