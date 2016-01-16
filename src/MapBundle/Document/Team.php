@@ -32,7 +32,7 @@ class Team
 
     /**
      * @MongoDB\Collection
-     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User", mappedBy="team")
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User")
      */
     protected $users;
 
@@ -141,9 +141,8 @@ class Team
      * @MongoDB\PreRemove
      */
     public function unlinkFromRelatedDocuments() {
-        //ToDo: unlink users from deleted team
-//        foreach ($this->getUsers() as $user) {
-//            $user->removeTeam($this);
-//        }
+        foreach ($this->getUsers() as $user) {
+            $user->removeTeam($this);
+        }
     }
 }

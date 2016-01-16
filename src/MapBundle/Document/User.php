@@ -83,19 +83,19 @@ class User implements UserInterface {
 
     /**
      * @MongoDB\Collection
-     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Team", mappedBy="users")
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Team")
      */
     protected $teams;
 
     /**
      * @MongoDB\Collection
-     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Skill", mappedBy="users")
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Skill")
      */
     protected $skills;
 
     /**
      * @MongoDB\Collection
-     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Event", mappedBy="users")
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\Event")
      */
     protected $events;
 
@@ -429,18 +429,17 @@ class User implements UserInterface {
      * @MongoDB\PreRemove
      */
     public function unlinkFromRelatedDocuments() {
-        //ToDo: unlink documents from deleted user
-//        foreach ($this->getSkills() as $skill) {
-//            $skill->removeUser($this);
-//        }
-//
-//        foreach ($this->getTeams() as $team) {
-//            $team->removeUser($this);
-//        }
-//
-//        foreach ($this->getEvents() as $event) {
-//            $event->removeUser($this);
-//        }
+        foreach ($this->getSkills() as $skill) {
+            $skill->removeUser($this);
+        }
+
+        foreach ($this->getTeams() as $team) {
+            $team->removeUser($this);
+        }
+
+        foreach ($this->getEvents() as $event) {
+            $event->removeUser($this);
+        }
     }
 
     /**

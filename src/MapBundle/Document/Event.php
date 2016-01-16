@@ -49,7 +49,7 @@ class Event {
 
     /**
      * @MongoDB\Collection
-     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User", mappedBy="team")
+     * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User")
      */
     protected $users;
 
@@ -200,7 +200,7 @@ class Event {
     /**
      * Get users
      *
-     * @return \Doctrine\Common\Collections\Collection $users
+     * @return Collection $users
      */
     public function getUsers()
     {
