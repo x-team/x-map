@@ -24,15 +24,15 @@ class AuthCest
 
     public function tryToLoginAndLogout(FunctionalTester $I)
     {
-        $I->login($this->user1['email'], $this->user2['password']);
+        $I->sendPOST('logins.json', ['email' => $this->user1['email'], 'password' => $this->user2['password']]);
         $I->seeResponseCodeIs(400);
 
-        $I->login($this->user1['email'], $this->user1['password']);
+        $I->sendPOST('logins.json', ['email' => $this->user1['email'], 'password' => $this->user1['password']]);
         $I->seeResponseCodeIs(200);
 
         $id1 = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->login($this->user2['email'], $this->user2['password']);
+        $I->sendPOST('logins.json', ['email' => $this->user2['email'], 'password' => $this->user2['password']]);
         $I->seeResponseCodeIs(200);
 
         $id2 = $I->grabDataFromResponseByJsonPath('$.id')[0];

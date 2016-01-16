@@ -1,12 +1,12 @@
 <?php namespace MapBundle\Security\Authorization\Voter;
 
 use InvalidArgumentException;
-use MapBundle\Document\User;
+use MapBundle\Document\Event;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserVoter implements VoterInterface
+class EventVoter implements VoterInterface
 {
     public function supportsAttribute($attribute)
     {
@@ -15,27 +15,19 @@ class UserVoter implements VoterInterface
             'edit',
             'create',
             'delete',
-            'edit_admin',
-            'edit_password',
-            'link_event',
-            'unlink_event',
-            'link_skill',
-            'unlink_skill',
-            'link_team',
-            'unlink_team',
         ));
     }
 
     public function supportsClass($class)
     {
-        $supportedClass = User::class;
+        $supportedClass = Event::class;
 
         return $supportedClass === $class || is_subclass_of($class, $supportedClass);
     }
 
-    public function vote(TokenInterface $token, $user, array $attributes)
+    public function vote(TokenInterface $token, $event, array $attributes)
     {
-        if (!$this->supportsClass(get_class($user))) {
+        if (!$this->supportsClass(get_class($event))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
@@ -54,38 +46,19 @@ class UserVoter implements VoterInterface
         $authUser = $token->getUser();
 
         if (!$authUser instanceof UserInterface) {
-            return $attribute === 'create' ? VoterInterface::ACCESS_GRANTED : VoterInterface::ACCESS_DENIED;
+            return VoterInterface::ACCESS_DENIED;
         }
 
         switch ($attribute) {
             case 'view':
+            case 'create':
                 if ($authUser->hasRole('ROLE_USER')) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;
             case 'edit':
-            case 'edit_password':
             case 'delete':
-                if ($authUser->hasRole('ROLE_ADMIN') || $authUser->getId() == $user->getId()) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
-            case 'edit_admin':
-                if ($authUser->hasRole('ROLE_ADMIN')) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
-            case 'link_team':
-            case 'unlink_team':
-            case 'link_skill':
-            case 'unlink_skill':
-                if ($authUser->hasRole('ROLE_ADMIN') || $authUser->getId() == $user->getId()) {
-                    return VoterInterface::ACCESS_GRANTED;
-                }
-                break;
-            case 'link_event':
-            case 'unlink_event':
-                if ($authUser->hasRole('ROLE_USER')) {
+                if ($authUser->hasRole('ROLE_USER') && $authUser->getId() == $event->getCreator()->getId() || $authUser->hasRole('ROLE_ADMIN')) {
                     return VoterInterface::ACCESS_GRANTED;
                 }
                 break;

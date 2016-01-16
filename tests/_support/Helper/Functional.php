@@ -4,10 +4,12 @@ namespace Helper;
 class Functional extends \Codeception\Module
 {
     public function login($email, $password) {
-        return $this->getModule('REST')->sendPOST('logins.json', [
+        $this->getModule('REST')->sendPOST('logins.json', [
             'email' => $email,
             'password' => $password,
         ]);
+
+        return $this->getModule('REST')->seeResponseCodeIs(200);
     }
 
     public function logout() {

@@ -94,7 +94,6 @@ class ContentsCest
 
         $I->am('ROLE_ADMIN');
         $I->login($this->admin['email'], $this->admin['password']);
-        $I->seeResponseCodeIs(200);
 
         $I->sendPOST('contents.json', $this->content3);
         $I->seeResponseCodeIs(200);

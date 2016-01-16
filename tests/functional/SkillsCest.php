@@ -96,7 +96,6 @@ class SkillsCest
 
         $I->am('ROLE_ADMIN');
         $I->login($this->admin['email'], $this->admin['password']);
-        $I->seeResponseCodeIs(200);
 
         $I->sendPOST('skills.json', $this->skill3);
         $I->seeResponseCodeIs(200);

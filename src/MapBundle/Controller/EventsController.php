@@ -172,8 +172,7 @@ class EventsController extends FOSRestController
         if (!$event || !$user) {
             throw $this->createNotFoundException();
         }
-
-        $this->denyAccessUnlessGranted('link', $user);
+        $this->denyAccessUnlessGranted('link_event', $user);
 
         $user->addEvent($event);
         $event->addUser($user);
@@ -203,7 +202,7 @@ class EventsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted('unlink', $user);
+        $this->denyAccessUnlessGranted('unlink_event', $user);
 
         $user->removeEvent($event);
         $event->removeUser($user);

@@ -99,7 +99,6 @@ class TeamsCest
 
         $I->am('ROLE_ADMIN');
         $I->login($this->admin['email'], $this->admin['password']);
-        $I->seeResponseCodeIs(200);
 
         $I->sendPOST('teams.json', $this->team3);
         $I->seeResponseCodeIs(200);

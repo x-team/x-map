@@ -173,7 +173,7 @@ class TeamsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted('link', $user);
+        $this->denyAccessUnlessGranted('link_team', $user);
 
         $team->addUser($user);
         $user->addTeam($team);
@@ -203,7 +203,7 @@ class TeamsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted('unlink', $user);
+        $this->denyAccessUnlessGranted('unlink_team', $user);
 
         $team->removeUser($user);
         $user->removeTeam($team);

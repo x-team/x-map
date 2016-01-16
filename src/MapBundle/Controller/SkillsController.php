@@ -173,7 +173,7 @@ class SkillsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted('link', $user);
+        $this->denyAccessUnlessGranted('link_skill', $user);
 
         $skill->addUser($user);
         $user->addSkill($skill);
@@ -203,7 +203,7 @@ class SkillsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted('unlink', $user);
+        $this->denyAccessUnlessGranted('unlink_skill', $user);
 
         $skill->removeUser($user);
         $user->removeSkill($skill);
