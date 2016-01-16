@@ -3,6 +3,7 @@
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @MongoDB\Document
@@ -32,26 +33,42 @@ class Event {
     /**
      * @MongoDB\Date
      * @Assert\NotBlank
+     * @Serializer\Type("DateTime<'Y-m-d'>")
      */
     protected $dateStart;
 
     /**
      * @MongoDB\Date
-     * @Assert\NotBlank
+     * @Serializer\Type("DateTime<'Y-m-d'>")
      */
     protected $dateEnd;
 
     /**
      * @MongoDB\Hash
-     * @Assert\NotBlank
      */
     protected $data;
+
+    //ToDo: find out why creation fails when notBlank constraint is applied
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="MapBundle\Document\User")
+     */
+    protected $creator;
 
     /**
      * @MongoDB\Collection
      * @MongoDB\ReferenceMany(targetDocument="MapBundle\Document\User")
      */
     protected $users;
+
+    /**
+     * @MongoDB\Float
+     */
+    protected $lat;
+
+    /**
+     * @MongoDB\Float
+     */
+    protected $lng;
 
     /**
      * Get id
@@ -214,5 +231,80 @@ class Event {
         foreach ($this->getUsers() as $user) {
             $user->removeEvent($this);
         }
+    }
+
+    /**
+     * @MongoDB\PrePersist
+     */
+    public function updateDateEnd() {
+        if (!$this->getDateEnd()) {
+            $this->setDateEnd($this->getDateStart());
+        }
+    }
+
+    /**
+     * Set lat
+     *
+     * @param float $lat
+     * @return self
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return float $lat
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param float $lng
+     * @return self
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return float $lng
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * Set creator
+     *
+     * @param User $creator
+     * @return self
+     */
+    public function setCreator(User $creator)
+    {
+        $this->creator = $creator;
+        return $this;
+    }
+
+    /**
+     * Get creator
+     *
+     * @return User $creator
+     */
+    public function getCreator()
+    {
+        return $this->creator;
     }
 }

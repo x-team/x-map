@@ -83,6 +83,8 @@ class EventsController extends FOSRestController
         $form = $this->createForm(new EventType, $event);
         $form->handleRequest($request);
 
+        $event->setCreator($this->get('security.context')->getToken()->getUser());
+
         if ($form->isValid()) {
             $this->dm->persist($event);
             $this->dm->flush();
@@ -107,13 +109,13 @@ class EventsController extends FOSRestController
      */
     public function putEventAction(Request $request, $id)
     {
-        $this->denyAccessUnlessGranted('edit', new Event);
-
         $event = $this->repository->find($id);
 
         if (!$event) {
             throw $this->createNotFoundException();
         }
+
+        $this->denyAccessUnlessGranted('edit', $event);
 
         $form = $this->createForm(new EventType, $event, array('method' => 'PUT'));
         $form->handleRequest($request);
@@ -139,13 +141,13 @@ class EventsController extends FOSRestController
      */
     public function deleteEventAction($id)
     {
-        $this->denyAccessUnlessGranted('delete', new Event);
-
         $event = $this->repository->find($id);
 
         if (!$event) {
             throw $this->createNotFoundException();
         }
+
+        $this->denyAccessUnlessGranted('delete', $event);
 
         $this->dm->remove($event);
         $this->dm->flush();
