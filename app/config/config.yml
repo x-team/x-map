@@ -75,9 +75,11 @@ fos_rest:
     formats:
       xml:  true
       json: true
+    templating_formats:
+      html: true
   format_listener:
     rules:
-      - { path: ^/, priorities: [ json, xml ], fallback_format: ~, prefer_extension: true }
+      - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
     media_type:
       version_regex: '/(v|version)=(?P<version>[0-9\.]+)/'
   exception:

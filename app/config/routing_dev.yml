@@ -1,14 +1,3 @@
-_welcome:
-    pattern:  /
-    defaults:
-        _controller: FrameworkBundle:Redirect:redirect
-        route: get_notes
-        permanent: true # this for 301
-
-_demo_note:
-    resource: "@AppBundle/Controller/NoteController.php"
-    type:     rest
-
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
     prefix:   /_wdt
