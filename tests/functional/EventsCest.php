@@ -48,11 +48,8 @@ class EventsCest
         $this->event3['dateEnd'] = (new DateTime)->modify('+5 week')->format('Y-m-d');
         $this->event4['dateStart'] = (new DateTime)->modify('+4 week')->format('Y-m-d');
 
-        $I->haveInCollection('Event', $this->event1);
-        $I->haveInCollection('Event', $this->event2);
-
-        $this->event1Id = $this->event1['_id'];
-        $this->event2Id = $this->event2['_id'];
+        $this->event1Id = (string)$I->haveInCollection('Event', $this->event1);
+        $this->event2Id = (string)$I->haveInCollection('Event', $this->event2);
 
         unset($this->event1['_id']);
         unset($this->event2['_id']);

@@ -34,11 +34,8 @@ class SkillsCest
     ];
 
     public function _before(FunctionalTester $I) {
-        $I->haveInCollection('Skill', $this->skill1);
-        $I->haveInCollection('Skill', $this->skill2);
-
-        $this->skill1Id = $this->skill1['_id'];
-        $this->skill2Id = $this->skill2['_id'];
+        $this->skill1Id = (string)$I->haveInCollection('Skill', $this->skill1);
+        $this->skill2Id = (string)$I->haveInCollection('Skill', $this->skill2);
 
         unset($this->skill1['_id']);
         unset($this->skill2['_id']);

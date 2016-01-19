@@ -37,14 +37,8 @@ class TeamsCest
     ];
 
     public function _before(FunctionalTester $I) {
-        $I->haveInCollection('Team', $this->team1);
-        $I->haveInCollection('Team', $this->team2);
-
-        $this->team1Id = $this->team1['_id'];
-        $this->team2Id = $this->team2['_id'];
-
-        unset($this->team1['_id']);
-        unset($this->team2['_id']);
+        $this->team1Id = (string)$I->haveInCollection('Team', $this->team1);
+        $this->team2Id = (string)$I->haveInCollection('Team', $this->team2);
 
         $encoder = $I->grabServiceFromContainer('security.password_encoder');
         $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User, $this->user['password'])]));
