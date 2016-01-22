@@ -3,14 +3,16 @@
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\User;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpNotFoundException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api")
+ */
 class AuthController extends FOSRestController
 {
     protected $dm;
@@ -38,22 +40,26 @@ class AuthController extends FOSRestController
         $email = $request->get('email');
         $password = $request->get('password');
 
+        $errors = [
+            'errors' => [
+                'children' => [
+                    'credentials' => [
+                        'errors' => [
+                            'Invalid credentials',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        if (empty($email) || empty($password)) {
+            return $this->handleView($this->view($errors, 400));
+        }
+
         $user = $this->repository->findOneByEmail($email);
 
         if(!$user instanceof User || !$this->checkUserPassword($user, $password)){
             $this->logoutUser();
-
-            $errors = [
-                'errors' => [
-                    'children' => [
-                        'credentials' => [
-                            'errors' => [
-                                'Invalid credentials',
-                            ],
-                        ],
-                    ],
-                ],
-            ];
 
             return $this->handleView($this->view($errors, 400));
         }

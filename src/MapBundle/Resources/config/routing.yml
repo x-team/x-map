@@ -21,7 +21,3 @@ events:
 auth:
   resource: "map.controller.auth"
   type: rest
-
-client:
-  path: /
-  defaults: { _controller: MapBundle:Home:index }

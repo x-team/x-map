@@ -8,7 +8,11 @@ use MapBundle\Form\Type\RegisterUserType;
 use MapBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api")
+ */
 class UsersController extends FOSRestController
 {
     protected $dm;
@@ -155,14 +159,14 @@ class UsersController extends FOSRestController
      */
     public function getUserAction($id)
     {
-        $this->denyAccessUnlessGranted('view', new User);
-
         if ($id === 'current') {
             $user = $this->get('security.context')->getToken()->getUser();
             $view = $user instanceof User ? $this->view($user) : $this->view(null);
 
             return $this->handleView($view);
         }
+
+        $this->denyAccessUnlessGranted('view', new User);
 
         $user = $this->repository->find($id);
 

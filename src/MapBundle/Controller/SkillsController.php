@@ -6,7 +6,11 @@ use MapBundle\Document\Skill;
 use MapBundle\Form\Type\SkillType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api")
+ */
 class SkillsController extends FOSRestController
 {
     protected $dm;

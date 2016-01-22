@@ -40,6 +40,9 @@ class TeamsCest
         $this->team1Id = (string)$I->haveInCollection('Team', $this->team1);
         $this->team2Id = (string)$I->haveInCollection('Team', $this->team2);
 
+        unset($this->team1['_id']);
+        unset($this->team2['_id']);
+
         $encoder = $I->grabServiceFromContainer('security.password_encoder');
         $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User, $this->user['password'])]));
         $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User, $this->admin['password'])]));
@@ -47,21 +50,21 @@ class TeamsCest
 
     public function tryToReadTeam(FunctionalTester $I)
     {
-        $I->sendGET('teams.json');
+        $I->sendGET('api/teams.json');
         $I->seeResponseCodeIs(403);
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendGET('teams.json');
+        $I->sendGET('api/teams.json');
 
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson([$this->team1, $this->team2]);
 
-        $I->sendGET('teams/' . $this->team1Id . '.json');
+        $I->sendGET('api/teams/' . $this->team1Id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team1);
 
-        $I->sendGET('teams/' . uniqid() . '.json');
+        $I->sendGET('api/teams/' . uniqid() . '.json');
         $I->seeResponseCodeIs(404);
     }
 
@@ -69,59 +72,59 @@ class TeamsCest
     {
         $I->am('Anonymous user');
 
-        $I->sendPOST('teams.json', $this->team3);
+        $I->sendPOST('api/teams.json', $this->team3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('teams/' .  $this->team2Id . '.json');
+        $I->sendPUT('api/teams/' .  $this->team2Id . '.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('teams/' .  $this->team2Id . '.json');
+        $I->sendDELETE('api/teams/' .  $this->team2Id . '.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_USER');
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendPOST('teams.json', $this->team3);
+        $I->sendPOST('api/teams.json', $this->team3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('teams/' .  $this->team2Id . '.json');
+        $I->sendPUT('api/teams/' .  $this->team2Id . '.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('teams/' .  $this->team2Id . '.json');
+        $I->sendDELETE('api/teams/' .  $this->team2Id . '.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_ADMIN');
         $I->login($this->admin['email'], $this->admin['password']);
 
-        $I->sendPOST('teams.json', $this->team3);
+        $I->sendPOST('api/teams.json', $this->team3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendGET('teams/' . $id . '.json');
+        $I->sendGET('api/teams/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
-        $I->sendGET('teams/' . $id . '.json');
+        $I->sendGET('api/teams/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
         $this->team3['name'] = 'new name';
         
-        $I->sendPUT('teams/' . $id . '.json', $this->team3);
+        $I->sendPUT('api/teams/' . $id . '.json', $this->team3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
-        $I->sendGET('teams/' . $id . '.json');
+        $I->sendGET('api/teams/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
-        $I->sendDELETE('teams/' . $id . '.json');
+        $I->sendDELETE('api/teams/' . $id . '.json');
         $I->seeResponseCodeIs(204);
 
-        $I->sendGET('teams/' . $id . '.json');
+        $I->sendGET('api/teams/' . $id . '.json');
         $I->seeResponseCodeIs(404);
     }
 }

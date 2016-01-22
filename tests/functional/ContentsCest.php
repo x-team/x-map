@@ -49,20 +49,20 @@ class ContentsCest
 
     public function tryToReadContent(FunctionalTester $I)
     {
-        $I->sendGET('contents.json');
+        $I->sendGET('api/contents.json');
         $I->seeResponseCodeIs(403);
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendGET('contents.json');
+        $I->sendGET('api/contents.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson([$this->content1, $this->content2]);
 
-        $I->sendGET('contents/' . $this->content1['key'] . '.json');
+        $I->sendGET('api/contents/' . $this->content1['key'] . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->content1);
 
-        $I->sendGET('contents/' . $this->content3['key'] . '.json');
+        $I->sendGET('api/contents/' . $this->content3['key'] . '.json');
         $I->seeResponseCodeIs(404);
     }
 
@@ -70,59 +70,59 @@ class ContentsCest
     {
         $I->am('Anonymous user');
 
-        $I->sendPOST('contents.json', $this->content3);
+        $I->sendPOST('api/contents.json', $this->content3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('contents/' .  $this->content2['key'] . '.json');
+        $I->sendPUT('api/contents/' .  $this->content2['key'] . '.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('contents/' .  $this->content2['key'] . '.json');
+        $I->sendDELETE('api/contents/' .  $this->content2['key'] . '.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_USER');
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendPOST('contents.json', $this->content3);
+        $I->sendPOST('api/contents.json', $this->content3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('contents/' .  $this->content2['key'] . '.json');
+        $I->sendPUT('api/contents/' .  $this->content2['key'] . '.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('contents/' .  $this->content2['key'] . '.json');
+        $I->sendDELETE('api/contents/' .  $this->content2['key'] . '.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_ADMIN');
         $I->login($this->admin['email'], $this->admin['password']);
 
-        $I->sendPOST('contents.json', $this->content3);
+        $I->sendPOST('api/contents.json', $this->content3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->content3);
 
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendGET('contents/' . $this->content3['key'] . '.json');
+        $I->sendGET('api/contents/' . $this->content3['key'] . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->content3);
 
-        $I->sendGET('contents/' . $id . '.json');
+        $I->sendGET('api/contents/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->content3);
 
         $this->content3['title'] = 'new title';
         
-        $I->sendPUT('contents/' . $id . '.json', $this->content3);
+        $I->sendPUT('api/contents/' . $id . '.json', $this->content3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->content3);
 
-        $I->sendGET('contents/' . $id . '.json');
+        $I->sendGET('api/contents/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->content3);
 
-        $I->sendDELETE('contents/' . $id . '.json');
+        $I->sendDELETE('api/contents/' . $id . '.json');
         $I->seeResponseCodeIs(204);
 
-        $I->sendGET('contents/' . $id . '.json');
+        $I->sendGET('api/contents/' . $id . '.json');
         $I->seeResponseCodeIs(404);
     }
 }

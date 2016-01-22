@@ -11,3 +11,7 @@ tests/_support/_generated
 tests/_support/*Tester.php
 tests/_output/*
 app/bootstrap.php.cache
+web/css
+web/js
+web/*.png
+web/*.html
