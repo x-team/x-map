@@ -1,21 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 
-class FieldError extends Component {
+class Error extends Component {
   render() {
     const { field, error } = this.props;
 
+    let fieldString = '';
+
+    if (field) {
+      fieldString = `${field}: `;
+    }
+
     return (
       <div>
-        <strong>{field}: {error}</strong>
+        <strong>{fieldString}{error}</strong>
       </div>
     );
 
   }
 }
 
-FieldError.propTypes = {
-  field: PropTypes.string.isRequired,
+Error.propTypes = {
+  field: PropTypes.string,
   error: PropTypes.string.isRequired
 };
 
-export default FieldError;
+export default Error;

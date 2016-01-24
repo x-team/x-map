@@ -5,13 +5,11 @@ use MapBundle\Document\User;
 class AuthCest
 {
     protected $user1 = [
-        'username' => 'bobbudowniczy1',
         'password' => 'testtest1',
         'email' => 'bob1@test.pl',
     ];
 
     protected $user2 = [
-        'username' => 'bobbudowniczy2',
         'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];

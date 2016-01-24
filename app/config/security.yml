@@ -13,7 +13,7 @@ security:
 
   providers:
     my_mongo_provider:
-      mongodb: {class: MapBundle\Document\User, property: username}
+      mongodb: {class: MapBundle\Document\User, property: email}
     in_memory:
       memory:
         users:

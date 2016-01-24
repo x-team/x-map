@@ -22,12 +22,7 @@ export function login(email, password, onSuccess) {
   return (dispatch) => {
     request(process.env.API_BASE_URL + 'logins.json', {
       body: JSON.stringify({email, password}),
-      method: 'POST',
-      mode: 'cors-with-forced-preflight',
-      credentials: 'include',
-      headers: {
-        'content-type': 'application/json;charset=UTF-8'
-      }
+      method: 'POST'
     })
       .then(json => dispatch(loginSuccess(json)))
       .then(onSuccess)
@@ -44,15 +39,14 @@ export function loginFailure(errors) {
 }
 
 export function logout(onSuccess) {
+  console.log(onSuccess);
   return (dispatch) => {
     request(process.env.API_BASE_URL + 'logouts.json', {
-      method: 'POST',
-      credentials: 'include',
-      mode: 'cors-with-forced-preflight'
+      method: 'POST'
     })
-      .then((json) => dispatch(logoutSuccess(json)))
+      .then(() => dispatch(logoutSuccess()))
       .then(onSuccess)
-      .catch((json) => dispatch(logoutFailure(json)));
+      .catch(() => dispatch(logoutFailure()));
   };
 }
 

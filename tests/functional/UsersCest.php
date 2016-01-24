@@ -5,7 +5,6 @@ use MapBundle\Document\User;
 class UsersCest
 {
     protected $user = [
-        'username' => 'bobbudowniczy1',
         'password' => 'testtest1',
         'email'    => 'bob1@test.pl',
     ];
@@ -13,7 +12,6 @@ class UsersCest
     protected $userId;
 
     protected $admin = [
-        'username' => 'admin',
         'password' => 'admin',
         'email'    => 'admin@test.pl',
         'isAdmin'  => true
@@ -25,15 +23,14 @@ class UsersCest
     {
         $encoder = $I->grabServiceFromContainer('security.password_encoder');
         $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User, $this->user['password'])]));
-        $this->userId = (string)$I->grabFromCollection('User', ['username' => $this->user['username']])['_id'];
+        $this->userId = (string)$I->grabFromCollection('User', ['email' => $this->user['email']])['_id'];
         $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User, $this->admin['password'])]));
-        $this->adminId = (string)$I->grabFromCollection('User', ['username' => $this->admin['username']])['_id'];
+        $this->adminId = (string)$I->grabFromCollection('User', ['email' => $this->admin['email']])['_id'];
     }
 
     public function tryToRegisterAndUpdate(FunctionalTester $I)
     {
         $user = [
-            'username' => 'bobbudowniczy',
             'password' => 'testtest',
         ];
 
@@ -81,7 +78,7 @@ class UsersCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson(array_merge(['id' => $id], $user));
 
-        $anotherUser = $I->grabFromCollection('User', ['username' => $this->user['username']]);
+        $anotherUser = $I->grabFromCollection('User', ['email' => $this->user['email']]);
 
         $I->sendPUT('api/users/' . $anotherUser['_id'] . '.json', $user);
         $I->seeResponseCodeIs(403);

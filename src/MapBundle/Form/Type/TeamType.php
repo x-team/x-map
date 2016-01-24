@@ -1,9 +1,8 @@
 <?php namespace MapBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TeamType extends AbstractType
+class TeamType extends BaseAbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -11,10 +10,5 @@ class TeamType extends AbstractType
             ->add('name')
             ->add('description')
         ;
-    }
-
-    public function getName()
-    {
-        return '';
     }
 }

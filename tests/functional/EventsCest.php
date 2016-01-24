@@ -5,14 +5,12 @@ use MapBundle\Document\User;
 class EventsCest
 {
     protected $admin = [
-        'username' => 'bobbudowniczy1',
         'password' => 'testtest1',
         'email' => 'bob1@test.pl',
         'isAdmin' => true
     ];
 
     protected $user = [
-        'username' => 'bobbudowniczy2',
         'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];
