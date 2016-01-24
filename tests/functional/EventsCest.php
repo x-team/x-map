@@ -61,21 +61,21 @@ class EventsCest
 
     public function tryToReadEvent(FunctionalTester $I)
     {
-        $I->sendGET('events.json');
+        $I->sendGET('api/events.json');
         $I->seeResponseCodeIs(403);
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendGET('events.json');
+        $I->sendGET('api/events.json');
 
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson([$this->event1, $this->event2]);
 
-        $I->sendGET('events/' . $this->event1Id . '.json');
+        $I->sendGET('api/events/' . $this->event1Id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event1);
 
-        $I->sendGET('events/' . uniqid() . '.json');
+        $I->sendGET('api/events/' . uniqid() . '.json');
         $I->seeResponseCodeIs(404);
     }
 
@@ -83,51 +83,51 @@ class EventsCest
     {
         $I->am('Anonymous user');
 
-        $I->sendPOST('events.json', $this->event3);
+        $I->sendPOST('api/events.json', $this->event3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('events/' .  $this->event2Id . '.json');
+        $I->sendPUT('api/events/' .  $this->event2Id . '.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('events/' .  $this->event2Id . '.json');
+        $I->sendDELETE('api/events/' .  $this->event2Id . '.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_USER');
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendPOST('events.json', $this->event3);
+        $I->sendPOST('api/events.json', $this->event3);
         $I->seeResponseCodeIs(400);
 
         $this->event3['type'] = 'conference';
 
-        $I->sendPOST('events.json', $this->event3);
+        $I->sendPOST('api/events.json', $this->event3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event3);
 
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendGET('events/' . $id . '.json');
+        $I->sendGET('api/events/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event3);
 
         $this->event3['name'] = 'new name';
         
-        $I->sendPUT('events/' . $id . '.json', $this->event3);
+        $I->sendPUT('api/events/' . $id . '.json', $this->event3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event3);
 
-        $I->sendGET('events/' . $id . '.json');
+        $I->sendGET('api/events/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event3);
 
-        $I->sendDELETE('events/' . $id . '.json');
+        $I->sendDELETE('api/events/' . $id . '.json');
         $I->seeResponseCodeIs(204);
 
-        $I->sendGET('events/' . $id . '.json');
+        $I->sendGET('api/events/' . $id . '.json');
         $I->seeResponseCodeIs(404);
 
-        $I->sendPOST('events.json', $this->event4);
+        $I->sendPOST('api/events.json', $this->event4);
         $I->seeResponseCodeIs(200);
         $this->event4['dateEnd'] = $this->event4['dateStart'];
         $I->seeResponseContainsJson($this->event4);
@@ -135,9 +135,9 @@ class EventsCest
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
         $this->event4['data'] = ['some' => ['custom', 'data'], 'to' => ['check' => 'if arbitrary data can be stored']];
-        $I->sendPUT('events/' . $id . '.json', $this->event4);
+        $I->sendPUT('api/events/' . $id . '.json', $this->event4);
 
-        $I->sendGET('events/' . $id . '.json');
+        $I->sendGET('api/events/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event4);
     }

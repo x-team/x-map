@@ -6,7 +6,11 @@ use MapBundle\Document\Event;
 use MapBundle\Form\Type\EventType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api")
+ */
 class EventsController extends FOSRestController
 {
     protected $dm;

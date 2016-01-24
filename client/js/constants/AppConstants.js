@@ -1,10 +1,17 @@
-/*
- * AppConstants
- * These are the variables that determine what our central data store (reducer.js)
- * changes in our state. When you add a new action, you have to add a new constant here
- *
- * Follow this format:
- * export const YOUR_ACTION_CONSTANT = 'YOUR_ACTION_CONSTANT';
- */
-export const CHANGE_PROJECT_NAME = 'CHANGE_PROJECT_NAME';
-export const CHANGE_OWNER_NAME = 'CHANGE_OWNER_NAME';
+export const USER_CREATE = 'USER_CREATE';
+export const USER_CREATE_SUCCESS = 'USER_CREATE_SUCCESS';
+export const USER_CREATE_FAILURE = 'USER_CREATE_FAILURE';
+
+export const USER_GET_CURRENT = 'USER_GET_CURRENT';
+export const USER_GET_CURRENT_SUCCESS = 'USER_GET_CURRENT_SUCCESS';
+export const USER_GET_CURRENT_FAILURE = 'USER_GET_CURRENT_FAILURE';
+
+export const APP_ROUTE_CHANGED = 'APP_ROUTE_CHANGED';
+
+export const APP_LOGIN = 'APP_LOGIN';
+export const APP_LOGIN_SUCCESS = 'APP_LOGIN_SUCCESS';
+export const APP_LOGIN_FAILURE = 'APP_LOGIN_FAILURE';
+
+export const APP_LOGOUT = 'APP_LOGOUT';
+export const APP_LOGOUT_SUCCESS = 'APP_LOGOUT_SUCCESS';
+export const APP_LOGOUT_FAILURE = 'APP_LOGOUT_FAILURE';

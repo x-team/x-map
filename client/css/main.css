@@ -16,3 +16,7 @@
 
 /* 5. Components */
 @import 'components/*.css';
+@import 'components/forms/*.css';
+@import 'components/fragments/*.css';
+@import 'components/pages/*.css';
+

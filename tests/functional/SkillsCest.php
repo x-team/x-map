@@ -47,21 +47,21 @@ class SkillsCest
 
     public function tryToReadSkill(FunctionalTester $I)
     {
-        $I->sendGET('skills.json');
+        $I->sendGET('api/skills.json');
         $I->seeResponseCodeIs(403);
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendGET('skills.json');
+        $I->sendGET('api/skills.json');
 
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson([$this->skill1, $this->skill2]);
 
-        $I->sendGET('skills/' . $this->skill1Id . '.json');
+        $I->sendGET('api/skills/' . $this->skill1Id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->skill1);
 
-        $I->sendGET('skills/' . uniqid() . '.json');
+        $I->sendGET('api/skills/' . uniqid() . '.json');
         $I->seeResponseCodeIs(404);
     }
 
@@ -69,59 +69,59 @@ class SkillsCest
     {
         $I->am('Anonymous user');
 
-        $I->sendPOST('skills.json', $this->skill3);
+        $I->sendPOST('api/skills.json', $this->skill3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('skills/' .  $this->skill2Id . '.json');
+        $I->sendPUT('api/skills/' .  $this->skill2Id . '.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('skills/' .  $this->skill2Id . '.json');
+        $I->sendDELETE('api/skills/' .  $this->skill2Id . '.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_USER');
 
         $I->login($this->user['email'], $this->user['password']);
 
-        $I->sendPOST('skills.json', $this->skill3);
+        $I->sendPOST('api/skills.json', $this->skill3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('skills/' .  $this->skill2Id . '.json');
+        $I->sendPUT('api/skills/' .  $this->skill2Id . '.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('skills/' .  $this->skill2Id . '.json');
+        $I->sendDELETE('api/skills/' .  $this->skill2Id . '.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_ADMIN');
         $I->login($this->admin['email'], $this->admin['password']);
 
-        $I->sendPOST('skills.json', $this->skill3);
+        $I->sendPOST('api/skills.json', $this->skill3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->skill3);
 
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendGET('skills/' . $id . '.json');
+        $I->sendGET('api/skills/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->skill3);
 
-        $I->sendGET('skills/' . $id . '.json');
+        $I->sendGET('api/skills/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->skill3);
 
         $this->skill3['name'] = 'new name';
         
-        $I->sendPUT('skills/' . $id . '.json', $this->skill3);
+        $I->sendPUT('api/skills/' . $id . '.json', $this->skill3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->skill3);
 
-        $I->sendGET('skills/' . $id . '.json');
+        $I->sendGET('api/skills/' . $id . '.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->skill3);
 
-        $I->sendDELETE('skills/' . $id . '.json');
+        $I->sendDELETE('api/skills/' . $id . '.json');
         $I->seeResponseCodeIs(204);
 
-        $I->sendGET('skills/' . $id . '.json');
+        $I->sendGET('api/skills/' . $id . '.json');
         $I->seeResponseCodeIs(404);
     }
 }

@@ -4,7 +4,7 @@ namespace Helper;
 class Functional extends \Codeception\Module
 {
     public function login($email, $password) {
-        $this->getModule('REST')->sendPOST('logins.json', [
+        $this->getModule('REST')->sendPOST('api/logins.json', [
             'email' => $email,
             'password' => $password,
         ]);
@@ -13,6 +13,6 @@ class Functional extends \Codeception\Module
     }
 
     public function logout() {
-        return $this->getModule('REST')->sendPOST('logouts.json');
+        return $this->getModule('REST')->sendPOST('api/logouts.json');
     }
 }

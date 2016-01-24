@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Hautelook\TemplatedUriBundle\HautelookTemplatedUriBundle(),
             new Bazinga\Bundle\RestExtraBundle\BazingaRestExtraBundle(),
             new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
             new MapBundle\MapBundle(),
         );
 

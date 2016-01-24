@@ -6,7 +6,11 @@ use MapBundle\Document\Team;
 use MapBundle\Form\Type\TeamType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api")
+ */
 class TeamsController extends FOSRestController
 {
     protected $dm;

@@ -6,7 +6,11 @@ use MapBundle\Document\Content;
 use MapBundle\Form\Type\ContentType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\Prefix;
 
+/**
+ * @Prefix("api")
+ */
 class ContentsController extends FOSRestController
 {
     protected $dm;

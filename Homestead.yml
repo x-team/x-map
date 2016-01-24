@@ -1,0 +1,22 @@
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+provider: virtualbox
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: ~/Workspace # your local folder that stores x-map folder
+      to: /home/vagrant/Workspace
+
+sites:
+    - map: x-map.app
+      to: /home/vagrant/Workspace/x-map/web
+      type: symfony
+
+variables:
+    - key: NODE_ENV
+      value: development

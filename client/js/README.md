@@ -6,7 +6,7 @@ The folder structure of the JS files reflects how [Redux](https://github.com/gae
 
 * `actions`: Actions get dispatched with this/these utility module(s)
 
-* `components`: The main JS folder. All your React components should be in this folder, for big projects they might be grouped into seperate subfolders. E.g. a navigation component `Nav.react.js`
+* `components`: The main JS folder. All your React components should be in this folder, for big projects they might be grouped into seperate subfolders. E.g. a navigation component `Nav.js`
 
 * `components/pages`: Actual pages (routes) users can visit.
 
