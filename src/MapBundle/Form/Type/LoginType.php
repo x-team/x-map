@@ -1,9 +1,8 @@
 <?php namespace MapBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class LoginType extends AbstractType
+class LoginType extends BaseAbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -11,10 +10,5 @@ class LoginType extends AbstractType
             ->add('email')
             ->add('password')
         ;
-    }
-
-    public function getName()
-    {
-        return '';
     }
 }

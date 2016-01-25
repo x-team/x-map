@@ -10,6 +10,9 @@ import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
 import RegistrationPage from './components/pages/RegistrationPage';
 import NotFoundPage from './components/pages/NotFound';
+import ProfilesPage from './components/pages/ProfilesPage';
+import ProfilePage from './components/pages/ProfilePage';
+import ProfileEditPage from './components/pages/ProfileEditPage';
 import App from './components/App';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
@@ -26,6 +29,9 @@ ReactDOM.render(
         <Route path="/" component={HomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegistrationPage} />
+        <Route path="/profiles" component={ProfilesPage} />
+        <Route path="/profile/:id/edit" component={ProfileEditPage} />
+        <Route path="/profile/:id" component={ProfilePage} />
         <Route path="*" component={NotFoundPage} />
       </Route>
     </Router>

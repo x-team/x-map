@@ -10,7 +10,6 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * @MongoDB\Document
  * @MongoDBUnique(fields="email")
- * @MongoDBUnique(fields="username")
  * @MongoDB\HasLifecycleCallbacks
  */
 class User implements UserInterface {
@@ -22,10 +21,10 @@ class User implements UserInterface {
 
     /**
      * @MongoDB\String
+     * @Assert\Email
      * @Assert\NotBlank
-     * @Assert\Length(min=6,max=32)
      */
-    protected $username;
+    protected $email;
 
     /**
      * @MongoDB\String
@@ -37,10 +36,15 @@ class User implements UserInterface {
 
     /**
      * @MongoDB\String
-     * @Assert\Email
-     * @Assert\NotBlank
+     * @Assert\Length(max=64)
      */
-    protected $email;
+    protected $firstName;
+
+    /**
+     * @MongoDB\String
+     * @Assert\Length(max=64)
+     */
+    protected $lastName;
 
     /**
      * @MongoDB\String
@@ -58,18 +62,24 @@ class User implements UserInterface {
      * @MongoDB\String
      * @Assert\Length(max=64)
      */
-    protected $nationality;
+    protected $slackId;
 
     /**
-     * @MongoDB\Boolean
+     * @MongoDB\String
+     * @Assert\Length(max=64)
      */
-    protected $isAdmin;
+    protected $nationality;
 
     /**
      * @MongoDB\String
      * @Assert\Url
      */
     protected $website;
+
+    /**
+     * @MongoDB\Boolean
+     */
+    protected $isAdmin;
 
     /**
      * @MongoDB\Float
@@ -113,28 +123,6 @@ class User implements UserInterface {
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @return self
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-        return $this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string $username
-     */
-    public function getUsername()
-    {
-        return $this->username;
     }
 
     /**
@@ -470,5 +458,81 @@ class User implements UserInterface {
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     * @return self
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string $firstName
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return self
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string $lastName
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set slackId
+     *
+     * @param string $slackId
+     * @return self
+     */
+    public function setSlackId($slackId)
+    {
+        $this->slackId = $slackId;
+        return $this;
+    }
+
+    /**
+     * Get slackId
+     *
+     * @return string $slackId
+     */
+    public function getSlackId()
+    {
+        return $this->slackId;
     }
 }

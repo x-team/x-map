@@ -1,10 +1,8 @@
 <?php namespace MapBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class EventType extends AbstractType
+class EventType extends BaseAbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -15,10 +13,5 @@ class EventType extends AbstractType
             ->add('dateEnd', 'date', ['widget' => 'single_text'])
             ->add('data', null, ['required' => false])
         ;
-    }
-
-    public function getName()
-    {
-        return '';
     }
 }

@@ -13,6 +13,8 @@ class App extends Component {
   }
 
   redirectToHomePage() {
+    const { actions } = this.props;
+    actions.userList();
     this.props.history.pushState(null, '/');
   }
 
@@ -26,7 +28,7 @@ class App extends Component {
 
     return (
       <div className="col-md-10 col-md-push-1">
-        <Header user={currentUser} onLogout={actions.logout}/>
+        <Header user={currentUser} onLogout={actions.logout} onLogoutSuccess={this.redirectToHomePage.bind(this)}/>
         { this.props.children }
       </div>
     );

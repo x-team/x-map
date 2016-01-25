@@ -1,9 +1,8 @@
 <?php namespace MapBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ContentType extends AbstractType
+class ContentType extends BaseAbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -12,10 +11,5 @@ class ContentType extends AbstractType
             ->add('title')
             ->add('content')
         ;
-    }
-
-    public function getName()
-    {
-        return '';
     }
 }
