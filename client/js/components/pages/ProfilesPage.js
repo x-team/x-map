@@ -23,21 +23,27 @@ class ProfilesPage extends Component {
     }
 
     return (
-      <div id="userProfiles" className="col-md-8 col-md-push-2">
-        <div className="row">
-          <table className="col-md-12">
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {profiles}
-            </tbody>
-          </table>
-        </div>
+      <div className="panel">
+        <article id="userProfiles">
+          <header>
+            <h2>Profiles</h2>
+          </header>
+
+          <section>
+            <table className="col-md-12">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {profiles}
+              </tbody>
+            </table>
+          </section>
+        </article>
       </div>
     );
   }

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Button, Input } from 'react-bootstrap';
 import ErrorList from '../forms/ErrorList';
 
 class LoginForm extends Component {
@@ -29,19 +28,18 @@ class LoginForm extends Component {
     const { errors } = this.props;
 
     return (
-      <div>
-        <ErrorList errors={errors} showFieldErrors={true}/>
-        <form id="loginForm" onSubmit={this.onSubmit.bind(this)}>
-          <div className="row">
-            <Input type="email" placeholder="Email" addonBefore="@" onChange={this.onStateChange.bind(this, 'email')} required/>
-          </div>
-          <div className="row">
-            <Input type="password" placeholder="Password" onChange={this.onStateChange.bind(this, 'password')} required/>
-          </div>
-          <div className="row">
-            <Button className="col-md-4 col-md-push-4 btn btn-success btn-sm" type="submit">Login</Button>
-          </div>
-        </form>
+      <div id="loginForm">
+        <article>
+          <section>
+            <h2>Login</h2>
+            <ErrorList errors={ errors } showFieldErrors={ true } />
+            <form onSubmit={ this.onSubmit.bind(this) }>
+              <input type="email" placeholder="Email" onChange={ this.onStateChange.bind(this, 'email') } />
+              <input type="password" placeholder="Password" onChange={ this.onStateChange.bind(this, 'password') } />
+              <button className="button" type="submit">Login</button>
+            </form>
+          </section>
+        </article>
       </div>
     );
   }

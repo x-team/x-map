@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Button, Input } from 'react-bootstrap';
 import ErrorList from '../forms/ErrorList';
 
 class RegistrationForm extends Component {
@@ -30,18 +29,17 @@ class RegistrationForm extends Component {
 
     return (
       <div id="registrationForm">
-        <ErrorList errors={errors} showFieldErrors={true}/>
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <div className="row">
-            <Input type="email" placeholder="Email" addonBefore="@" onChange={this.onStateChange.bind(this, 'email')} required/>
-          </div>
-          <div className="row">
-            <Input type="password" placeholder="Password" onChange={this.onStateChange.bind(this, 'password')} required/>
-          </div>
-          <div className="row">
-            <Button className="col-md-4 col-md-push-4 btn btn-success btn-sm" type="submit">Register</Button>
-          </div>
-        </form>
+        <article>
+          <section>
+            <h2>Register</h2>
+            <ErrorList errors={ errors } showFieldErrors={ true } />
+            <form onSubmit={ this.onSubmit.bind(this) }>
+              <input type="email" placeholder="Email" onChange={ this.onStateChange.bind(this, 'email') } />
+              <input type="password" placeholder="Password" onChange={ this.onStateChange.bind(this, 'password') } />
+              <button className="button" type="submit">Register</button>
+            </form>
+          </section>
+        </article>
       </div>
     );
   }

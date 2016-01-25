@@ -13,10 +13,8 @@ class RegistrationPage extends Component {
     const { actions, errors } = this.props;
 
     return (
-      <div className="row">
-        <div className="col-md-4 col-md-push-4">
-          <RegistrationForm onSubmit={actions.userCreate} onSuccess={this.redirectToHomePage.bind(this)} errors={errors}/>
-        </div>
+      <div className="panel">
+        <RegistrationForm onSubmit={ actions.userCreate } onSuccess={ this.redirectToHomePage.bind(this) } errors={ errors }/>
       </div>
     );
   }

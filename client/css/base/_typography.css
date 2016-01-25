@@ -1,3 +1,50 @@
 /**
  * Basic typography style for copy text
  */
+
+a {
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px dashed $dark-grey;
+  width: calc(100% - 40px);
+}
+
+blockquote {
+  padding-left: 20%;
+  padding-right: 10px;
+  background-color: rgba(0, 0, 0, .2);
+}
+
+blockquote cite {
+  padding-left: 20px;
+  padding-right: 10px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+pre {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  color: $light-brand-color;
+  width: 100%;
+}
+
+code {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: $light-brand-color;
+}
+
+pre code {
+  background-color: transparent;
+}

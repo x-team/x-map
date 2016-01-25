@@ -13,10 +13,8 @@ class LoginPage extends Component {
     const { actions, errors } = this.props;
 
     return (
-      <div className="row">
-        <div className="col-md-4 col-md-push-4">
-          <LoginForm onSubmit={actions.login} onSuccess={this.redirectToHomePage.bind(this)} errors={errors}/>
-        </div>
+      <div className="panel">
+        <LoginForm onSubmit={ actions.login } onSuccess={ this.redirectToHomePage.bind(this) } errors={ errors } />
       </div>
     );
   }

@@ -36,3 +36,7 @@
   position: absolute;
   width: 1px;
 }
+
+.center {
+  align-self: center;
+}

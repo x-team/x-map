@@ -1,0 +1,33 @@
+/*This file contains all styles related to the navigations of the site/application.*/
+.navigation a,
+.navigation button {
+  background-image: linear-gradient(to top, $light-grey, #fff);
+  background-color: $light-grey;
+  text-shadow: 0 1px 0 $light-grey;
+  padding: 15px;
+  color: $dark-grey;
+  text-decoration: none;
+  border: 1px solid $mid-grey;
+  width: auto;
+  font-weight: bold;
+}
+
+.navigation button {
+  line-height: 1.1;
+}
+
+.navigation a:hover,
+.navigation button:hover {
+  background-image: linear-gradient(to top, #fff, $light-grey);
+  color: $brand-color;
+}
+
+.navigation > *:first-child {
+  border-radius: 5px 0 0 5px;
+  border-right: 1px solid $light-grey;
+}
+
+.navigation > *:last-child {
+  border-radius: 0 5px 5px 0;
+  border-left: 1px solid #fff;
+}
