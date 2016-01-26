@@ -1,12 +1,11 @@
 import {
+  APP_LOGOUT_SUCCESS,
   USER_LIST_SUCCESS,
   USER_LIST_FAILURE,
   USER_GET_SUCCESS,
   USER_GET_FAILURE,
   USER_UPDATE_SUCCESS,
-  USER_DELETE_SUCCESS,
-  USER_GET_CURRENT_SUCCESS,
-  USER_GET_CURRENT_FAILURE
+  USER_DELETE_SUCCESS
 } from '../constants/AppConstants';
 import assignToEmpty from '../utils/assign';
 
@@ -20,11 +19,7 @@ function usersReducer(users = {}, action) {
         newUsers[user.id] = user
       });
       return newUsers;
-    case USER_LIST_FAILURE:
-    case USER_GET_CURRENT_FAILURE:
-      return {};
     case USER_GET_SUCCESS:
-    case USER_GET_CURRENT_SUCCESS:
     case USER_UPDATE_SUCCESS:
       return assignToEmpty(users, {
         [action.user.id]: action.user
@@ -34,6 +29,9 @@ function usersReducer(users = {}, action) {
       return assignToEmpty(users, {
         [action.user.id]: undefined
       });
+    case APP_LOGOUT_SUCCESS:
+    case USER_LIST_FAILURE:
+      return {};
     default:
       return users;
   }

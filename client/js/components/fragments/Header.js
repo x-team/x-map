@@ -11,7 +11,7 @@ class Header extends Component {
     const { user, onLogout, onLogoutSuccess } = this.props;
 
     let header;
-    if (user.id) {
+    if (user && user.id) {
       header = <HeaderAuthenticated user={ user } onLogout={ onLogout } onLogoutSuccess={ onLogoutSuccess }/>;
     } else {
       header = <HeaderAnonymous />;

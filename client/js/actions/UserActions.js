@@ -30,14 +30,19 @@ import request from '../utils/request';
 
 export function userCreate(data, onSuccess) {
   return (dispatch) => {
+    dispatch(doUserCreate());
     request(process.env.API_BASE_URL + 'users.json', {
       body: JSON.stringify(data),
       method: 'POST'
     })
       .then(json => dispatch(userCreateSuccess(json)))
-      .then(() => dispatch(login(email, password, onSuccess)))
+      .then(() => dispatch(login(data.email, data.password, onSuccess)))
       .catch((json) => dispatch(userCreateFailure(json)));
   };
+}
+
+export function doUserCreate() {
+  return {type: USER_CREATE};
 }
 
 export function userCreateSuccess(user) {
@@ -50,11 +55,16 @@ export function userCreateFailure(errors) {
 
 export function userGet(id, onSuccess) {
   return (dispatch) => {
+    dispatch(doGetUser(id, onSuccess));
     request(process.env.API_BASE_URL + 'users/' + id + '.json')
       .then(json => dispatch(userGetSuccess(json)))
       .then(onSuccess)
       .catch(() => dispatch(userGetFailure(id)));
   };
+}
+
+export function doUserGet(user) {
+  return { type: USER_GET, user };
 }
 
 export function userGetSuccess(user) {
@@ -67,14 +77,24 @@ export function userGetFailure(id) {
 
 export function userGetCurrent(onSuccess) {
   return (dispatch) => {
+    dispatch(doUserGetCurrent(onSuccess));
     request(process.env.API_BASE_URL + 'users/current.json')
-      .then(json => dispatch(userGetCurrentSuccess(json)))
-      .then(onSuccess)
+      .then(user => {
+        dispatch((user && user.id) ? userGetCurrentSuccess(user, onSuccess) : userGetCurrentFailure());
+      })
       .catch(() => dispatch(userGetCurrentFailure()));
   };
 }
 
-export function userGetCurrentSuccess(user) {
+export function doUserGetCurrent(onSuccess) {
+  return { type: USER_GET_CURRENT, onSuccess };
+}
+
+export function userGetCurrentSuccess(user, onSuccess) {
+  if (onSuccess) {
+    onSuccess();
+  };
+
   return { type: USER_GET_CURRENT_SUCCESS, user };
 }
 
@@ -84,11 +104,16 @@ export function userGetCurrentFailure() {
 
 export function userList(onSuccess) {
   return (dispatch) => {
+    dispatch(doUserList(onSuccess));
     request(process.env.API_BASE_URL + 'users.json')
       .then(json => dispatch(userListSuccess(json)))
       .then(onSuccess)
       .catch(() => dispatch(userListFailure()));
   };
+}
+
+export function doUserList(onSuccess) {
+  return { type: USER_LIST, onSuccess };
 }
 
 export function userListSuccess(users) {
@@ -101,6 +126,7 @@ export function userListFailure() {
 
 export function userUpdate(id, data, onSuccess) {
   return (dispatch) => {
+    dispatch(doUserUpdate(id, data, onSuccess));
     request(process.env.API_BASE_URL + 'users/' + id + '.json', {
       body: JSON.stringify(data),
       method: 'PUT'
@@ -109,6 +135,10 @@ export function userUpdate(id, data, onSuccess) {
       .then(onSuccess)
       .catch((json) => dispatch(userUpdateFailure(json)));
   };
+}
+
+export function doUserUpdate(id, data, onSuccess) {
+  return { type: USER_UPDATE, id, data, onSuccess };
 }
 
 export function userUpdateSuccess(user) {
@@ -121,6 +151,7 @@ export function userUpdateFailure(errors) {
 
 export function userDelete(id, onSuccess) {
   return (dispatch) => {
+    dispatch(doUserDelete(id, onSuccess));
     request(process.env.API_BASE_URL + 'users/' + id + '.json', {
       method: 'DELETE'
     })
@@ -128,6 +159,10 @@ export function userDelete(id, onSuccess) {
       .then(onSuccess)
       .catch(() => dispatch(userDeleteFailure(id)));
   };
+}
+
+export function doUserDelete(id, onSuccess) {
+  return { type: USER_DELETE, id, onSuccess };
 }
 
 export function userDeleteSuccess(id) {

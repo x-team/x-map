@@ -13,10 +13,10 @@ class RegistrationForm extends Component {
   onSubmit(e) {
     e.preventDefault();
     const { onSubmit, onSuccess } = this.props;
-    onSubmit(this.state.email, this.state.password, onSuccess);
+    onSubmit(this.state, onSuccess);
   }
 
-  onStateChange(field, e) {
+  onInputChange(field, e) {
     let change = {};
     change[field] = e.target.value;
 
@@ -34,8 +34,8 @@ class RegistrationForm extends Component {
             <h2>Register</h2>
             <ErrorList errors={ errors } showFieldErrors={ true } />
             <form onSubmit={ this.onSubmit.bind(this) }>
-              <input type="email" placeholder="Email" onChange={ this.onStateChange.bind(this, 'email') } />
-              <input type="password" placeholder="Password" onChange={ this.onStateChange.bind(this, 'password') } />
+              <input type="email" placeholder="Email" onChange={ this.onInputChange.bind(this, 'email') } />
+              <input type="password" placeholder="Password" onChange={ this.onInputChange.bind(this, 'password') } />
               <button className="button" type="submit">Register</button>
             </form>
           </section>

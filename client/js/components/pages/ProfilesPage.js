@@ -50,20 +50,12 @@ class ProfilesPage extends Component {
 }
 
 ProfilesPage.propTypes = {
-  users: PropTypes.object.isRequired,
-  params: PropTypes.shape({
-    id: PropTypes.string
-  }).isRequired,
-  history: PropTypes.object.isRequired,
-  currentUser: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired
+  users: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    users: state.users,
-    currentUser: state.currentUser
+    users: state.users
   };
 }
 
