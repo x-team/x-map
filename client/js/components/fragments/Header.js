@@ -8,11 +8,11 @@ import 'file?name=[name].[ext]!../../../img/logo.png';
 
 class Header extends Component {
   render() {
-    const { user, onLogout, onLogoutSuccess } = this.props;
+    const { user, onLogout } = this.props;
 
     let header;
     if (user && user.id) {
-      header = <HeaderAuthenticated user={ user } onLogout={ onLogout } onLogoutSuccess={ onLogoutSuccess }/>;
+      header = <HeaderAuthenticated user={user} onLogout={onLogout}/>;
     } else {
       header = <HeaderAnonymous />;
     }
@@ -20,10 +20,10 @@ class Header extends Component {
     return (
       <header id="header">
         <Link id="logo" to="/">
-          <img className="logo" src={ Logo } alt="X-Map brand"/>
+          <img className="logo" src={Logo} alt="X-Map brand"/>
         </Link>
         <h1>X-Map</h1>
-        { header }
+        {header}
       </header>
     );
   }
@@ -31,8 +31,7 @@ class Header extends Component {
 
 Header.propTypes = {
   user: PropTypes.object,
-  onLogout: PropTypes.func.isRequired,
-  onLogoutSuccess: PropTypes.func
-}
+  onLogout: PropTypes.func.isRequired
+};
 
 export default Header;

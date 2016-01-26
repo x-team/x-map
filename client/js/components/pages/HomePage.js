@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 class HomePage extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = { visibility: false };
   }
 
-  hidePanel () {
+  hidePanel() {
     this.setState({ visibility: true });
   }
 
   render() {
-    let visibility = this.state.visibility ? 'hidden' : '';
+    const visibility = this.state.visibility ? 'hidden' : '';
     return (
-      <div className={ 'panel homepage ' + visibility }>
+      <div className={'panel homepage ' + visibility}>
         <article>
           <section>
             <h2>Welcome to X-Map</h2>
             <p>Please <Link to="/login">Log in</Link> or <Link to="/register">Register</Link> to proceed.</p>
             <p>An <a href="https://github.com/x-team/x-map/" target="_blank">open source</a> project at <a href="http://x-team.com/community/" target="_blank">X-Team</a></p>
-            <button className="button" onClick={ this.hidePanel.bind(this) }>Click to hide panel.</button>
+            <button className="button" onClick={this.hidePanel.bind(this)}>Click to hide panel.</button>
           </section>
         </article>
 

@@ -14,7 +14,7 @@ class LoginPage extends Component {
 
     return (
       <div className="panel">
-        <LoginForm onSubmit={ actions.login } onSuccess={ this.redirectToHomePage.bind(this) } errors={ errors } />
+        <LoginForm onSubmit={actions.login} onSuccess={this.redirectToHomePage.bind(this)} errors={errors} />
       </div>
     );
   }
@@ -22,7 +22,8 @@ class LoginPage extends Component {
 
 LoginPage.propTypes = {
   actions: PropTypes.object,
-  errors: PropTypes.object
+  errors: PropTypes.object,
+  history: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

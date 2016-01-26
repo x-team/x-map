@@ -1,18 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as AppActions from '../../actions/AppActions';
-import LoginForm from '../forms/LoginForm';
 import { Link } from 'react-router';
 
 class ProfilesPage extends Component {
   render() {
-
     const { users } = this.props;
 
-    let profiles = [];
-
-    for(let id in users) {
+    const profiles = [];
+    for (const id in users) {
       profiles.push(
         <tr key={id}>
           <td>{users[id].email}</td>
@@ -22,15 +17,19 @@ class ProfilesPage extends Component {
       );
     }
 
+    if (!profiles.length) {
+      return <span/>;
+    }
+
     return (
       <div className="panel">
         <article id="userProfiles">
           <header>
-            <h2>Profiles</h2>
+            <h2>Users</h2>
           </header>
 
           <section>
-            <table className="col-md-12">
+            <table>
               <thead>
                 <tr>
                   <th>Email</th>

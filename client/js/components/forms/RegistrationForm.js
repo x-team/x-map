@@ -3,11 +3,11 @@ import ErrorList from '../forms/ErrorList';
 
 class RegistrationForm extends Component {
   constructor(props, context) {
-    super(props, context)
+    super(props, context);
     this.state = {
       email: '',
       password: ''
-    }
+    };
   }
 
   onSubmit(e) {
@@ -17,14 +17,10 @@ class RegistrationForm extends Component {
   }
 
   onInputChange(field, e) {
-    let change = {};
-    change[field] = e.target.value;
-
-    this.setState(change);
+    this.setState({[field]: e.target.value});
   }
 
   render() {
-
     const { errors } = this.props;
 
     return (
@@ -32,10 +28,10 @@ class RegistrationForm extends Component {
         <article>
           <section>
             <h2>Register</h2>
-            <ErrorList errors={ errors } showFieldErrors={ true } />
-            <form onSubmit={ this.onSubmit.bind(this) }>
-              <input type="email" placeholder="Email" onChange={ this.onInputChange.bind(this, 'email') } />
-              <input type="password" placeholder="Password" onChange={ this.onInputChange.bind(this, 'password') } />
+            <ErrorList errors={errors} showFieldErrors/>
+            <form onSubmit={this.onSubmit.bind(this)}>
+              <input type="email" placeholder="Email" onChange={this.onInputChange.bind(this, 'email')} required/>
+              <input type="password" placeholder="Password" onChange={this.onInputChange.bind(this, 'password')} required/>
               <button className="button" type="submit">Register</button>
             </form>
           </section>

@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 import {
   APP_ROUTE_CHANGED,
   APP_LOGIN,
@@ -6,7 +8,11 @@ import {
   USER_CREATE,
   USER_CREATE_FAILURE,
   USER_UPDATE,
-  USER_UPDATE_FAILURE
+  USER_UPDATE_FAILURE,
+  TEAM_CREATE,
+  TEAM_CREATE_FAILURE,
+  TEAM_UPDATE,
+  TEAM_UPDATE_FAILURE
 } from '../constants/AppConstants';
 import assignToEmpty from '../utils/assign';
 
@@ -41,6 +47,22 @@ function errorsReducer(errors = {}, action) {
       return assignToEmpty(errors, {
         userUpdate: parseErrors(action.errors)
       });
+    case TEAM_CREATE:
+      return assignToEmpty(errors, {
+        teamCreate: {}
+      });
+    case TEAM_CREATE_FAILURE:
+      return assignToEmpty(errors, {
+        teamCreate: parseErrors(action.errors)
+      });
+    case TEAM_UPDATE:
+      return assignToEmpty(errors, {
+        teamUpdate: {}
+      });
+    case TEAM_UPDATE_FAILURE:
+      return assignToEmpty(errors, {
+        teamUpdate: parseErrors(action.errors)
+      });
     case APP_LOGOUT_SUCCESS:
       return {};
     default:
@@ -49,7 +71,7 @@ function errorsReducer(errors = {}, action) {
 }
 
 function parseErrors(errors) {
-  let parsedErrors = {};
+  const parsedErrors = {};
 
   if (errors && errors.errors) {
     if (errors.errors.errors && errors.errors.errors.length) {
@@ -59,7 +81,7 @@ function parseErrors(errors) {
     if (errors.errors.children) {
       parsedErrors.fieldErrors = {};
       const children = errors.errors.children;
-      for (var field in children) {
+      for (const field in children) {
         if (children[field].errors && children[field].errors.length) {
           parsedErrors.fieldErrors[field] = children[field].errors;
         }

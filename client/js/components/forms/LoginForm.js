@@ -17,14 +17,10 @@ class LoginForm extends Component {
   }
 
   onInputChange(field, e) {
-    let change = {};
-    change[field] = e.target.value;
-
-    this.setState(change);
+    this.setState({[field]: e.target.value});
   }
 
   render() {
-
     const { errors } = this.props;
 
     return (
@@ -32,10 +28,10 @@ class LoginForm extends Component {
         <article>
           <section>
             <h2>Login</h2>
-            <ErrorList errors={ errors } showFieldErrors={ true } />
+            <ErrorList errors={errors} showFieldErrors/>
             <form onSubmit={ this.onSubmit.bind(this) }>
-              <input type="email" placeholder="Email" onChange={ this.onInputChange.bind(this, 'email') } />
-              <input type="password" placeholder="Password" onChange={ this.onInputChange.bind(this, 'password') } />
+              <input type="email" placeholder="Email" onChange={this.onInputChange.bind(this, 'email')} required/>
+              <input type="password" placeholder="Password" onChange={this.onInputChange.bind(this, 'password')} required/>
               <button className="button" type="submit">Login</button>
             </form>
           </section>

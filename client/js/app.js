@@ -13,6 +13,10 @@ import NotFoundPage from './components/pages/NotFound';
 import ProfilesPage from './components/pages/ProfilesPage';
 import ProfilePage from './components/pages/ProfilePage';
 import ProfileEditPage from './components/pages/ProfileEditPage';
+import TeamsPage from './components/pages/TeamsPage';
+import TeamPage from './components/pages/TeamPage';
+import TeamEditPage from './components/pages/TeamEditPage';
+import TeamAddPage from './components/pages/TeamAddPage';
 import App from './components/App';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
@@ -30,8 +34,12 @@ ReactDOM.render(
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegistrationPage} />
         <Route path="/profiles" component={ProfilesPage} />
-        <Route path="/profile/:id/edit" component={ProfileEditPage} />
         <Route path="/profile/:id" component={ProfilePage} />
+        <Route path="/profile/:id/edit" component={ProfileEditPage} />
+        <Route path="/teams" component={TeamsPage} />
+        <Route path="/team/new" component={TeamAddPage} />
+        <Route path="/team/:id" component={TeamPage} />
+        <Route path="/team/:id/edit" component={TeamEditPage} />
         <Route path="*" component={NotFoundPage} />
       </Route>
     </Router>

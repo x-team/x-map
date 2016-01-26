@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import GoogleMapsLoader from 'google-maps';
 
 class Map extends Component {
-  constructor () {
-    super();
-    this.map;
-  }
-
-  componentDidMount () {
+  componentDidMount() {
     // https://developers.google.com/maps/documentation/javascript/reference
     // https://developers.google.com/maps/documentation/javascript/libraries
     // https://developers.google.com/maps/documentation/javascript/controls
@@ -41,7 +36,7 @@ class Map extends Component {
 
       this.map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
 
-      var drawingManager = new google.maps.drawing.DrawingManager({
+      const drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
         drawingControlOptions: {
           position: google.maps.ControlPosition.BOTTOM_CENTER,
