@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 
 class HeaderAnonymous extends Component {
   render() {
-    const { user } = this.props;
     return (
       <div>
         <nav className="navigation">

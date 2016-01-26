@@ -16,7 +16,7 @@ class LoginForm extends Component {
     onSubmit(this.state.email, this.state.password, onSuccess);
   }
 
-  onStateChange(field, e) {
+  onInputChange(field, e) {
     let change = {};
     change[field] = e.target.value;
 
@@ -34,8 +34,8 @@ class LoginForm extends Component {
             <h2>Login</h2>
             <ErrorList errors={ errors } showFieldErrors={ true } />
             <form onSubmit={ this.onSubmit.bind(this) }>
-              <input type="email" placeholder="Email" onChange={ this.onStateChange.bind(this, 'email') } />
-              <input type="password" placeholder="Password" onChange={ this.onStateChange.bind(this, 'password') } />
+              <input type="email" placeholder="Email" onChange={ this.onInputChange.bind(this, 'email') } />
+              <input type="password" placeholder="Password" onChange={ this.onInputChange.bind(this, 'password') } />
               <button className="button" type="submit">Login</button>
             </form>
           </section>

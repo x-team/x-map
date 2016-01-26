@@ -7,18 +7,17 @@ import { Link } from 'react-router';
 
 class ProfilePage extends Component {
   render() {
-    const { users, history, params, currentUser } = this.props;
+    const { users, history, params, currentUserId } = this.props;
 
-    let user;
-    if (!params.id || !users[params.id]) {
-      history.pushState(null, '/404')
-    } else {
-      user = users[params.id];
+    if (!users[params.id]) {
+      history.pushState(null, '/404');
     }
+
+    const user = users[params.id];
 
     let editLink = <span/>;
 
-    if (user.id === currentUser.id) {
+    if (user.id === currentUserId) {
       editLink =
         <div className="row">
           <Link className="btn btn-success col-md-4 col-md-push-4" to={`/profile/${user.id}/edit`}>Edit profile</Link>
@@ -85,15 +84,13 @@ ProfilePage.propTypes = {
     id: PropTypes.string.isRequired
   }).isRequired,
   history: PropTypes.object.isRequired,
-  currentUser: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired
+  currentUserId: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
     users: state.users,
-    currentUser: state.currentUser
+    currentUserId: state.session.currentUserId
   };
 }
 

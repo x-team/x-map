@@ -12,6 +12,10 @@ import {
   APP_LOGOUT_FAILURE
 } from '../constants/AppConstants';
 
+import {
+  userList
+} from './UserActions';
+
 import request from '../utils/request';
 
 export function routeChanged() {
@@ -20,6 +24,7 @@ export function routeChanged() {
 
 export function login(email, password, onSuccess) {
   return (dispatch) => {
+    dispatch(doLogin(email, password));
     request(process.env.API_BASE_URL + 'logins.json', {
       body: JSON.stringify({email, password}),
       method: 'POST'
@@ -30,8 +35,15 @@ export function login(email, password, onSuccess) {
   };
 }
 
+export function doLogin(email, password) {
+  return {type: APP_LOGIN, email, password};
+}
+
 export function loginSuccess(user) {
-  return {type: APP_LOGIN_SUCCESS, user};
+  return (dispatch) => {
+    dispatch(userList());
+    dispatch({type: APP_LOGIN_SUCCESS, user});
+  }
 }
 
 export function loginFailure(errors) {
@@ -39,8 +51,8 @@ export function loginFailure(errors) {
 }
 
 export function logout(onSuccess) {
-  console.log(onSuccess);
   return (dispatch) => {
+    dispatch(doLogout());
     request(process.env.API_BASE_URL + 'logouts.json', {
       method: 'POST'
     })
@@ -48,6 +60,10 @@ export function logout(onSuccess) {
       .then(onSuccess)
       .catch(() => dispatch(logoutFailure()));
   };
+}
+
+export function doLogout() {
+  return {type: APP_LOGOUT};
 }
 
 export function logoutSuccess() {

@@ -5,6 +5,7 @@ import * as AppActions from '../actions/AppActions';
 import * as UserActions from '../actions/UserActions';
 import assignToEmpty from '../utils/assign';
 import Header from './fragments/Header';
+import HeaderLoading from './fragments/HeaderLoading';
 import Map from './fragments/Map';
 
 class App extends Component {
@@ -14,37 +15,59 @@ class App extends Component {
   }
 
   redirectToHomePage() {
-    const { actions } = this.props;
-    actions.userList();
-    this.props.history.pushState(null, '/');
+    this.props.history.push('/');
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { actions } = this.props;
-    actions.userGetCurrent(this.redirectToHomePage.bind(this));
+    actions.userGetCurrent(() => actions.userList());
   }
 
   render() {
-    const { currentUser, actions } = this.props;
+    const { currentUserId, currentUserLoaded, usersLoaded, users, actions } = this.props;
 
-    return (
-      <section>
-        <Header user={ currentUser } onLogout={ actions.logout } onLogoutSuccess={ this.redirectToHomePage.bind(this) } />
-        { this.props.children }
-        <Map />
-      </section>
-    );
+    let app;
+    if (currentUserLoaded && (!currentUserId || usersLoaded)) {
+      app =
+        <section>
+          <Header user={users[currentUserId]}
+                  onLogout={actions.logout}
+                  onLogoutSuccess={this.redirectToHomePage.bind(this)}
+          />
+          { this.props.children }
+          <Map />
+        </section>;
+    } else {
+      app =
+        <section>
+          <HeaderLoading/>
+          <Map />
+        </section>;
+    }
+
+    return app;
   }
 }
 
 App.propTypes = {
-  currentUser: PropTypes.object,
-  actions: PropTypes.object
+  currentUserId: PropTypes.string,
+  currentUserLoaded: PropTypes.bool,
+  usersLoaded: PropTypes.bool,
+  actions: PropTypes.object,
+  users: PropTypes.object
+};
+
+App.defaultProps = {
+  currentUserLoaded: false,
+  usersLoaded: false
 };
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    currentUserId: state.session.currentUserId,
+    currentUserLoaded: state.session.currentUserLoaded,
+    usersLoaded: state.session.usersLoaded,
+    users: state.users
   };
 }
 
