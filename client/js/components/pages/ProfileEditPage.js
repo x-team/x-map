@@ -24,10 +24,12 @@ class ProfileEditPage extends Component {
     }
 
     return (
-      <div className="row">
-        <div className="col-md-8 col-md-push-2">
-          <ProfileForm user={user} onSubmit={actions.userUpdate} onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
-        </div>
+      <div className="panel">
+        <article>
+          <section>
+            <ProfileForm user={user} onSubmit={actions.userUpdate} onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
+          </section>
+        </article>
       </div>
     );
   }

@@ -22,8 +22,8 @@ class ErrorList extends Component {
     }
 
     return (
-      <div className="errors col-md-12">
-        {errorList}
+      <div className="alert error">
+        { errorList }
       </div>
     );
   }

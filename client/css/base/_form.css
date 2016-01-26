@@ -1,0 +1,174 @@
+/**
+ * Forms
+Developer's notes, will be removed.
+Form tags:
+- <input>
+- <textarea>
+- <button>
+- <select>
+- <option>
+- <optgroup>
+- <fieldset>
+- <label>
+Input types:
+- button
+- checkbox
+- color
+- date
+- datetime
+- datetime-local
+- email
+- file
+- hidden
+- image
+- month
+- number
+- password
+- radio
+- range
+- reset
+- search
+- submit
+- tel
+- text
+- time
+- url
+- week
+ */
+
+form {
+  width: 100%;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: $dark-grey;
+}
+
+.button,
+a.button,
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  color: $dark-grey;
+  background-color: #fff;
+  padding: 0.5rem;
+  text-decoration: none;
+  border: none;
+  border-radius: 1px;
+  width: 100%;
+  text-shadow: none;
+}
+
+.button:hover,
+a.button:hover,
+button:hover,
+html input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+  color: $light-brand-color;
+  background-color: $light-grey;
+}
+
+.button:focus,
+a.button:focus,
+button:focus,
+html input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus {
+  color: #fff;
+  background-color: $mid-grey;
+}
+
+button[disabled],
+html input[disabled] {
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  width: 100%;
+  border: none;
+  padding: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-bottom: 3px solid $mid-grey;
+  margin-bottom: 1rem;
+  color: $light-brand-color;
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+textarea:hover {
+  border-bottom: 3px solid $light-grey;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  border-bottom: 3px solid $light-brand-color;
+  outline: none;
+}
+
+::-webkit-input-placeholder,
+:-moz-placeholder,
+::-moz-placeholder,
+:placeholder-shown {
+  color: #222;
+  text-shadow: none;
+}
+:-moz-placeholder {
+  opacity: 1;
+}
+::-moz-placeholder {
+  opacity: 1;
+}
+
+input:placeholder-shown {
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline-block;
+}
+
+input[type="number"] {
+}
+
+input[type="search"] {
+}
+
+fieldset {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+legend {
+}
+
+textarea {
+  min-height: 150px;
+}
+
+optgroup {
+}
+
+label {
+  cursor: pointer;
+  width: 100%;
+  display: block;
+}
+
+fieldset label {
+  margin-top: 0.7rem;
+}
+
+select {
+  width: 100%;
+}
