@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Document;
+<?php
+
+namespace MapBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
@@ -8,8 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @MongoDB\Document
  * @MongoDBUnique(fields="key")
  */
-class Content {
-
+class Content
+{
     /**
      * @MongoDB\Id
      */
@@ -36,7 +38,7 @@ class Content {
     protected $content;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id $id
      */
@@ -46,19 +48,21 @@ class Content {
     }
 
     /**
-     * Set key
+     * Set key.
      *
      * @param string $key
+     *
      * @return self
      */
     public function setKey($key)
     {
         $this->key = $key;
+
         return $this;
     }
 
     /**
-     * Get key
+     * Get key.
      *
      * @return string $key
      */
@@ -68,19 +72,21 @@ class Content {
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return self
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string $title
      */
@@ -90,19 +96,21 @@ class Content {
     }
 
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return self
      */
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 
     /**
-     * Get content
+     * Get content.
      *
      * @return string $content
      */

@@ -1,10 +1,11 @@
-<?php namespace MapBundle\Controller;
+<?php
+
+namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\User;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpNotFoundException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -58,7 +59,7 @@ class AuthController extends FOSRestController
 
         $user = $this->repository->findOneByEmail($email);
 
-        if(!$user instanceof User || !$this->checkUserPassword($user, $password)){
+        if (!$user instanceof User || !$this->checkUserPassword($user, $password)) {
             $this->logoutUser();
 
             return $this->handleView($this->view($errors, 400));
@@ -107,9 +108,10 @@ class AuthController extends FOSRestController
     {
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
-        if(!$encoder){
+        if (!$encoder) {
             return false;
         }
+
         return $encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt());
     }
 }

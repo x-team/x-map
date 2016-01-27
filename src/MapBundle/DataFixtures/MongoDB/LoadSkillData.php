@@ -1,4 +1,6 @@
-<?php namespace MapBundle\DataFixtures;
+<?php
+
+namespace MapBundle\DataFixtures;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -9,10 +11,10 @@ class LoadSkillData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $skill1 = new Skill;
+        $skill1 = new Skill();
         $skill1->setName('skill1');
 
-        $skill2 = new Skill;
+        $skill2 = new Skill();
         $skill2->setName('skill2');
 
         $manager->persist($skill1);

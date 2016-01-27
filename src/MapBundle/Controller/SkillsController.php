@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Controller;
+<?php
+
+namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -35,7 +37,7 @@ class SkillsController extends FOSRestController
      */
     public function getSkillAction($id)
     {
-        $this->denyAccessUnlessGranted('view', new Skill);
+        $this->denyAccessUnlessGranted('view', new Skill());
 
         $skill = $this->repository->find($id);
 
@@ -58,7 +60,7 @@ class SkillsController extends FOSRestController
      */
     public function getSkillsAction()
     {
-        $this->denyAccessUnlessGranted('view', new Skill);
+        $this->denyAccessUnlessGranted('view', new Skill());
 
         $skills = $this->repository->findAll();
 
@@ -80,11 +82,11 @@ class SkillsController extends FOSRestController
      */
     public function postSkillAction(Request $request)
     {
-        $skill = new Skill;
+        $skill = new Skill();
 
         $this->denyAccessUnlessGranted('create', $skill);
 
-        $form = $this->createForm(new SkillType, $skill);
+        $form = $this->createForm(new SkillType(), $skill);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -111,7 +113,7 @@ class SkillsController extends FOSRestController
      */
     public function putSkillAction(Request $request, $id)
     {
-        $this->denyAccessUnlessGranted('edit', new Skill);
+        $this->denyAccessUnlessGranted('edit', new Skill());
 
         $skill = $this->repository->find($id);
 
@@ -119,7 +121,7 @@ class SkillsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new SkillType, $skill, array('method' => 'PUT'));
+        $form = $this->createForm(new SkillType(), $skill, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -143,7 +145,7 @@ class SkillsController extends FOSRestController
      */
     public function deleteSkillAction($id)
     {
-        $this->denyAccessUnlessGranted('delete', new Skill);
+        $this->denyAccessUnlessGranted('delete', new Skill());
 
         $skill = $this->repository->find($id);
 

@@ -7,7 +7,7 @@ class TeamsCest
     protected $admin = [
         'password' => 'testtest1',
         'email' => 'bob1@test.pl',
-        'isAdmin' => true
+        'isAdmin' => true,
     ];
 
     protected $user = [
@@ -34,16 +34,17 @@ class TeamsCest
         'description' => 'description3',
     ];
 
-    public function _before(FunctionalTester $I) {
-        $this->team1Id = (string)$I->haveInCollection('Team', $this->team1);
-        $this->team2Id = (string)$I->haveInCollection('Team', $this->team2);
+    public function _before(FunctionalTester $I)
+    {
+        $this->team1Id = (string) $I->haveInCollection('Team', $this->team1);
+        $this->team2Id = (string) $I->haveInCollection('Team', $this->team2);
 
         unset($this->team1['_id']);
         unset($this->team2['_id']);
 
         $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User, $this->user['password'])]));
-        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User, $this->admin['password'])]));
+        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User(), $this->user['password'])]));
+        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User(), $this->admin['password'])]));
     }
 
     public function tryToReadTeam(FunctionalTester $I)
@@ -58,11 +59,11 @@ class TeamsCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson([$this->team1, $this->team2]);
 
-        $I->sendGET('api/teams/' . $this->team1Id . '.json');
+        $I->sendGET('api/teams/'.$this->team1Id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team1);
 
-        $I->sendGET('api/teams/' . uniqid() . '.json');
+        $I->sendGET('api/teams/'.uniqid().'.json');
         $I->seeResponseCodeIs(404);
     }
 
@@ -73,10 +74,10 @@ class TeamsCest
         $I->sendPOST('api/teams.json', $this->team3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('api/teams/' .  $this->team2Id . '.json');
+        $I->sendPUT('api/teams/'.$this->team2Id.'.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('api/teams/' .  $this->team2Id . '.json');
+        $I->sendDELETE('api/teams/'.$this->team2Id.'.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_USER');
@@ -86,10 +87,10 @@ class TeamsCest
         $I->sendPOST('api/teams.json', $this->team3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('api/teams/' .  $this->team2Id . '.json');
+        $I->sendPUT('api/teams/'.$this->team2Id.'.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('api/teams/' .  $this->team2Id . '.json');
+        $I->sendDELETE('api/teams/'.$this->team2Id.'.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_ADMIN');
@@ -101,28 +102,28 @@ class TeamsCest
 
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendGET('api/teams/' . $id . '.json');
+        $I->sendGET('api/teams/'.$id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
-        $I->sendGET('api/teams/' . $id . '.json');
+        $I->sendGET('api/teams/'.$id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
         $this->team3['name'] = 'new name';
-        
-        $I->sendPUT('api/teams/' . $id . '.json', $this->team3);
+
+        $I->sendPUT('api/teams/'.$id.'.json', $this->team3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
-        $I->sendGET('api/teams/' . $id . '.json');
+        $I->sendGET('api/teams/'.$id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->team3);
 
-        $I->sendDELETE('api/teams/' . $id . '.json');
+        $I->sendDELETE('api/teams/'.$id.'.json');
         $I->seeResponseCodeIs(204);
 
-        $I->sendGET('api/teams/' . $id . '.json');
+        $I->sendGET('api/teams/'.$id.'.json');
         $I->seeResponseCodeIs(404);
     }
 }

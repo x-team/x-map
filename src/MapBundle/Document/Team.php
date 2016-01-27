@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Document;
+<?php
+
+namespace MapBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -37,7 +39,7 @@ class Team
     protected $users;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id $id
      */
@@ -47,19 +49,21 @@ class Team
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string $name
      */
@@ -69,19 +73,21 @@ class Team
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return self
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string $description
      */
@@ -91,19 +97,21 @@ class Team
     }
 
     /**
-     * Set users
+     * Set users.
      *
      * @param collection $users
+     *
      * @return self
      */
     public function setUsers($users)
     {
         $this->users = $users;
+
         return $this;
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return collection $users
      */
@@ -116,9 +124,9 @@ class Team
     {
         $this->users = new ArrayCollection();
     }
-    
+
     /**
-     * Add user
+     * Add user.
      *
      * @param User $user
      */
@@ -128,7 +136,7 @@ class Team
     }
 
     /**
-     * Remove user
+     * Remove user.
      *
      * @param User $user
      */
@@ -140,7 +148,8 @@ class Team
     /**
      * @MongoDB\PreRemove
      */
-    public function unlinkFromRelatedDocuments() {
+    public function unlinkFromRelatedDocuments()
+    {
         foreach ($this->getUsers() as $user) {
             $user->removeTeam($this);
         }

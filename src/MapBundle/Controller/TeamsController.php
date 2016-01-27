@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Controller;
+<?php
+
+namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -35,7 +37,7 @@ class TeamsController extends FOSRestController
      */
     public function getTeamAction($id)
     {
-        $this->denyAccessUnlessGranted('view', new Team);
+        $this->denyAccessUnlessGranted('view', new Team());
 
         $team = $this->repository->find($id);
 
@@ -58,7 +60,7 @@ class TeamsController extends FOSRestController
      */
     public function getTeamsAction()
     {
-        $this->denyAccessUnlessGranted('view', new Team);
+        $this->denyAccessUnlessGranted('view', new Team());
 
         $teams = $this->repository->findAll();
 
@@ -80,11 +82,11 @@ class TeamsController extends FOSRestController
      */
     public function postTeamAction(Request $request)
     {
-        $team = new Team;
+        $team = new Team();
 
         $this->denyAccessUnlessGranted('create', $team);
 
-        $form = $this->createForm(new TeamType, $team);
+        $form = $this->createForm(new TeamType(), $team);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -111,7 +113,7 @@ class TeamsController extends FOSRestController
      */
     public function putTeamAction(Request $request, $id)
     {
-        $this->denyAccessUnlessGranted('edit', new Team);
+        $this->denyAccessUnlessGranted('edit', new Team());
 
         $team = $this->repository->find($id);
 
@@ -119,7 +121,7 @@ class TeamsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new TeamType, $team, array('method' => 'PUT'));
+        $form = $this->createForm(new TeamType(), $team, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -143,7 +145,7 @@ class TeamsController extends FOSRestController
      */
     public function deleteTeamAction($id)
     {
-        $this->denyAccessUnlessGranted('delete', new Team);
+        $this->denyAccessUnlessGranted('delete', new Team());
 
         $team = $this->repository->find($id);
 

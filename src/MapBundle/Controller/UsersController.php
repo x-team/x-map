@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Controller;
+<?php
+
+namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -37,7 +39,7 @@ class UsersController extends FOSRestController
      */
     public function getUsersAction()
     {
-        $this->denyAccessUnlessGranted('view', new User);
+        $this->denyAccessUnlessGranted('view', new User());
 
         $users = $this->repository->findAll();
         $view = $this->view($users);
@@ -58,11 +60,11 @@ class UsersController extends FOSRestController
      */
     public function postUserAction(Request $request)
     {
-        $user = new User;
+        $user = new User();
 
         $this->denyAccessUnlessGranted('create', $user);
 
-        $form = $this->createForm(new RegisterUserType, $user);
+        $form = $this->createForm(new RegisterUserType(), $user);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -99,7 +101,7 @@ class UsersController extends FOSRestController
 
         $this->denyAccessUnlessGranted('edit', $user);
 
-        $form = $this->createForm(new UserType, $user, array('method' => 'PUT'));
+        $form = $this->createForm(new UserType(), $user, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -132,7 +134,7 @@ class UsersController extends FOSRestController
 
         $this->denyAccessUnlessGranted('edit_password', $user);
 
-        $form = $this->createForm(new PasswordType, $user, array('method' => 'PUT'));
+        $form = $this->createForm(new PasswordType(), $user, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -166,7 +168,7 @@ class UsersController extends FOSRestController
             return $this->handleView($view);
         }
 
-        $this->denyAccessUnlessGranted('view', new User);
+        $this->denyAccessUnlessGranted('view', new User());
 
         $user = $this->repository->find($id);
 
@@ -234,7 +236,7 @@ class UsersController extends FOSRestController
 
     protected function updateAdmin($userId, $isAdmin)
     {
-        $this->denyAccessUnlessGranted('edit_admin', new User);
+        $this->denyAccessUnlessGranted('edit_admin', new User());
 
         $user = $this->repository->find($userId);
 

@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Validator\Constraints;
+<?php
+
+namespace MapBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraints\AbstractComparison;
 use Symfony\Component\Validator\Exception\MissingOptionsException;

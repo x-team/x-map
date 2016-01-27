@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Security\Authorization\Voter;
+<?php
+
+namespace MapBundle\Security\Authorization\Voter;
 
 use InvalidArgumentException;
 use MapBundle\Document\Content;

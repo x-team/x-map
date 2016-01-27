@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Controller;
+<?php
+
+namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -35,7 +37,7 @@ class ContentsController extends FOSRestController
      */
     public function getContentAction($idOrKey)
     {
-        $this->denyAccessUnlessGranted('view', new Content);
+        $this->denyAccessUnlessGranted('view', new Content());
 
         $content = $this->repository->find($idOrKey) ?: $this->repository->findByKey($idOrKey);
 
@@ -58,7 +60,7 @@ class ContentsController extends FOSRestController
      */
     public function getContentsAction()
     {
-        $this->denyAccessUnlessGranted('view', new Content);
+        $this->denyAccessUnlessGranted('view', new Content());
 
         $contents = $this->repository->findAll();
 
@@ -80,10 +82,10 @@ class ContentsController extends FOSRestController
      */
     public function postContentAction(Request $request)
     {
-        $content = new Content;
+        $content = new Content();
         $this->denyAccessUnlessGranted('create', $content);
 
-        $form = $this->createForm(new ContentType, $content);
+        $form = $this->createForm(new ContentType(), $content);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -110,7 +112,7 @@ class ContentsController extends FOSRestController
      */
     public function putContentAction(Request $request, $id)
     {
-        $this->denyAccessUnlessGranted('edit', new Content);
+        $this->denyAccessUnlessGranted('edit', new Content());
 
         $content = $this->repository->find($id);
 
@@ -118,7 +120,7 @@ class ContentsController extends FOSRestController
             throw $this->createNotFoundException();
         }
 
-        $form = $this->createForm(new ContentType, $content, array('method' => 'PUT'));
+        $form = $this->createForm(new ContentType(), $content, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -142,7 +144,7 @@ class ContentsController extends FOSRestController
      */
     public function deleteContentAction($id)
     {
-        $this->denyAccessUnlessGranted('delete', new Content);
+        $this->denyAccessUnlessGranted('delete', new Content());
 
         $content = $this->repository->find($id);
 
