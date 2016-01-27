@@ -6,7 +6,8 @@ import RegistrationForm from '../forms/RegistrationForm';
 
 class RegistrationPage extends Component {
   redirectToHomePage() {
-    this.props.history.pushState(null, '/');
+    const { history } = this.props;
+    history.pushState(null, '/');
   }
 
   render() {
@@ -14,7 +15,7 @@ class RegistrationPage extends Component {
 
     return (
       <div className="panel">
-        <RegistrationForm onSubmit={ actions.userCreate } onSuccess={ this.redirectToHomePage.bind(this) } errors={ errors }/>
+        <RegistrationForm onSubmit={actions.userCreate} onSuccess={this.redirectToHomePage.bind(this)} errors={errors}/>
       </div>
     );
   }
@@ -22,7 +23,8 @@ class RegistrationPage extends Component {
 
 RegistrationPage.propTypes = {
   actions: PropTypes.object,
-  errors: PropTypes.object
+  errors: PropTypes.object,
+  history: PropTypes.object.isRequired
 };
 
 

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Button, Input } from 'react-bootstrap';
 import ErrorList from '../forms/ErrorList';
 
 class ProfileForm extends Component {
@@ -11,51 +10,47 @@ class ProfileForm extends Component {
   onSubmit(e) {
     e.preventDefault();
     const { onSubmit, onSuccess } = this.props;
-    onSubmit(this.state.id, this.state, onSuccess);
+    onSubmit(this.state, onSuccess);
   }
 
   onInputChange(field, e) {
-    let change = {};
-    change[field] = e.target.value;
-
-    this.setState(change);
+    this.setState({[field]: e.target.value});
   }
 
   render() {
-
     const { errors } = this.props;
 
     return (
       <div>
-        <ErrorList errors={errors} showFieldErrors={true}/>
+        <ErrorList errors={errors} showFieldErrors/>
         <h3>Edit profile #{this.state.id}</h3>
         <form id="profileEditForm" onSubmit={this.onSubmit.bind(this)}>
           <div className="row">
-            <Input type="email" placeholder="Email" value={this.state.email} addonBefore="@" onChange={this.onInputChange.bind(this, 'email')} required/>
+            <input type="email" placeholder="Email" value={this.state.email} onChange={this.onInputChange.bind(this, 'email')} required/>
           </div>
           <div className="row">
-            <Input type="text" placeholder="First name" value={this.state.firstName}  onChange={this.onInputChange.bind(this, 'firstName')} required/>
+            <input type="text" placeholder="First name" value={this.state.firstName} onChange={this.onInputChange.bind(this, 'firstName')} required/>
           </div>
           <div className="row">
-            <Input type="text" placeholder="Last name" value={this.state.lastName}  onChange={this.onInputChange.bind(this, 'lastName')} required/>
+            <input type="text" placeholder="Last name" value={this.state.lastName} onChange={this.onInputChange.bind(this, 'lastName')} required/>
           </div>
           <div className="row">
-            <Input type="text" placeholder="Skype ID" value={this.state.skypeId}  onChange={this.onInputChange.bind(this, 'skypeId')} required/>
+            <input type="text" placeholder="Skype ID" value={this.state.skypeId} onChange={this.onInputChange.bind(this, 'skypeId')}/>
           </div>
           <div className="row">
-            <Input type="text" placeholder="Slack ID" value={this.state.slackId}  onChange={this.onInputChange.bind(this, 'slackId')} required/>
+            <input type="text" placeholder="Slack ID" value={this.state.slackId} onChange={this.onInputChange.bind(this, 'slackId')}/>
           </div>
           <div className="row">
-            <Input type="text" placeholder="Website" value={this.state.website}  onChange={this.onInputChange.bind(this, 'website')} required/>
+            <input type="text" placeholder="Website" value={this.state.website} onChange={this.onInputChange.bind(this, 'website')}/>
           </div>
           <div className="row">
-            <Input type="text" placeholder="Nationality" value={this.state.nationality}  onChange={this.onInputChange.bind(this, 'nationality')} required/>
+            <input type="text" placeholder="Nationality" value={this.state.nationality} onChange={this.onInputChange.bind(this, 'nationality')}/>
           </div>
           <div className="row">
-            <Input type="textarea" placeholder="About me" value={this.state.aboutMe}  onChange={this.onInputChange.bind(this, 'aboutMe')} required/>
+            <textarea placeholder="About me" value={this.state.aboutMe} onChange={this.onInputChange.bind(this, 'aboutMe')}/>
           </div>
           <div className="row">
-            <Button className="col-md-4 col-md-push-4 btn btn-success btn-sm" type="submit">Update profile</Button>
+            <button className="button" type="submit">Save</button>
           </div>
         </form>
       </div>

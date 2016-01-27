@@ -15,7 +15,6 @@ class Error extends Component {
         <strong>{fieldString}{error}</strong>
       </div>
     );
-
   }
 }
 

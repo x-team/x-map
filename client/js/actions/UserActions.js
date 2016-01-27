@@ -1,5 +1,3 @@
-// Disable the no-use-before-define eslint rule for this file
-// It makes more sense to have the asnyc actions before the non-async ones
 /* eslint-disable no-use-before-define */
 
 import {
@@ -20,8 +18,7 @@ import {
   USER_UPDATE_FAILURE,
   USER_DELETE,
   USER_DELETE_SUCCESS,
-  USER_DELETE_FAILURE,
-
+  USER_DELETE_FAILURE
 } from '../constants/AppConstants';
 
 import { login } from './AppActions';
@@ -35,140 +32,144 @@ export function userCreate(data, onSuccess) {
       body: JSON.stringify(data),
       method: 'POST'
     })
-      .then(json => dispatch(userCreateSuccess(json)))
+      .then(user => dispatch(userCreateSuccess(user)))
       .then(() => dispatch(login(data.email, data.password, onSuccess)))
-      .catch((json) => dispatch(userCreateFailure(json)));
+      .catch((errors) => dispatch(userCreateFailure(data, errors)));
   };
 }
 
-export function doUserCreate() {
+function doUserCreate() {
   return {type: USER_CREATE};
 }
 
 export function userCreateSuccess(user) {
-  return { type: USER_CREATE_SUCCESS, user };
+  return {type: USER_CREATE_SUCCESS, user};
 }
 
-export function userCreateFailure(errors) {
-  return { type: USER_CREATE_FAILURE, errors };
+export function userCreateFailure(data, errors) {
+  return {type: USER_CREATE_FAILURE, data, errors};
 }
 
 export function userGet(id, onSuccess) {
   return (dispatch) => {
-    dispatch(doGetUser(id, onSuccess));
+    dispatch(doUserGet(id));
     request(process.env.API_BASE_URL + 'users/' + id + '.json')
-      .then(json => dispatch(userGetSuccess(json)))
+      .then(user => dispatch(userGetSuccess(user)))
       .then(onSuccess)
-      .catch(() => dispatch(userGetFailure(id)));
+      .catch((errors) => dispatch(userGetFailure(id, errors)));
   };
 }
 
-export function doUserGet(user) {
-  return { type: USER_GET, user };
+function doUserGet(id) {
+  return {type: USER_GET, id};
 }
 
 export function userGetSuccess(user) {
-  return { type: USER_GET_SUCCESS, user };
+  return {type: USER_GET_SUCCESS, user};
 }
 
-export function userGetFailure(id) {
-  return { type: USER_GET_FAILURE, id };
+export function userGetFailure(id, errors) {
+  return {type: USER_GET_FAILURE, id, errors};
 }
 
-export function userGetCurrent(onSuccess) {
+export function userGetCurrent(onSuccess, onFailure) {
   return (dispatch) => {
-    dispatch(doUserGetCurrent(onSuccess));
+    dispatch(doUserGetCurrent());
     request(process.env.API_BASE_URL + 'users/current.json')
       .then(user => {
-        dispatch((user && user.id) ? userGetCurrentSuccess(user, onSuccess) : userGetCurrentFailure());
+        dispatch((user && user.id) ? userGetCurrentSuccess(user, onSuccess) : userGetCurrentFailure(onFailure));
       })
-      .catch(() => dispatch(userGetCurrentFailure()));
+      .catch((errors) => dispatch(userGetCurrentFailure(onFailure, errors)));
   };
 }
 
-export function doUserGetCurrent(onSuccess) {
-  return { type: USER_GET_CURRENT, onSuccess };
+function doUserGetCurrent() {
+  return {type: USER_GET_CURRENT};
 }
 
 export function userGetCurrentSuccess(user, onSuccess) {
   if (onSuccess) {
     onSuccess();
-  };
+  }
 
-  return { type: USER_GET_CURRENT_SUCCESS, user };
+  return {type: USER_GET_CURRENT_SUCCESS, user};
 }
 
-export function userGetCurrentFailure() {
-  return { type: USER_GET_CURRENT_FAILURE };
+export function userGetCurrentFailure(errors, onFailure) {
+  if (onFailure) {
+    onFailure();
+  }
+
+  return {type: USER_GET_CURRENT_FAILURE, errors};
 }
 
 export function userList(onSuccess) {
   return (dispatch) => {
-    dispatch(doUserList(onSuccess));
+    dispatch(doUserList());
     request(process.env.API_BASE_URL + 'users.json')
-      .then(json => dispatch(userListSuccess(json)))
+      .then(users => dispatch(userListSuccess(users)))
       .then(onSuccess)
-      .catch(() => dispatch(userListFailure()));
+      .catch((errors) => dispatch(userListFailure(errors)));
   };
 }
 
-export function doUserList(onSuccess) {
-  return { type: USER_LIST, onSuccess };
+function doUserList() {
+  return {type: USER_LIST};
 }
 
 export function userListSuccess(users) {
-  return { type: USER_LIST_SUCCESS, users };
+  return {type: USER_LIST_SUCCESS, users};
 }
 
-export function userListFailure() {
-  return { type: USER_LIST_FAILURE };
+export function userListFailure(errors) {
+  return {type: USER_LIST_FAILURE, errors};
 }
 
-export function userUpdate(id, data, onSuccess) {
+export function userUpdate(data, onSuccess) {
   return (dispatch) => {
-    dispatch(doUserUpdate(id, data, onSuccess));
-    request(process.env.API_BASE_URL + 'users/' + id + '.json', {
+    dispatch(doUserUpdate(data));
+    request(process.env.API_BASE_URL + 'users/' + data.id + '.json', {
       body: JSON.stringify(data),
       method: 'PUT'
     })
-      .then(json => dispatch(userUpdateSuccess(json)))
+      .then(user => dispatch(userUpdateSuccess(user)))
       .then(onSuccess)
-      .catch((json) => dispatch(userUpdateFailure(json)));
+      .catch((errors) => dispatch(userUpdateFailure(errors)));
   };
 }
 
-export function doUserUpdate(id, data, onSuccess) {
-  return { type: USER_UPDATE, id, data, onSuccess };
+function doUserUpdate(data) {
+  return {type: USER_UPDATE, data};
 }
 
 export function userUpdateSuccess(user) {
-  return { type: USER_UPDATE_SUCCESS, user };
+  return {type: USER_UPDATE_SUCCESS, user};
 }
 
 export function userUpdateFailure(errors) {
-  return { type: USER_UPDATE_FAILURE, errors };
+  return {type: USER_UPDATE_FAILURE, errors};
 }
 
 export function userDelete(id, onSuccess) {
   return (dispatch) => {
-    dispatch(doUserDelete(id, onSuccess));
+    dispatch(doUserDelete(id));
     request(process.env.API_BASE_URL + 'users/' + id + '.json', {
       method: 'DELETE'
     })
       .then(() => dispatch(userDeleteSuccess(id)))
       .then(onSuccess)
-      .catch(() => dispatch(userDeleteFailure(id)));
+      .catch((errors) => dispatch(userDeleteFailure(id, errors)));
   };
 }
 
-export function doUserDelete(id, onSuccess) {
-  return { type: USER_DELETE, id, onSuccess };
+function doUserDelete(id) {
+  return {type: USER_DELETE, id};
 }
 
 export function userDeleteSuccess(id) {
-  return { type: USER_DELETE_SUCCESS, id };
+  return {type: USER_DELETE_SUCCESS, id};
 }
 
-export function userDeleteFailure(id) {
-  return { type: USER_DELETE_FAILURE, id };
+export function userDeleteFailure(id, errors) {
+  return {type: USER_DELETE_FAILURE, id, errors};
 }

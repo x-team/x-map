@@ -12,7 +12,7 @@ class ErrorList extends Component {
     }
 
     if (showFieldErrors && errors.fieldErrors) {
-      for (let field in errors.fieldErrors) {
+      for (const field in errors.fieldErrors) {
         errorList = errorList.concat(errors.fieldErrors[field].map((error, index) => <Error key={`${field}_${index}`} field={field} error={error}/>));
       }
     }
@@ -23,19 +23,19 @@ class ErrorList extends Component {
 
     return (
       <div className="alert error">
-        { errorList }
+        {errorList}
       </div>
     );
   }
 }
 
 ErrorList.propTypes = {
+  showGlobalErrors: PropTypes.bool,
+  showFieldErrors: PropTypes.bool,
   errors: PropTypes.shape({
     globalErrors: PropTypes.array,
     fieldErrors: PropTypes.object
-  }),
-  showGlobalErrors: PropTypes.bool,
-  showFieldErrors: PropTypes.bool
+  })
 };
 
 ErrorList.defaultProps = {

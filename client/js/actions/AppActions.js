@@ -1,5 +1,3 @@
-// Disable the no-use-before-define eslint rule for this file
-// It makes more sense to have the asnyc actions before the non-async ones
 /* eslint-disable no-use-before-define */
 
 import {
@@ -16,10 +14,14 @@ import {
   userList
 } from './UserActions';
 
+import {
+  teamList
+} from './TeamActions';
+
 import request from '../utils/request';
 
 export function routeChanged() {
-  return { type: APP_ROUTE_CHANGED };
+  return {type: APP_ROUTE_CHANGED};
 }
 
 export function login(email, password, onSuccess) {
@@ -29,21 +31,22 @@ export function login(email, password, onSuccess) {
       body: JSON.stringify({email, password}),
       method: 'POST'
     })
-      .then(json => dispatch(loginSuccess(json)))
+      .then(user => dispatch(loginSuccess(user)))
       .then(onSuccess)
-      .catch((json) => dispatch(loginFailure(json)));
+      .catch((errors) => dispatch(loginFailure(errors)));
   };
 }
 
-export function doLogin(email, password) {
+function doLogin(email, password) {
   return {type: APP_LOGIN, email, password};
 }
 
 export function loginSuccess(user) {
   return (dispatch) => {
     dispatch(userList());
+    dispatch(teamList());
     dispatch({type: APP_LOGIN_SUCCESS, user});
-  }
+  };
 }
 
 export function loginFailure(errors) {
@@ -56,13 +59,13 @@ export function logout(onSuccess) {
     request(process.env.API_BASE_URL + 'logouts.json', {
       method: 'POST'
     })
-      .then(() => dispatch(logoutSuccess()))
       .then(onSuccess)
-      .catch(() => dispatch(logoutFailure()));
+      .then(() => dispatch(logoutSuccess()))
+      .catch((errors) => dispatch(logoutFailure(errors)));
   };
 }
 
-export function doLogout() {
+function doLogout() {
   return {type: APP_LOGOUT};
 }
 
@@ -70,6 +73,6 @@ export function logoutSuccess() {
   return {type: APP_LOGOUT_SUCCESS};
 }
 
-export function logoutFailure() {
-  return {type: APP_LOGOUT_FAILURE};
+export function logoutFailure(errors) {
+  return {type: APP_LOGOUT_FAILURE, errors};
 }
