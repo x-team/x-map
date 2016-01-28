@@ -18,7 +18,13 @@ import {
   USER_UPDATE_FAILURE,
   USER_DELETE,
   USER_DELETE_SUCCESS,
-  USER_DELETE_FAILURE
+  USER_DELETE_FAILURE,
+  USER_GRANT_ADMIN,
+  USER_GRANT_ADMIN_SUCCESS,
+  USER_GRANT_ADMIN_FAILURE,
+  USER_REVOKE_ADMIN,
+  USER_REVOKE_ADMIN_SUCCESS,
+  USER_REVOKE_ADMIN_FAILURE
 } from '../constants/AppConstants';
 
 import { login } from './AppActions';
@@ -146,8 +152,8 @@ export function userUpdateSuccess(user) {
   return {type: USER_UPDATE_SUCCESS, user};
 }
 
-export function userUpdateFailure(errors) {
-  return {type: USER_UPDATE_FAILURE, errors};
+export function userUpdateFailure(data, errors) {
+  return {type: USER_UPDATE_FAILURE, data, errors};
 }
 
 export function userDelete(id, onSuccess) {
@@ -172,4 +178,52 @@ export function userDeleteSuccess(id) {
 
 export function userDeleteFailure(id, errors) {
   return {type: USER_DELETE_FAILURE, id, errors};
+}
+
+export function userGrantAdmin(id, onSuccess) {
+  return (dispatch) => {
+    dispatch(doUserGrantAdmin(id));
+    request(process.env.API_BASE_URL + 'users/' + id + '/admin.json', {
+      method: 'PUT'
+    })
+      .then(() => dispatch(userGrantAdminSuccess(id)))
+      .then(onSuccess)
+      .catch((errors) => dispatch(userGrantAdminFailure(id, errors)));
+  };
+}
+
+function doUserGrantAdmin(id) {
+  return {type: USER_GRANT_ADMIN, id};
+}
+
+export function userGrantAdminSuccess(id) {
+  return {type: USER_GRANT_ADMIN_SUCCESS, id};
+}
+
+export function userGrantAdminFailure(id, errors) {
+  return {type: USER_GRANT_ADMIN_FAILURE, id, errors};
+}
+
+export function userRevokeAdmin(id, onSuccess) {
+  return (dispatch) => {
+    dispatch(doUserRevokeAdmin(id));
+    request(process.env.API_BASE_URL + 'users/' + id + '/admin.json', {
+      method: 'DELETE'
+    })
+      .then(() => dispatch(userRevokeAdminSuccess(id)))
+      .then(onSuccess)
+      .catch((errors) => dispatch(userRevokeAdminFailure(id, errors)));
+  };
+}
+
+function doUserRevokeAdmin(id) {
+  return {type: USER_REVOKE_ADMIN, id};
+}
+
+export function userRevokeAdminSuccess(id) {
+  return {type: USER_REVOKE_ADMIN_SUCCESS, id};
+}
+
+export function userRevokeAdminFailure(id, errors) {
+  return {type: USER_REVOKE_ADMIN_FAILURE, id, errors};
 }

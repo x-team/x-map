@@ -6,7 +6,9 @@ import {
   USER_GET_SUCCESS,
   USER_GET_FAILURE,
   USER_UPDATE_SUCCESS,
-  USER_DELETE_SUCCESS
+  USER_DELETE_SUCCESS,
+  USER_GRANT_ADMIN_SUCCESS,
+  USER_REVOKE_ADMIN_SUCCESS
 } from '../constants/AppConstants';
 import assignToEmpty from '../utils/assign';
 
@@ -26,6 +28,14 @@ function usersReducer(users = {}, action) {
       return assignToEmpty(users, {
         [action.user.id]: action.user
       });
+    case USER_GRANT_ADMIN_SUCCESS:
+      newUsers = assignToEmpty(users);
+      newUsers[action.id].isAdmin = true;
+      return newUsers;
+    case USER_REVOKE_ADMIN_SUCCESS:
+      newUsers = assignToEmpty(users);
+      newUsers[action.id].isAdmin = false;
+      return newUsers;
     case USER_GET_FAILURE:
     case USER_DELETE_SUCCESS:
       newUsers = assignToEmpty(users);

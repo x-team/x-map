@@ -122,19 +122,19 @@ class UsersCest
         unset($user['id']);
 
         $I->sendPUT('api/users/'.$id.'/admin.json');
-        $I->seeResponseCodeIs(200);
+        $I->seeResponseCodeIs(204);
         $I->seeInCollection('User', array_merge($user, ['isAdmin' => true]));
 
         $I->sendPUT('api/users/'.$id.'/admin.json');
-        $I->seeResponseCodeIs(200);
+        $I->seeResponseCodeIs(204);
         $I->seeInCollection('User', array_merge($user, ['isAdmin' => true]));
 
         $I->sendDELETE('api/users/'.$id.'/admin.json');
-        $I->seeResponseCodeIs(200);
+        $I->seeResponseCodeIs(204);
         $I->seeInCollection('User', array_merge($user, ['isAdmin' => false]));
 
         $I->sendDELETE('api/users/'.$id.'/admin.json');
-        $I->seeResponseCodeIs(200);
+        $I->seeResponseCodeIs(204);
         $I->seeInCollection('User', array_merge($user, ['isAdmin' => false]));
     }
 

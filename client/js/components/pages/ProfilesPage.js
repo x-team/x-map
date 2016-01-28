@@ -12,7 +12,7 @@ class ProfilesPage extends Component {
         <tr key={id}>
           <td>{users[id].email}</td>
           <td>{users[id].firstName} {users[id].lastName}</td>
-          <td><Link className="btn btn-success col-md-12" to={`/profile/${id}`}>View</Link></td>
+          <td><Link to={`/profile/${id}`}>View</Link></td>
         </tr>
       );
     }
