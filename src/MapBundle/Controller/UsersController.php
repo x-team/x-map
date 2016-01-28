@@ -247,6 +247,6 @@ class UsersController extends FOSRestController
         $user->setIsAdmin($isAdmin);
         $this->dm->flush();
 
-        return $this->handleView($this->view($user));
+        return $this->handleView($this->view());
     }
 }

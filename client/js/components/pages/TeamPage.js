@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import Team from '../fragments/Team';
 
 class TeamPage extends Component {
   render() {
@@ -16,12 +17,11 @@ class TeamPage extends Component {
     if (isAdmin) {
       editLink = (
         <section>
-          <Link className="btn btn-success col-md-4 col-md-push-4" to={`/team/${team.id}/edit`}>Edit team</Link>
+          <Link to={`/team/${team.id}/edit`}>Edit team</Link>
         </section>
       );
     }
 
-    // ToDo: move to separate component
     return (
       <div className="panel">
         <article id="teamProfile">
@@ -30,18 +30,7 @@ class TeamPage extends Component {
           </header>
 
           <section>
-            <table className="col-md-12">
-              <tbody>
-              <tr>
-                <th className="left">Name</th>
-                <td>{team.name}</td>
-              </tr>
-              <tr>
-                <th className="left">Description</th>
-                <td>{team.description}</td>
-              </tr>
-              </tbody>
-            </table>
+            <Team team={team}/>
           </section>
 
           {editLink}

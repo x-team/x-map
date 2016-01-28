@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as UserActions from '../../actions/UserActions';
 import { Link } from 'react-router';
+import Profile from '../fragments/Profile';
 
 class ProfilePage extends Component {
   render() {
-    const { users, history, params, currentUserId, isAdmin } = this.props;
+    const { users, history, params, currentUserId, isAdmin, actions } = this.props;
 
     const user = users[params.id];
     if (!user) {
@@ -17,7 +20,13 @@ class ProfilePage extends Component {
       editLink = <Link to={`/profile/${user.id}/edit`}>Edit profile</Link>;
     }
 
-    // ToDo: move to separate component
+    let adminLink = <span/>;
+    if (isAdmin && user.id !== currentUserId) {
+      const grantRevokeText = user.isAdmin ? 'Revoke admin' : 'Grant admin';
+      const grantRevokeAction = user.isAdmin ? actions.userRevokeAdmin.bind(null, user.id) : actions.userGrantAdmin.bind(null, user.id);
+      adminLink = <button type="button" className="button" onClick={grantRevokeAction}>{grantRevokeText}</button>;
+    }
+
     return (
       <div className="panel">
         <article id="userProfile">
@@ -26,43 +35,9 @@ class ProfilePage extends Component {
           </header>
 
           <section>
-            <table className="col-md-12">
-              <tbody>
-                <tr>
-                  <th className="left">Email</th>
-                  <td>{user.email}</td>
-                </tr>
-                <tr>
-                  <th className="left">First name</th>
-                  <td>{user.firstName}</td>
-                </tr>
-                <tr>
-                  <th className="left">Last name</th>
-                  <td>{user.lastName}</td>
-                </tr>
-                <tr>
-                  <th className="left">Skype ID</th>
-                  <td>{user.skypeId}</td>
-                </tr>
-                <tr>
-                  <th className="left">Slack ID</th>
-                  <td>{user.slackId}</td>
-                </tr>
-                <tr>
-                  <th className="left">Website</th>
-                  <td>{user.website}</td>
-                </tr>
-                <tr>
-                  <th className="left">Nationality</th>
-                  <td>{user.nationality}</td>
-                </tr>
-                <tr>
-                  <th className="left">About me</th>
-                  <td>{user.aboutMe}</td>
-                </tr>
-              </tbody>
-            </table>
+            <Profile user={user}/>
             {editLink}
+            {adminLink}
           </section>
         </article>
       </div>
@@ -77,7 +52,8 @@ ProfilePage.propTypes = {
   }).isRequired,
   history: PropTypes.object.isRequired,
   currentUserId: PropTypes.string,
-  isAdmin: PropTypes.bool
+  isAdmin: PropTypes.bool,
+  actions: PropTypes.object
 };
 
 function mapStateToProps(state) {
@@ -88,4 +64,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ProfilePage);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(UserActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

@@ -42,7 +42,7 @@ class TeamsPage extends Component {
     if (teamProfiles.length) {
       teamsList = (
         <section>
-          <table className="col-md-12">
+          <table>
             <thead>
             <tr>
               <th>Name</th>
