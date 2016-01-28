@@ -6,6 +6,18 @@ import { Link } from 'react-router';
 import Profile from '../fragments/Profile';
 
 class ProfilePage extends Component {
+  componentDidMount() {
+    this.props.actions.userActiveChanged([this.props.params.id]);
+  }
+
+  componentWillUpdate(props) {
+    props.actions.userActiveChanged([props.params.id]);
+  }
+
+  componentWillUnmount() {
+    this.props.actions.userActiveChanged([]);
+  }
+
   render() {
     const { users, history, params, currentUserId, isAdmin, actions } = this.props;
 
@@ -15,9 +27,11 @@ class ProfilePage extends Component {
       return <span/>;
     }
 
-    let editLink = <span/>;
+    let editLink;
+    let setLocationLink;
     if (isAdmin || user.id === currentUserId) {
       editLink = <Link to={`/profile/${user.id}/edit`}>Edit profile</Link>;
+      setLocationLink = <Link to={`/profile/${user.id}/location`}>Set location</Link>;
     }
 
     let adminLink = <span/>;
@@ -37,6 +51,7 @@ class ProfilePage extends Component {
           <section>
             <Profile user={user}/>
             {editLink}
+            {setLocationLink}
             {adminLink}
           </section>
         </article>

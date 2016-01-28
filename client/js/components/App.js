@@ -27,6 +27,10 @@ class App extends Component {
     this.props.history.push('/');
   }
 
+  redirectToProfilePage(id) {
+    this.props.history.push('/profile/' + id);
+  }
+
   render() {
     const { currentUserId, currentUserLoaded, usersLoaded, teamsLoaded, users, actions } = this.props;
 
@@ -36,7 +40,7 @@ class App extends Component {
         <section>
           <Header user={users[currentUserId]} onLogout={actions.logout.bind(null, this.redirectToHomePage.bind(this))}/>
           { this.props.children }
-          <Map />
+          <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>
         </section>
       );
     } else {

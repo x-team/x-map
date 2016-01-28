@@ -13,6 +13,7 @@
     "rules": {
         "guard-for-in": 0,
         "comma-dangle": [2, "never"],
-        "indent": [2, 2, {"SwitchCase": 1}]
+        "indent": [2, 2, {"SwitchCase": 1}],
+        "no-use-before-define": 0
     }
 }

@@ -5,6 +5,17 @@ import * as UserActions from '../../actions/UserActions';
 import ProfileForm from '../forms/ProfileForm';
 
 class ProfileEditPage extends Component {
+  componentDidMount() {
+    this.props.actions.userActiveChanged([this.props.params.id]);
+  }
+
+  componentWillUpdate(props) {
+    props.actions.userActiveChanged([props.params.id]);
+  }
+
+  componentWillUnmount() {
+    this.props.actions.userActiveChanged([]);
+  }
 
   redirectToProfilePage(id) {
     const { history } = this.props;

@@ -2,9 +2,24 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TeamActions from '../../actions/TeamActions';
+import * as UserActions from '../../actions/UserActions';
 import TeamForm from '../forms/TeamForm';
+import assignToEmpty from '../../utils/assign';
 
 class TeamEditPage extends Component {
+  componentDidMount() {
+    const { actions, params, teams } = this.props;
+    actions.userActiveChanged(teams[params.id].users.map(user => user.id));
+  }
+
+  componentWillUpdate(props) {
+    const { actions, params, teams } = props;
+    actions.userActiveChanged(teams[params.id].users.map(user => user.id));
+  }
+
+  componentWillUnmount() {
+    this.props.actions.userActiveChanged([]);
+  }
 
   redirectToTeamPage(id) {
     this.props.history.pushState(null, '/team/' + id);
@@ -53,7 +68,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TeamActions, dispatch)
+    actions: bindActionCreators(assignToEmpty(TeamActions, UserActions), dispatch)
   };
 }
 

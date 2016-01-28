@@ -2,16 +2,31 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TeamActions from '../../actions/TeamActions';
+import * as UserActions from '../../actions/UserActions';
 import { Link } from 'react-router';
 import MiniTeam from '../fragments/MiniTeam';
+import assignToEmpty from '../../utils/assign';
 
 class TeamsPage extends Component {
+  markTeamAsActive(id) {
+    const { actions, teams } = this.props;
+    actions.userActiveChanged(teams[id].users.map(user => user.id));
+  }
+
+  markTeamAsInactive() {
+    this.props.actions.userActiveChanged([]);
+  }
+
   render() {
     const { teams, isAdmin } = this.props;
 
     const teamProfiles = [];
     for (const id in teams) {
-      teamProfiles.push(<MiniTeam key={id} team={teams[id]}/>);
+      teamProfiles.push(
+        <div key={id} onMouseOver={this.markTeamAsActive.bind(this, id)} onMouseOut={this.markTeamAsInactive.bind(this)}>
+          <MiniTeam team={teams[id]}/>
+        </div>
+      );
     }
 
     let teamsList;
@@ -64,7 +79,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TeamActions, dispatch)
+    actions: bindActionCreators(assignToEmpty(TeamActions, UserActions), dispatch)
   };
 }
 
