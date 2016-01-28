@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Document;
+<?php
+
+namespace MapBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -9,8 +11,8 @@ use JMS\Serializer\Annotation as Serializer;
  * @MongoDB\Document
  * @MongoDB\HasLifecycleCallbacks
  */
-class Event {
-
+class Event
+{
     /**
      * @MongoDB\Id
      */
@@ -71,7 +73,7 @@ class Event {
     protected $lng;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id $id
      */
@@ -81,19 +83,21 @@ class Event {
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string $name
      */
@@ -103,19 +107,21 @@ class Event {
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
+     *
      * @return self
      */
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string $type
      */
@@ -125,19 +131,21 @@ class Event {
     }
 
     /**
-     * Set dateStart
+     * Set dateStart.
      *
      * @param date $dateStart
+     *
      * @return self
      */
     public function setDateStart($dateStart)
     {
         $this->dateStart = $dateStart;
+
         return $this;
     }
 
     /**
-     * Get dateStart
+     * Get dateStart.
      *
      * @return date $dateStart
      */
@@ -147,19 +155,21 @@ class Event {
     }
 
     /**
-     * Set dateEnd
+     * Set dateEnd.
      *
      * @param date $dateEnd
+     *
      * @return self
      */
     public function setDateEnd($dateEnd)
     {
         $this->dateEnd = $dateEnd;
+
         return $this;
     }
 
     /**
-     * Get dateEnd
+     * Get dateEnd.
      *
      * @return date $dateEnd
      */
@@ -169,19 +179,21 @@ class Event {
     }
 
     /**
-     * Set data
+     * Set data.
      *
      * @param hash $data
+     *
      * @return self
      */
     public function setData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 
     /**
-     * Get data
+     * Get data.
      *
      * @return hash $data
      */
@@ -193,9 +205,9 @@ class Event {
     {
         $this->users = new ArrayCollection();
     }
-    
+
     /**
-     * Add user
+     * Add user.
      *
      * @param User $user
      */
@@ -205,7 +217,7 @@ class Event {
     }
 
     /**
-     * Remove user
+     * Remove user.
      *
      * @param User $user
      */
@@ -215,7 +227,7 @@ class Event {
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return Collection $users
      */
@@ -227,7 +239,8 @@ class Event {
     /**
      * @MongoDB\PreRemove
      */
-    public function unlinkFromRelatedDocuments() {
+    public function unlinkFromRelatedDocuments()
+    {
         foreach ($this->getUsers() as $user) {
             $user->removeEvent($this);
         }
@@ -236,26 +249,29 @@ class Event {
     /**
      * @MongoDB\PrePersist
      */
-    public function updateDateEnd() {
+    public function updateDateEnd()
+    {
         if (!$this->getDateEnd()) {
             $this->setDateEnd($this->getDateStart());
         }
     }
 
     /**
-     * Set lat
+     * Set lat.
      *
      * @param float $lat
+     *
      * @return self
      */
     public function setLat($lat)
     {
         $this->lat = $lat;
+
         return $this;
     }
 
     /**
-     * Get lat
+     * Get lat.
      *
      * @return float $lat
      */
@@ -265,19 +281,21 @@ class Event {
     }
 
     /**
-     * Set lng
+     * Set lng.
      *
      * @param float $lng
+     *
      * @return self
      */
     public function setLng($lng)
     {
         $this->lng = $lng;
+
         return $this;
     }
 
     /**
-     * Get lng
+     * Get lng.
      *
      * @return float $lng
      */
@@ -287,19 +305,21 @@ class Event {
     }
 
     /**
-     * Set creator
+     * Set creator.
      *
      * @param User $creator
+     *
      * @return self
      */
     public function setCreator(User $creator)
     {
         $this->creator = $creator;
+
         return $this;
     }
 
     /**
-     * Get creator
+     * Get creator.
      *
      * @return User $creator
      */

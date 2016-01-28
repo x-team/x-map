@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Document;
+<?php
+
+namespace MapBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -10,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @MongoDBUnique(fields="name")
  * @MongoDB\HasLifecycleCallbacks
  */
-class Skill {
-
+class Skill
+{
     /**
      * @MongoDB\Id
      */
@@ -31,7 +33,7 @@ class Skill {
     protected $users;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id $id
      */
@@ -41,19 +43,21 @@ class Skill {
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return self
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string $name
      */
@@ -65,7 +69,8 @@ class Skill {
     /**
      * @MongoDB\PreRemove
      */
-    public function unlinkFromRelatedDocuments() {
+    public function unlinkFromRelatedDocuments()
+    {
         foreach ($this->getUsers() as $user) {
             $user->removeSkill($this);
         }
@@ -75,9 +80,9 @@ class Skill {
     {
         $this->users = new ArrayCollection();
     }
-    
+
     /**
-     * Add user
+     * Add user.
      *
      * @param User $user
      */
@@ -87,7 +92,7 @@ class Skill {
     }
 
     /**
-     * Remove user
+     * Remove user.
      *
      * @param User $user
      */
@@ -97,7 +102,7 @@ class Skill {
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return Collection $users
      */

@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Controller;
+<?php
+
+namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -35,7 +37,7 @@ class EventsController extends FOSRestController
      */
     public function getEventAction($id)
     {
-        $this->denyAccessUnlessGranted('view', new Event);
+        $this->denyAccessUnlessGranted('view', new Event());
 
         $event = $this->repository->find($id);
 
@@ -58,7 +60,7 @@ class EventsController extends FOSRestController
      */
     public function getEventsAction()
     {
-        $this->denyAccessUnlessGranted('view', new Event);
+        $this->denyAccessUnlessGranted('view', new Event());
 
         $events = $this->repository->findAll();
 
@@ -80,11 +82,11 @@ class EventsController extends FOSRestController
      */
     public function postEventAction(Request $request)
     {
-        $event = new Event;
+        $event = new Event();
 
         $this->denyAccessUnlessGranted('create', $event);
 
-        $form = $this->createForm(new EventType, $event);
+        $form = $this->createForm(new EventType(), $event);
         $form->handleRequest($request);
 
         $event->setCreator($this->get('security.context')->getToken()->getUser());
@@ -121,7 +123,7 @@ class EventsController extends FOSRestController
 
         $this->denyAccessUnlessGranted('edit', $event);
 
-        $form = $this->createForm(new EventType, $event, array('method' => 'PUT'));
+        $form = $this->createForm(new EventType(), $event, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {

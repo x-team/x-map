@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Form\Type;
+<?php
+
+namespace MapBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 

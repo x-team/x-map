@@ -1,4 +1,6 @@
-<?php namespace MapBundle\Document;
+<?php
+
+namespace MapBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -12,8 +14,8 @@ use JMS\Serializer\Annotation as Serializer;
  * @MongoDBUnique(fields="email")
  * @MongoDB\HasLifecycleCallbacks
  */
-class User implements UserInterface {
-
+class User implements UserInterface
+{
     /**
      * @MongoDB\Id(strategy="auto")
      */
@@ -109,14 +111,15 @@ class User implements UserInterface {
      */
     protected $events;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->teams = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->events = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id $id
      */
@@ -126,19 +129,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
+     *
      * @return self
      */
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string $password
      */
@@ -148,19 +153,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
+     *
      * @return self
      */
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string $email
      */
@@ -170,19 +177,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set aboutMe
+     * Set aboutMe.
      *
      * @param string $aboutMe
+     *
      * @return self
      */
     public function setAboutMe($aboutMe)
     {
         $this->aboutMe = $aboutMe;
+
         return $this;
     }
 
     /**
-     * Get aboutMe
+     * Get aboutMe.
      *
      * @return string $aboutMe
      */
@@ -192,19 +201,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set skypeId
+     * Set skypeId.
      *
      * @param string $skypeId
+     *
      * @return self
      */
     public function setSkypeId($skypeId)
     {
         $this->skypeId = $skypeId;
+
         return $this;
     }
 
     /**
-     * Get skypeId
+     * Get skypeId.
      *
      * @return string $skypeId
      */
@@ -214,19 +225,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set isAdmin
+     * Set isAdmin.
      *
      * @param string $isAdmin
+     *
      * @return self
      */
     public function setIsAdmin($isAdmin)
     {
         $this->isAdmin = $isAdmin;
+
         return $this;
     }
 
     /**
-     * Get isAdmin
+     * Get isAdmin.
      *
      * @return string $isAdmin
      */
@@ -236,19 +249,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set website
+     * Set website.
      *
      * @param string $website
+     *
      * @return self
      */
     public function setWebsite($website)
     {
         $this->website = $website;
+
         return $this;
     }
 
     /**
-     * Get website
+     * Get website.
      *
      * @return string $website
      */
@@ -262,24 +277,27 @@ class User implements UserInterface {
         return $this->getIsAdmin() ? ['ROLE_ADMIN', 'ROLE_USER'] : ['ROLE_USER'];
     }
 
-    public function hasRole($role) {
+    public function hasRole($role)
+    {
         return in_array($role, $this->getRoles());
     }
 
     /**
-     * Set teams
+     * Set teams.
      *
      * @param collection $teams
+     *
      * @return self
      */
     public function setTeams($teams)
     {
         $this->teams = $teams;
+
         return $this;
     }
 
     /**
-     * Get teams
+     * Get teams.
      *
      * @return collection $teams
      */
@@ -288,28 +306,32 @@ class User implements UserInterface {
         return $this->teams;
     }
 
-    public function addTeam(Team $team) {
+    public function addTeam(Team $team)
+    {
         $this->teams[] = $team;
     }
 
-    public function removeTeam(Team $team) {
+    public function removeTeam(Team $team)
+    {
         $this->teams->removeElement($team);
     }
 
     /**
-     * Set lat
+     * Set lat.
      *
      * @param float $lat
+     *
      * @return self
      */
     public function setLat($lat)
     {
         $this->lat = $lat;
+
         return $this;
     }
 
     /**
-     * Get lat
+     * Get lat.
      *
      * @return float $lat
      */
@@ -319,19 +341,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set lng
+     * Set lng.
      *
      * @param float $lng
+     *
      * @return self
      */
     public function setLng($lng)
     {
         $this->lng = $lng;
+
         return $this;
     }
 
     /**
-     * Get lng
+     * Get lng.
      *
      * @return float $lng
      */
@@ -362,19 +386,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set nationality
+     * Set nationality.
      *
      * @param string $nationality
+     *
      * @return self
      */
     public function setNationality($nationality)
     {
         $this->nationality = $nationality;
+
         return $this;
     }
 
     /**
-     * Get nationality
+     * Get nationality.
      *
      * @return string $nationality
      */
@@ -384,7 +410,7 @@ class User implements UserInterface {
     }
 
     /**
-     * Add skill
+     * Add skill.
      *
      * @param Skill $skill
      */
@@ -394,7 +420,7 @@ class User implements UserInterface {
     }
 
     /**
-     * Remove skill
+     * Remove skill.
      *
      * @param Skill $skill
      */
@@ -404,7 +430,7 @@ class User implements UserInterface {
     }
 
     /**
-     * Get skills
+     * Get skills.
      *
      * @return \Doctrine\Common\Collections\Collection $skills
      */
@@ -416,7 +442,8 @@ class User implements UserInterface {
     /**
      * @MongoDB\PreRemove
      */
-    public function unlinkFromRelatedDocuments() {
+    public function unlinkFromRelatedDocuments()
+    {
         foreach ($this->getSkills() as $skill) {
             $skill->removeUser($this);
         }
@@ -431,7 +458,7 @@ class User implements UserInterface {
     }
 
     /**
-     * Add event
+     * Add event.
      *
      * @param Event $event
      */
@@ -441,7 +468,7 @@ class User implements UserInterface {
     }
 
     /**
-     * Remove event
+     * Remove event.
      *
      * @param Event $event
      */
@@ -451,7 +478,7 @@ class User implements UserInterface {
     }
 
     /**
-     * Get events
+     * Get events.
      *
      * @return Collection $events
      */
@@ -471,19 +498,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set firstName
+     * Set firstName.
      *
      * @param string $firstName
+     *
      * @return self
      */
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
+
         return $this;
     }
 
     /**
-     * Get firstName
+     * Get firstName.
      *
      * @return string $firstName
      */
@@ -493,19 +522,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set lastName
+     * Set lastName.
      *
      * @param string $lastName
+     *
      * @return self
      */
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
+
         return $this;
     }
 
     /**
-     * Get lastName
+     * Get lastName.
      *
      * @return string $lastName
      */
@@ -515,19 +546,21 @@ class User implements UserInterface {
     }
 
     /**
-     * Set slackId
+     * Set slackId.
      *
      * @param string $slackId
+     *
      * @return self
      */
     public function setSlackId($slackId)
     {
         $this->slackId = $slackId;
+
         return $this;
     }
 
     /**
-     * Get slackId
+     * Get slackId.
      *
      * @return string $slackId
      */

@@ -32,7 +32,8 @@
         "sensio/generator-bundle": "~2.3",
         "codeception/codeception": "*",
         "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "flow/jsonpath": "*"
+        "flow/jsonpath": "*",
+        "fabpot/php-cs-fixer": "*"
     },
     "scripts": {
         "post-install-cmd": [

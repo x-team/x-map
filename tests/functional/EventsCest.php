@@ -7,7 +7,7 @@ class EventsCest
     protected $admin = [
         'password' => 'testtest1',
         'email' => 'bob1@test.pl',
-        'isAdmin' => true
+        'isAdmin' => true,
     ];
 
     protected $user = [
@@ -35,26 +35,27 @@ class EventsCest
 
     protected $event4 = [
         'name' => 'conference4',
-        'type' => 'conference'
+        'type' => 'conference',
     ];
 
-    public function _before(FunctionalTester $I) {
-        $this->event1['dateStart'] = (new DateTime)->modify('-1 week')->format('Y-m-d');
-        $this->event2['dateStart'] = (new DateTime)->modify('+1 week')->format('Y-m-d');
-        $this->event2['dateEnd'] = (new DateTime)->modify('+2 week')->format('Y-m-d');
-        $this->event3['dateStart'] = (new DateTime)->modify('+4 week')->format('Y-m-d');
-        $this->event3['dateEnd'] = (new DateTime)->modify('+5 week')->format('Y-m-d');
-        $this->event4['dateStart'] = (new DateTime)->modify('+4 week')->format('Y-m-d');
+    public function _before(FunctionalTester $I)
+    {
+        $this->event1['dateStart'] = (new DateTime())->modify('-1 week')->format('Y-m-d');
+        $this->event2['dateStart'] = (new DateTime())->modify('+1 week')->format('Y-m-d');
+        $this->event2['dateEnd'] = (new DateTime())->modify('+2 week')->format('Y-m-d');
+        $this->event3['dateStart'] = (new DateTime())->modify('+4 week')->format('Y-m-d');
+        $this->event3['dateEnd'] = (new DateTime())->modify('+5 week')->format('Y-m-d');
+        $this->event4['dateStart'] = (new DateTime())->modify('+4 week')->format('Y-m-d');
 
-        $this->event1Id = (string)$I->haveInCollection('Event', $this->event1);
-        $this->event2Id = (string)$I->haveInCollection('Event', $this->event2);
+        $this->event1Id = (string) $I->haveInCollection('Event', $this->event1);
+        $this->event2Id = (string) $I->haveInCollection('Event', $this->event2);
 
         unset($this->event1['_id']);
         unset($this->event2['_id']);
 
         $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User, $this->user['password'])]));
-        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User, $this->admin['password'])]));
+        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User(), $this->user['password'])]));
+        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User(), $this->admin['password'])]));
     }
 
     public function tryToReadEvent(FunctionalTester $I)
@@ -69,11 +70,11 @@ class EventsCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson([$this->event1, $this->event2]);
 
-        $I->sendGET('api/events/' . $this->event1Id . '.json');
+        $I->sendGET('api/events/'.$this->event1Id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event1);
 
-        $I->sendGET('api/events/' . uniqid() . '.json');
+        $I->sendGET('api/events/'.uniqid().'.json');
         $I->seeResponseCodeIs(404);
     }
 
@@ -84,10 +85,10 @@ class EventsCest
         $I->sendPOST('api/events.json', $this->event3);
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('api/events/' .  $this->event2Id . '.json');
+        $I->sendPUT('api/events/'.$this->event2Id.'.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendDELETE('api/events/' .  $this->event2Id . '.json');
+        $I->sendDELETE('api/events/'.$this->event2Id.'.json');
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_USER');
@@ -105,24 +106,24 @@ class EventsCest
 
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendGET('api/events/' . $id . '.json');
+        $I->sendGET('api/events/'.$id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event3);
 
         $this->event3['name'] = 'new name';
-        
-        $I->sendPUT('api/events/' . $id . '.json', $this->event3);
+
+        $I->sendPUT('api/events/'.$id.'.json', $this->event3);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event3);
 
-        $I->sendGET('api/events/' . $id . '.json');
+        $I->sendGET('api/events/'.$id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event3);
 
-        $I->sendDELETE('api/events/' . $id . '.json');
+        $I->sendDELETE('api/events/'.$id.'.json');
         $I->seeResponseCodeIs(204);
 
-        $I->sendGET('api/events/' . $id . '.json');
+        $I->sendGET('api/events/'.$id.'.json');
         $I->seeResponseCodeIs(404);
 
         $I->sendPOST('api/events.json', $this->event4);
@@ -133,9 +134,9 @@ class EventsCest
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
         $this->event4['data'] = ['some' => ['custom', 'data'], 'to' => ['check' => 'if arbitrary data can be stored']];
-        $I->sendPUT('api/events/' . $id . '.json', $this->event4);
+        $I->sendPUT('api/events/'.$id.'.json', $this->event4);
 
-        $I->sendGET('api/events/' . $id . '.json');
+        $I->sendGET('api/events/'.$id.'.json');
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson($this->event4);
     }

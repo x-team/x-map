@@ -14,10 +14,11 @@ class AuthCest
         'email' => 'bob2@test.pl',
     ];
 
-    public function _before(FunctionalTester $I) {
+    public function _before(FunctionalTester $I)
+    {
         $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user1, ['password' => $encoder->encodePassword(new User, $this->user1['password'])]));
-        $I->haveInCollection('User', array_merge($this->user2, ['password' => $encoder->encodePassword(new User, $this->user2['password'])]));
+        $I->haveInCollection('User', array_merge($this->user1, ['password' => $encoder->encodePassword(new User(), $this->user1['password'])]));
+        $I->haveInCollection('User', array_merge($this->user2, ['password' => $encoder->encodePassword(new User(), $this->user2['password'])]));
     }
 
     public function tryToLoginAndLogout(FunctionalTester $I)
@@ -35,19 +36,19 @@ class AuthCest
 
         $id2 = $I->grabDataFromResponseByJsonPath('$.id')[0];
 
-        $I->sendPUT('api/users/' . $id1 . '/password.json');
+        $I->sendPUT('api/users/'.$id1.'/password.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('api/users/' . $id2 . '/password.json');
+        $I->sendPUT('api/users/'.$id2.'/password.json');
         $I->seeResponseCodeIs(400);
 
         $I->sendPOST('api/logouts.json');
         $I->seeResponseCodeIs(204);
 
-        $I->sendPUT('api/users/' . $id1 . '/password.json');
+        $I->sendPUT('api/users/'.$id1.'/password.json');
         $I->seeResponseCodeIs(403);
 
-        $I->sendPUT('api/users/' . $id2 . '/password.json');
+        $I->sendPUT('api/users/'.$id2.'/password.json');
         $I->seeResponseCodeIs(403);
     }
 }
