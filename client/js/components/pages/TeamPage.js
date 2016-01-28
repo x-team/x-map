@@ -1,9 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import Team from '../fragments/Team';
+import * as TeamActions from '../../actions/TeamActions';
 
 class TeamPage extends Component {
+  deleteTeam(id) {
+    this.props.actions.teamDelete(id, this.redirectToTeamsPage.bind(this));
+  }
+
+  redirectToTeamsPage() {
+    this.props.history.pushState(null, '/teams');
+  }
+
   render() {
     const { teams, history, params, isAdmin } = this.props;
 
@@ -13,13 +23,11 @@ class TeamPage extends Component {
       return <span/>;
     }
 
-    let editLink = <span/>;
+    let editLink;
+    let deleteButton;
     if (isAdmin) {
-      editLink = (
-        <section>
-          <Link to={`/team/${team.id}/edit`}>Edit team</Link>
-        </section>
-      );
+      editLink = <Link to={`/team/${team.id}/edit`}>Edit team</Link>;
+      deleteButton = <button type="button" className="button" onClick={this.deleteTeam.bind(this, team.id)}>Delete</button>;
     }
 
     return (
@@ -35,6 +43,8 @@ class TeamPage extends Component {
 
           {editLink}
 
+          {deleteButton}
+
         </article>
       </div>
     );
@@ -47,7 +57,8 @@ TeamPage.propTypes = {
     id: PropTypes.string.isRequired
   }).isRequired,
   history: PropTypes.object.isRequired,
-  isAdmin: PropTypes.bool
+  isAdmin: PropTypes.bool,
+  actions: PropTypes.object
 };
 
 function mapStateToProps(state) {
@@ -57,4 +68,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(TeamPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(TeamActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamPage);
