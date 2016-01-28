@@ -3,58 +3,29 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TeamActions from '../../actions/TeamActions';
 import { Link } from 'react-router';
+import MiniTeam from '../fragments/MiniTeam';
 
 class TeamsPage extends Component {
-
-  onClickDelete(id) {
-    const { actions } = this.props;
-    actions.teamDelete(id);
-  }
-
   render() {
     const { teams, isAdmin } = this.props;
 
     const teamProfiles = [];
     for (const id in teams) {
-      let deleteButton;
-      if (isAdmin) {
-        deleteButton = <a href="#" className="link" onClick={this.onClickDelete.bind(this, id)}>Delete</a>;
-      }
-
-      teamProfiles.push(
-        <tr key={id}>
-          <td>{teams[id].name}</td>
-          <td><Link to={`/team/${id}`}>View</Link> {deleteButton}</td>
-        </tr>
-      );
-    }
-
-    let addLink = <span/>;
-    if (isAdmin) {
-      addLink = (
-        <section>
-          <Link to="/team/new">Add team</Link>
-        </section>
-      );
+      teamProfiles.push(<MiniTeam key={id} team={teams[id]}/>);
     }
 
     let teamsList;
     if (teamProfiles.length) {
       teamsList = (
         <section>
-          <table>
-            <thead>
-            <tr>
-              <th>Name</th>
-              <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-              {teamProfiles}
-            </tbody>
-          </table>
+          {teamProfiles}
         </section>
       );
+    }
+
+    let addLink = <span/>;
+    if (isAdmin) {
+      addLink = <Link to="/team/new">Add team</Link>;
     }
 
     return (

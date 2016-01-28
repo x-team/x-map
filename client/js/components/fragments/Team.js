@@ -1,27 +1,43 @@
 import React, { Component, PropTypes } from 'react';
+import MiniProfile from './MiniProfile';
 
 class Team extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = props.team;
-  }
-
   render() {
     const { team } = this.props;
 
+    const userProfiles = [];
+    for (const id in team.users) {
+      userProfiles.push(<MiniProfile key={id} user={team.users[id]}/>);
+    }
+
+    let listOfUserProfiles;
+    if (userProfiles.length) {
+      listOfUserProfiles = (
+        <section>
+          <h3>Linked users:</h3>
+          {userProfiles}
+        </section>
+      );
+    }
+
     return (
-      <table>
-        <tbody>
-        <tr>
-          <th>Name</th>
-          <td>{team.name}</td>
-        </tr>
-        <tr>
-          <th>Description</th>
-          <td>{team.description}</td>
-        </tr>
-        </tbody>
-      </table>
+      <section>
+        <table>
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <td>{team.name}</td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td>{team.description}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {listOfUserProfiles}
+
+      </section>
     );
   }
 }

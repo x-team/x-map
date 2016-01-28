@@ -15,7 +15,13 @@ import {
   TEAM_UPDATE_FAILURE,
   TEAM_DELETE,
   TEAM_DELETE_SUCCESS,
-  TEAM_DELETE_FAILURE
+  TEAM_DELETE_FAILURE,
+  TEAM_LINK_USER,
+  TEAM_LINK_USER_SUCCESS,
+  TEAM_LINK_USER_FAILURE,
+  TEAM_UNLINK_USER,
+  TEAM_UNLINK_USER_SUCCESS,
+  TEAM_UNLINK_USER_FAILURE
 } from '../constants/AppConstants';
 
 import request from '../utils/request';
@@ -120,8 +126,8 @@ export function teamDelete(id, onSuccess) {
     request(process.env.API_BASE_URL + 'teams/' + id + '.json', {
       method: 'DELETE'
     })
-      .then(() => dispatch(teamDeleteSuccess(id)))
       .then(onSuccess)
+      .then(() => dispatch(teamDeleteSuccess(id)))
       .catch((errors) => dispatch(teamDeleteFailure(id, errors)));
   };
 }
@@ -136,4 +142,52 @@ export function teamDeleteSuccess(id) {
 
 export function teamDeleteFailure(id, errors) {
   return {type: TEAM_DELETE_FAILURE, id, errors};
+}
+
+export function teamLinkUser(id, userId, onSuccess) {
+  return (dispatch) => {
+    dispatch(doTeamLinkUser(id, userId));
+    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '/admin.json', {
+      method: 'PUT'
+    })
+      .then(() => dispatch(teamLinkUserSuccess(id, userId)))
+      .then(onSuccess)
+      .catch((errors) => dispatch(teamLinkUserFailure(id, userId, errors)));
+  };
+}
+
+function doTeamLinkUser(id, userId) {
+  return {type: TEAM_LINK_USER, id, userId};
+}
+
+export function teamLinkUserSuccess(id, userId) {
+  return {type: TEAM_LINK_USER_SUCCESS, id, userId};
+}
+
+export function teamLinkUserFailure(id, userId, errors) {
+  return {type: TEAM_LINK_USER_FAILURE, id, userId, errors};
+}
+
+export function teamUnlinkUser(id, userId, onSuccess) {
+  return (dispatch) => {
+    dispatch(doTeamUnlinkUser(id, userId));
+    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '/admin.json', {
+      method: 'DELETE'
+    })
+      .then(() => dispatch(teamUnlinkUserSuccess(id, userId)))
+      .then(onSuccess)
+      .catch((errors) => dispatch(teamUnlinkUserFailure(id, userId, errors)));
+  };
+}
+
+function doTeamUnlinkUser(id, userId) {
+  return {type: TEAM_UNLINK_USER, id, userId};
+}
+
+export function teamUnlinkUserSuccess(id, userId) {
+  return {type: TEAM_UNLINK_USER_SUCCESS, id, userId};
+}
+
+export function teamUnlinkUserFailure(id, userId, errors) {
+  return {type: TEAM_UNLINK_USER_FAILURE, id, userId, errors};
 }
