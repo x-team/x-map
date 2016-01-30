@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-
 import {
   TEAM_CREATE,
   TEAM_CREATE_SUCCESS,

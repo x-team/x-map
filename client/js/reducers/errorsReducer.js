@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-
 import {
   APP_ROUTE_CHANGED,
   APP_LOGIN,

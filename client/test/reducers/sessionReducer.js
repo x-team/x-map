@@ -2,10 +2,14 @@ import expect from 'expect';
 import sessionReducer from '../../js/reducers/sessionReducer';
 import * as AppConstants from '../../js/constants/AppConstants';
 
-// Test Reducer
+const initialState = {
+  activeUserIds: [],
+  mapMode: AppConstants.MAP_MODE_SHOW
+};
+
 describe('sessionReducer', () => {
-  it('should return empty object as the initial state', () => {
-    expect(sessionReducer(undefined, {})).toEqual({});
+  it('should return initial state on init', () => {
+    expect(sessionReducer(undefined, {})).toEqual(initialState);
   });
 
   it('should set current user on APP_LOGIN_SUCCESS action', () => {
@@ -16,13 +20,13 @@ describe('sessionReducer', () => {
 
   it('should remove current user on APP_LOGIN_FAILURE action', () => {
     const state = { currentUserId: 42, isAdmin: false, currentUserLoaded: true };
-    const expected = { currentUserId: undefined, isAdmin: false, currentUserLoaded: true };
+    const expected = { currentUserId: null, isAdmin: false, currentUserLoaded: true };
     expect(sessionReducer(state, {type: AppConstants.APP_LOGIN_FAILURE})).toEqual(expected);
   });
 
   it('should remove current user on APP_LOGOUT_SUCCESS action', () => {
     const state = { currentUserId: 42, isAdmin: false, currentUserLoaded: true };
-    const expected = { currentUserId: undefined, isAdmin: false, currentUserLoaded: true };
+    const expected = { currentUserId: null, isAdmin: false, currentUserLoaded: true };
     expect(sessionReducer(state, {type: AppConstants.APP_LOGOUT_SUCCESS})).toEqual(expected);
   });
 

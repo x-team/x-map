@@ -13,6 +13,7 @@ import NotFoundPage from './components/pages/NotFound';
 import ProfilesPage from './components/pages/ProfilesPage';
 import ProfilePage from './components/pages/ProfilePage';
 import ProfileEditPage from './components/pages/ProfileEditPage';
+import ProfileSetLocationPage from './components/pages/ProfileSetLocationPage';
 import TeamsPage from './components/pages/TeamsPage';
 import TeamPage from './components/pages/TeamPage';
 import TeamEditPage from './components/pages/TeamEditPage';
@@ -36,6 +37,7 @@ ReactDOM.render(
         <Route path="/profiles" component={ProfilesPage} />
         <Route path="/profile/:id" component={ProfilePage} />
         <Route path="/profile/:id/edit" component={ProfileEditPage} />
+        <Route path="/profile/:id/location" component={ProfileSetLocationPage} />
         <Route path="/teams" component={TeamsPage} />
         <Route path="/team/new" component={TeamAddPage} />
         <Route path="/team/:id" component={TeamPage} />

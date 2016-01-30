@@ -1,5 +1,3 @@
-/* eslint-disable no-use-before-define */
-
 import {
   USER_CREATE,
   USER_CREATE_SUCCESS,
@@ -24,7 +22,11 @@ import {
   USER_GRANT_ADMIN_FAILURE,
   USER_REVOKE_ADMIN,
   USER_REVOKE_ADMIN_SUCCESS,
-  USER_REVOKE_ADMIN_FAILURE
+  USER_REVOKE_ADMIN_FAILURE,
+  USER_ACTIVE_CHANGED,
+  USER_UPDATES_LOCATION,
+  USER_UPDATED_LOCATION,
+  USER_SELECTED_LOCATION
 } from '../constants/AppConstants';
 
 import { login } from './AppActions';
@@ -226,4 +228,20 @@ export function userRevokeAdminSuccess(id) {
 
 export function userRevokeAdminFailure(id, errors) {
   return {type: USER_REVOKE_ADMIN_FAILURE, id, errors};
+}
+
+export function userActiveChanged(ids) {
+  return {type: USER_ACTIVE_CHANGED, ids};
+}
+
+export function userUpdatesLocation(lat, lng) {
+  return {type: USER_UPDATES_LOCATION, lat, lng};
+}
+
+export function userUpdatedLocation(lat, lng) {
+  return {type: USER_UPDATED_LOCATION, lat, lng};
+}
+
+export function userSelectedLocation(lat, lng) {
+  return {type: USER_SELECTED_LOCATION, lat, lng};
 }

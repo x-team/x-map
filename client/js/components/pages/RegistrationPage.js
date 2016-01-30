@@ -6,8 +6,7 @@ import RegistrationForm from '../forms/RegistrationForm';
 
 class RegistrationPage extends Component {
   redirectToHomePage() {
-    const { history } = this.props;
-    history.pushState(null, '/');
+    this.props.history.pushState(null, '/');
   }
 
   render() {

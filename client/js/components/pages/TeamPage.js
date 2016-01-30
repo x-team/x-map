@@ -4,8 +4,24 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import Team from '../fragments/Team';
 import * as TeamActions from '../../actions/TeamActions';
+import * as UserActions from '../../actions/UserActions';
+import assignToEmpty from '../../utils/assign';
 
 class TeamPage extends Component {
+  componentDidMount() {
+    const { actions, params, teams } = this.props;
+    actions.userActiveChanged(teams[params.id].users.map(user => user.id));
+  }
+
+  componentWillUpdate(props) {
+    const { actions, params, teams } = props;
+    actions.userActiveChanged(teams[params.id].users.map(user => user.id));
+  }
+
+  componentWillUnmount() {
+    this.props.actions.userActiveChanged([]);
+  }
+
   deleteTeam(id) {
     this.props.actions.teamDelete(id, this.redirectToTeamsPage.bind(this));
   }
@@ -70,7 +86,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TeamActions, dispatch)
+    actions: bindActionCreators(assignToEmpty(TeamActions, UserActions), dispatch)
   };
 }
 
