@@ -6,14 +6,6 @@ import {
   APP_LOGOUT
 } from '../constants/AppConstants';
 
-import {
-  userList
-} from './UserActions';
-
-import {
-  teamList
-} from './TeamActions';
-
 import request from '../utils/request';
 import getGoogleApiClient from 'google-client-api';
 

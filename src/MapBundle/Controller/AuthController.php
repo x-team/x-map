@@ -25,15 +25,15 @@ class AuthController extends FOSRestController
 
     protected $validator;
 
-    protected $tokenEncoder;
+    protected $tokenManager;
 
-    public function __construct(ManagerRegistry $registry, Google_Client $googleClient, ValidatorInterface $validator, JWTManagerInterface $tokenEncoder)
+    public function __construct(ManagerRegistry $registry, Google_Client $googleClient, ValidatorInterface $validator, JWTManagerInterface $tokenManager)
     {
         $this->dm = $registry->getManager();
         $this->repository = $registry->getRepository('MapBundle:User');
         $this->googleClient = $googleClient;
         $this->validator = $validator;
-        $this->tokenEncoder = $tokenEncoder;
+        $this->tokenManager = $tokenManager;
     }
 
     /**
@@ -66,14 +66,14 @@ class AuthController extends FOSRestController
 //            return $this->handleView($this->view('Invalid email address.', 400));
 //        }
 
-        $user = $this->repository->findOneByEmail($email) ?: new User;
+        $user = $this->repository->findOneByEmail($email) ?: new User();
         $this->updateUserWithPayload($user, $payload);
 
         if (!count($this->validator->validate($user))) {
             $this->dm->persist($user);
             $this->dm->flush();
 
-            $jwt = $this->tokenEncoder->create($user);
+            $jwt = $this->tokenManager->create($user);
             $view = $this->view(['user' => $user, 'token' => $jwt]);
         } else {
             $view = $this->view('Invalid user data.', 400);

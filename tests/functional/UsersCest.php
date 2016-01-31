@@ -5,14 +5,12 @@ use MapBundle\Document\User;
 class UsersCest
 {
     protected $user = [
-        'password' => 'testtest1',
         'email' => 'bob1@test.pl',
     ];
 
     protected $userId;
 
     protected $admin = [
-        'password' => 'admin',
         'email' => 'admin@test.pl',
         'isAdmin' => true,
     ];
@@ -21,69 +19,32 @@ class UsersCest
 
     public function _before(FunctionalTester $I)
     {
-        $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User(), $this->user['password'])]));
+        $I->haveInCollection('User', $this->user);
         $this->userId = (string) $I->grabFromCollection('User', ['email' => $this->user['email']])['_id'];
-        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User(), $this->admin['password'])]));
+        $I->haveInCollection('User', $this->admin);
         $this->adminId = (string) $I->grabFromCollection('User', ['email' => $this->admin['email']])['_id'];
     }
 
     public function tryToRegisterAndUpdate(FunctionalTester $I)
     {
-        $user = [
-            'password' => 'testtest',
-        ];
-
-        $I->sendPOST('api/users.json', $user);
-
-        $I->seeResponseCodeIs(400);
-
-        $user['email'] = 'bob@test.pl';
-
-        $I->sendPOST('api/users.json', $user);
-        $I->seeResponseCodeIs(200);
-
-        unset($user['password']);
-
-        $I->seeResponseContainsJson($user);
-        $I->dontseeResponseContains('password');
-
+        $I->login($this->user['email']);
         $id = $I->grabDataFromResponseByJsonPath('$.id')[0];
-
-        $I->login($user['email'], 'testtest');
-        $I->seeResponseCodeIs(200);
 
         $I->sendGET('api/users/'.$id.'.json');
         $I->seeResponseCodeIs(200);
-        $I->seeResponseContainsJson(array_merge(['id' => $id], $user));
-        $I->dontseeResponseContains('password');
+        $I->seeResponseContainsJson(array_merge(['id' => $id], $this->user));
 
         $I->sendGET('api/users/current.json');
         $I->seeResponseCodeIs(200);
-        $I->seeResponseContainsJson(array_merge(['id' => $id], $user));
-        $I->dontseeResponseContains('password');
+        $I->seeResponseContainsJson(array_merge(['id' => $id], $this->user));
 
         $I->sendPUT('api/users/'.$id.'.json', ['nationality' => 'Polish']);
         $I->seeResponseCodeIs(200);
-        $I->seeResponseContainsJson(array_merge(['id' => $id], $user, ['nationality' => 'Polish']));
+        $I->seeResponseContainsJson(array_merge(['id' => $id], $this->user, ['nationality' => 'Polish']));
 
-        //ToDo: validate old password is required
-//        $I->sendPUT('users/' . $id . '/password.json', ['old_password' => '', 'password' => '123456']);
-//        $I->seeResponseCodeIs(400);
+        $anotherUser = $I->grabFromCollection('User', ['email' => $this->admin['email']]);
 
-        $I->sendPUT('api/users/'.$id.'/password.json', ['old_password' => 'testtest', 'password' => '123456']);
-        $I->seeResponseCodeIs(204);
-
-        $I->sendGET('api/users/'.$id.'.json');
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseContainsJson(array_merge(['id' => $id], $user));
-
-        $anotherUser = $I->grabFromCollection('User', ['email' => $this->user['email']]);
-
-        $I->sendPUT('api/users/'.$anotherUser['_id'].'.json', $user);
-        $I->seeResponseCodeIs(403);
-
-        $I->sendPUT('api/users/'.$anotherUser['_id'].'/password.json', $user);
+        $I->sendPUT('api/users/'.$anotherUser['_id'].'.json', $this->user);
         $I->seeResponseCodeIs(403);
 
         $I->sendDELETE('api/users/'.$anotherUser['_id'].'.json');
@@ -92,7 +53,7 @@ class UsersCest
         $I->sendDELETE('api/users/'.$id.'.json');
         $I->seeResponseCodeIs(204);
 
-        $I->login($this->admin['email'], $this->admin['password']);
+        $I->login($this->admin['email']);
 
         $I->sendGET('api/users/'.$id.'.json');
         $I->seeResponseCodeIs(404);
@@ -102,21 +63,20 @@ class UsersCest
     {
         $user = $this->user;
         $user['id'] = $this->userId;
-        unset($user['password']);
+
+        $I->sendPUT('api/users/'.$user['id'].'/admin.json');
+        $I->seeResponseCodeIs(401);
+        $I->sendDELETE('api/users/'.$user['id'].'/admin.json');
+        $I->seeResponseCodeIs(401);
+
+        $I->login($this->user['email']);
 
         $I->sendPUT('api/users/'.$user['id'].'/admin.json');
         $I->seeResponseCodeIs(403);
         $I->sendDELETE('api/users/'.$user['id'].'/admin.json');
         $I->seeResponseCodeIs(403);
 
-        $I->login($this->user['email'], $this->user['password']);
-
-        $I->sendPUT('api/users/'.$user['id'].'/admin.json');
-        $I->seeResponseCodeIs(403);
-        $I->sendDELETE('api/users/'.$user['id'].'/admin.json');
-        $I->seeResponseCodeIs(403);
-
-        $I->login($this->admin['email'], $this->admin['password']);
+        $I->login($this->admin['email']);
 
         $id = $user['id'];
         unset($user['id']);
@@ -146,12 +106,12 @@ class UsersCest
         $skill2Id = (string) $dbUser = $I->grabFromCollection('Skill', ['name' => 'skill2'])['_id'];
 
         $I->sendPUT('api/skills/'.$skill1Id.'/users/'.$this->userId.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendDELETE('api/skills/'.$skill1Id.'/users/'.$this->userId.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendPUT('api/skills/'.$skill1Id.'/users/'.$this->userId.'.json');
         $I->seeResponseCodeIs(204);
@@ -186,7 +146,7 @@ class UsersCest
         $I->sendPUT('api/skills/'.$skill2Id.'/users/'.$this->adminId.'.json');
         $I->seeResponseCodeIs(403);
 
-        $I->login($this->admin['email'], $this->admin['password']);
+        $I->login($this->admin['email']);
 
         $I->sendPUT('api/skills/'.$skill2Id.'/users/'.$this->userId.'.json');
         $I->seeResponseCodeIs(204);
@@ -200,12 +160,12 @@ class UsersCest
         $team2Id = (string) $dbUser = $I->grabFromCollection('Team', ['name' => 'team2'])['_id'];
 
         $I->sendPUT('api/teams/'.$team1Id.'/users/'.$this->userId.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendDELETE('api/teams/'.$team1Id.'/users/'.$this->userId.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendPUT('api/teams/'.$team1Id.'/users/'.$this->userId.'.json');
         $I->seeResponseCodeIs(204);
@@ -240,7 +200,7 @@ class UsersCest
         $I->sendPUT('api/teams/'.$team2Id.'/users/'.$this->adminId.'.json');
         $I->seeResponseCodeIs(403);
 
-        $I->login($this->admin['email'], $this->admin['password']);
+        $I->login($this->admin['email']);
 
         $I->sendPUT('api/teams/'.$team2Id.'/users/'.$this->userId.'.json');
         $I->seeResponseCodeIs(204);
@@ -254,12 +214,12 @@ class UsersCest
         $event2Id = (string) $dbUser = $I->grabFromCollection('Event', ['name' => 'event2'])['_id'];
 
         $I->sendPUT('api/events/'.$event1Id.'/users/'.$this->userId.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendDELETE('api/events/'.$event1Id.'/users/'.$this->userId.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendPUT('api/events/'.$event1Id.'/users/'.$this->userId.'.json');
         $I->seeResponseCodeIs(204);

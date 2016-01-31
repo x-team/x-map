@@ -5,13 +5,11 @@ use MapBundle\Document\User;
 class TeamsCest
 {
     protected $admin = [
-        'password' => 'testtest1',
         'email' => 'bob1@test.pl',
         'isAdmin' => true,
     ];
 
     protected $user = [
-        'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];
 
@@ -42,17 +40,16 @@ class TeamsCest
         unset($this->team1['_id']);
         unset($this->team2['_id']);
 
-        $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User(), $this->user['password'])]));
-        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User(), $this->admin['password'])]));
+        $I->haveInCollection('User', $this->user);
+        $I->haveInCollection('User', $this->admin);
     }
 
     public function tryToReadTeam(FunctionalTester $I)
     {
         $I->sendGET('api/teams.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendGET('api/teams.json');
 
@@ -72,17 +69,17 @@ class TeamsCest
         $I->am('Anonymous user');
 
         $I->sendPOST('api/teams.json', $this->team3);
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendPUT('api/teams/'.$this->team2Id.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendDELETE('api/teams/'.$this->team2Id.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->am('ROLE_USER');
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendPOST('api/teams.json', $this->team3);
         $I->seeResponseCodeIs(403);
@@ -94,7 +91,7 @@ class TeamsCest
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_ADMIN');
-        $I->login($this->admin['email'], $this->admin['password']);
+        $I->login($this->admin['email']);
 
         $I->sendPOST('api/teams.json', $this->team3);
         $I->seeResponseCodeIs(200);
