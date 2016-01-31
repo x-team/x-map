@@ -17,7 +17,7 @@ class App extends Component {
 
   componentDidMount() {
     const { actions } = this.props;
-    actions.userGetCurrent(() => {
+    actions.authenticate(() => {
       actions.userList();
       actions.teamList();
     }, this.redirectToHomePage.bind(this));

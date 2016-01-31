@@ -41,7 +41,8 @@ module.exports = function(options) {
       new webpack.DefinePlugin({
         "process.env": {
           NODE_ENV: JSON.stringify("production"),
-          API_BASE_URL: JSON.stringify(options.apiBaseUrl)
+          API_BASE_URL: JSON.stringify(options.apiBaseUrl),
+          GOOGLE_SETTINGS: JSON.stringify(options.googleSettings)
         }
       })
     ];
@@ -65,7 +66,8 @@ module.exports = function(options) {
       new webpack.DefinePlugin({
         "process.env": {
           NODE_ENV: JSON.stringify("development"),
-          API_BASE_URL: JSON.stringify(options.apiBaseUrl)
+          API_BASE_URL: JSON.stringify(options.apiBaseUrl),
+          GOOGLE_SETTINGS: JSON.stringify(options.googleSettings)
         }
       })
     ]

@@ -1,6 +1,6 @@
 import {
   APP_LOGIN_FAILURE,
-  APP_LOGOUT_SUCCESS,
+  APP_LOGOUT,
   USER_LIST_SUCCESS,
   USER_LIST_FAILURE,
   USER_GET_SUCCESS,
@@ -42,7 +42,7 @@ function usersReducer(users = {}, action) {
       delete newUsers[action.id];
       return newUsers;
     case APP_LOGIN_FAILURE:
-    case APP_LOGOUT_SUCCESS:
+    case APP_LOGOUT:
     case USER_LIST_FAILURE:
       return {};
     default:

@@ -13,3 +13,7 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    jwt_key_pass_phrase:  ''                                      # ssh key pass phrase
+    google_application_name: x-map
+    google_developer_key: ''

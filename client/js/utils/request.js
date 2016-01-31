@@ -8,7 +8,8 @@ const request = (url, options = {}) => {
     credentials: 'include',
     mode: 'cors-with-forced-preflight',
     headers: {
-      'content-type': 'application/json;charset=UTF-8'
+      'content-type': 'application/json;charset=UTF-8',
+      'authorization': 'Bearer ' + window.token
     }
   };
 

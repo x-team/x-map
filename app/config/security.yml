@@ -24,9 +24,22 @@ security:
       pattern:  ^/(_(profiler|wdt)|css|images|js)/
       security: false
 
+    login:
+      pattern:   ^/api/(login|doc)
+      stateless: true
+      anonymous: ~
+
+    api:
+      pattern:   ^/api
+      stateless: true
+      lexik_jwt: ~
+
     main:
       pattern: ^/
       anonymous: ~
-      stateless:  false
-      http_basic:
-        realm: "Demo REST API (username: restapi, password: secretpw)"
+      stateless: true
+
+  access_control:
+    - { path: ^/api/(logins|doc), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+

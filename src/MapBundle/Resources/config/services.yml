@@ -31,19 +31,9 @@ services:
 
   map.controller.auth:
     class: MapBundle\Controller\AuthController
-    arguments: [@doctrine_mongodb]
+    arguments: [@doctrine_mongodb, @google.client, @validator, @lexik_jwt_authentication.jwt_manager]
     calls:
       - [setContainer, ["@service_container"]]
-
-  encoder.bcrypt:
-    class: Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder
-    arguments: [12]
-
-  validator.encoded_equal_to:
-    class: MapBundle\Validator\Constraints\EncodedEqualToValidator
-    tags:
-      - { name: validator.constraint_validator, alias: encoded_equal_to }
-    arguments: ["@encoder.bcrypt"]
 
   security.access.user_voter:
     class:    MapBundle\Security\Authorization\Voter\UserVoter
@@ -79,3 +69,9 @@ services:
     class: Monolog\Formatter\LineFormatter
     calls:
       - [includeStacktraces]
+
+  google.client:
+    class: Google_Client
+    calls:
+      - [setApplicationName, [%google_application_name%]]
+      - [setDeveloperKey, [%google_developer_key%]]

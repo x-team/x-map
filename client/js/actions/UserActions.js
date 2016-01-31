@@ -1,13 +1,7 @@
 import {
-  USER_CREATE,
-  USER_CREATE_SUCCESS,
-  USER_CREATE_FAILURE,
   USER_GET,
   USER_GET_SUCCESS,
   USER_GET_FAILURE,
-  USER_GET_CURRENT,
-  USER_GET_CURRENT_SUCCESS,
-  USER_GET_CURRENT_FAILURE,
   USER_LIST,
   USER_LIST_SUCCESS,
   USER_LIST_FAILURE,
@@ -29,34 +23,7 @@ import {
   USER_SELECTED_LOCATION
 } from '../constants/AppConstants';
 
-import { login } from './AppActions';
-
 import request from '../utils/request';
-
-export function userCreate(data, onSuccess) {
-  return (dispatch) => {
-    dispatch(doUserCreate());
-    request(process.env.API_BASE_URL + 'users.json', {
-      body: JSON.stringify(data),
-      method: 'POST'
-    })
-      .then(user => dispatch(userCreateSuccess(user)))
-      .then(() => dispatch(login(data.email, data.password, onSuccess)))
-      .catch((errors) => dispatch(userCreateFailure(data, errors)));
-  };
-}
-
-function doUserCreate() {
-  return {type: USER_CREATE};
-}
-
-export function userCreateSuccess(user) {
-  return {type: USER_CREATE_SUCCESS, user};
-}
-
-export function userCreateFailure(data, errors) {
-  return {type: USER_CREATE_FAILURE, data, errors};
-}
 
 export function userGet(id, onSuccess) {
   return (dispatch) => {
@@ -78,37 +45,6 @@ export function userGetSuccess(user) {
 
 export function userGetFailure(id, errors) {
   return {type: USER_GET_FAILURE, id, errors};
-}
-
-export function userGetCurrent(onSuccess, onFailure) {
-  return (dispatch) => {
-    dispatch(doUserGetCurrent());
-    request(process.env.API_BASE_URL + 'users/current.json')
-      .then(user => {
-        dispatch((user && user.id) ? userGetCurrentSuccess(user, onSuccess) : userGetCurrentFailure(onFailure));
-      })
-      .catch((errors) => dispatch(userGetCurrentFailure(onFailure, errors)));
-  };
-}
-
-function doUserGetCurrent() {
-  return {type: USER_GET_CURRENT};
-}
-
-export function userGetCurrentSuccess(user, onSuccess) {
-  if (onSuccess) {
-    onSuccess();
-  }
-
-  return {type: USER_GET_CURRENT_SUCCESS, user};
-}
-
-export function userGetCurrentFailure(errors, onFailure) {
-  if (onFailure) {
-    onFailure();
-  }
-
-  return {type: USER_GET_CURRENT_FAILURE, errors};
 }
 
 export function userList(onSuccess) {

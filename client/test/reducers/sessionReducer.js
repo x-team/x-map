@@ -24,14 +24,9 @@ describe('sessionReducer', () => {
     expect(sessionReducer(state, {type: AppConstants.APP_LOGIN_FAILURE})).toEqual(expected);
   });
 
-  it('should remove current user on APP_LOGOUT_SUCCESS action', () => {
+  it('should remove current user on APP_LOGOUT action', () => {
     const state = { currentUserId: 42, isAdmin: false, currentUserLoaded: true };
     const expected = { currentUserId: null, isAdmin: false, currentUserLoaded: true };
-    expect(sessionReducer(state, {type: AppConstants.APP_LOGOUT_SUCCESS})).toEqual(expected);
-  });
-
-  it('should keep current user on APP_LOGOUT_FAILURE action', () => {
-    const state = { currentUserId: 42, isAdmin: false, currentUserLoaded: true };
-    expect(sessionReducer(state, {type: AppConstants.APP_LOGOUT_FAILURE})).toEqual(state);
+    expect(sessionReducer(state, {type: AppConstants.APP_LOGOUT})).toEqual(expected);
   });
 });

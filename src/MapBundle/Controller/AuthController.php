@@ -4,12 +4,13 @@ namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
+use Google_Client;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManagerInterface;
 use MapBundle\Document\User;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\Prefix;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Prefix("api")
@@ -20,10 +21,19 @@ class AuthController extends FOSRestController
 
     protected $repository;
 
-    public function __construct(ManagerRegistry $registry)
+    protected $googleClient;
+
+    protected $validator;
+
+    protected $tokenEncoder;
+
+    public function __construct(ManagerRegistry $registry, Google_Client $googleClient, ValidatorInterface $validator, JWTManagerInterface $tokenEncoder)
     {
         $this->dm = $registry->getManager();
         $this->repository = $registry->getRepository('MapBundle:User');
+        $this->googleClient = $googleClient;
+        $this->validator = $validator;
+        $this->tokenEncoder = $tokenEncoder;
     }
 
     /**
@@ -38,80 +48,45 @@ class AuthController extends FOSRestController
      */
     public function postLoginAction(Request $request)
     {
-        $email = $request->get('email');
-        $password = $request->get('password');
-
-        $errors = [
-            'errors' => [
-                'children' => [
-                    'credentials' => [
-                        'errors' => [
-                            'Invalid credentials',
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        if (empty($email) || empty($password)) {
-            return $this->handleView($this->view($errors, 400));
+        $token = $request->get('token');
+        if (empty($token)) {
+            return $this->handleView($this->view('Invalid credentials.', 400));
         }
 
-        $user = $this->repository->findOneByEmail($email);
-
-        if (!$user instanceof User || !$this->checkUserPassword($user, $password)) {
-            $this->logoutUser();
-
-            return $this->handleView($this->view($errors, 400));
+        $loginTicket = $this->googleClient->getAuth()->verifyIdToken($token, $this->container->getParameter('google_developer_key'));
+        if (empty($loginTicket)) {
+            return $this->handleView($this->view('Invalid credentials.', 400));
         }
 
-        $user = $this->loginUser($user);
+        $payload = $loginTicket->getAttributes()['payload'];
+        $email = $payload['email'];
 
-        return $this->handleView($this->view($user));
-    }
+// Disabled temporarily to make testing multiple accounts easier
+//        if (!preg_match('/@x-team.com$/', $email)) {
+//            return $this->handleView($this->view('Invalid email address.', 400));
+//        }
 
-    /**
-     * @ApiDoc(
-     *   resource = true,
-     *   section = "auth",
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   }
-     * )
-     */
-    public function postLogoutAction()
-    {
-        $this->logoutUser();
+        $user = $this->repository->findOneByEmail($email) ?: new User;
+        $this->updateUserWithPayload($user, $payload);
 
-        return $this->handleView($this->view());
-    }
+        if (!count($this->validator->validate($user))) {
+            $this->dm->persist($user);
+            $this->dm->flush();
 
-    protected function loginUser(User $user)
-    {
-        $securityContext = $this->get('security.context');
-        $roles = $user->getRoles();
-        $token = new UsernamePasswordToken($user, null, 'main', $roles);
-        $securityContext->setToken($token);
-
-        return $securityContext->getToken()->getUser();
-    }
-
-    protected function logoutUser()
-    {
-        $securityContext = $this->get('security.context');
-        $token = new AnonymousToken(null, new User());
-        $securityContext->setToken($token);
-        $this->get('session')->invalidate();
-    }
-
-    protected function checkUserPassword(User $user, $password)
-    {
-        $factory = $this->get('security.encoder_factory');
-        $encoder = $factory->getEncoder($user);
-        if (!$encoder) {
-            return false;
+            $jwt = $this->tokenEncoder->create($user);
+            $view = $this->view(['user' => $user, 'token' => $jwt]);
+        } else {
+            $view = $this->view('Invalid user data.', 400);
         }
 
-        return $encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt());
+        return $this->handleView($view);
+    }
+
+    protected function updateUserWithPayload(User $user, $payload)
+    {
+        $user->setEmail($payload['email']);
+        $user->setFirstName($payload['given_name']);
+        $user->setLastName($payload['family_name']);
+        $user->setAvatar($payload['picture']);
     }
 }

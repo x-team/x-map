@@ -26,7 +26,9 @@
         "willdurand/rest-extra-bundle": "^1.0",
         "doctrine/mongodb-odm": "1.0.*",
         "doctrine/mongodb-odm-bundle": "3.0.*",
-        "nelmio/cors-bundle": "^1.4.0"
+        "nelmio/cors-bundle": "^1.4.0",
+        "lexik/jwt-authentication-bundle": "^1.4",
+        "happyr/google-api-bundle": "^2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

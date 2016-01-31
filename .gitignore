@@ -1,6 +1,7 @@
 /web/bundles/
 /app/cache/*
 /app/logs/*
+/app/var/*
 /build/
 /vendor/
 /bin/
