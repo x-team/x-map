@@ -3,6 +3,9 @@ DirectoryIndex index.html
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
     # If the requested filename exists, simply serve it.
     # We only want to let Apache serve files and not directories.
     RewriteCond %{REQUEST_FILENAME} -f
