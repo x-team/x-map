@@ -5,8 +5,7 @@ const request = (url, options = {}) => {
 
   const defaults = {
     method: 'GET',
-    credentials: 'include',
-    mode: 'cors-with-forced-preflight',
+    mode: 'cors',
     headers: {
       'content-type': 'application/json;charset=UTF-8',
       'authorization': 'Bearer ' + window.token

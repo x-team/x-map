@@ -51,7 +51,7 @@ swiftmailer:
   spool:   { type: memory }
 
 fos_rest:
-  disable_csrf_role: ROLE_API
+  disable_csrf_role: ROLE_USER
   param_fetcher_listener: true
   view:
     mime_types:
