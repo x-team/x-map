@@ -234,7 +234,7 @@ describe('geoDataReducer', () => {
     expect(geoDataReducer(state, {type: AppConstants.APP_LOGIN_FAILURE})).toEqual(initialState);
   });
 
-  it('should remove all data on APP_LOGOUT_SUCCESS action', () => {
+  it('should remove all data on APP_LOGOUT action', () => {
     const state = { type: 'FeatureCollection', features: [
       {
         id: 42,
@@ -246,6 +246,6 @@ describe('geoDataReducer', () => {
       }
     ]};
 
-    expect(geoDataReducer(state, {type: AppConstants.APP_LOGOUT_SUCCESS})).toEqual(initialState);
+    expect(geoDataReducer(state, {type: AppConstants.APP_LOGOUT})).toEqual(initialState);
   });
 });

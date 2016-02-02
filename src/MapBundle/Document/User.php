@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @MongoDB\Document
@@ -27,14 +26,6 @@ class User implements UserInterface
      * @Assert\NotBlank
      */
     protected $email;
-
-    /**
-     * @MongoDB\String
-     * @Assert\NotBlank
-     * @Assert\Length(min=6)
-     * @Serializer\Exclude
-     */
-    protected $password;
 
     /**
      * @MongoDB\String
@@ -77,6 +68,12 @@ class User implements UserInterface
      * @Assert\Url
      */
     protected $website;
+
+    /**
+     * @MongoDB\String
+     * @Assert\Url
+     */
+    protected $avatar;
 
     /**
      * @MongoDB\Boolean
@@ -126,30 +123,6 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set password.
-     *
-     * @param string $password
-     *
-     * @return self
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password.
-     *
-     * @return string $password
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -270,6 +243,30 @@ class User implements UserInterface
     public function getWebsite()
     {
         return $this->website;
+    }
+
+    /**
+     * Set avatar.
+     *
+     * @param string $avatar
+     *
+     * @return self
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar.
+     *
+     * @return string $avatar
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 
     public function getRoles()
@@ -567,5 +564,17 @@ class User implements UserInterface
     public function getSlackId()
     {
         return $this->slackId;
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
     }
 }

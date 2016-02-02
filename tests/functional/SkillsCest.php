@@ -5,13 +5,11 @@ use MapBundle\Document\User;
 class SkillsCest
 {
     protected $admin = [
-        'password' => 'testtest1',
         'email' => 'bob1@test.pl',
         'isAdmin' => true,
     ];
 
     protected $user = [
-        'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];
 
@@ -39,17 +37,16 @@ class SkillsCest
         unset($this->skill1['_id']);
         unset($this->skill2['_id']);
 
-        $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User(), $this->user['password'])]));
-        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User(), $this->admin['password'])]));
+        $I->haveInCollection('User', $this->user);
+        $I->haveInCollection('User', $this->admin);
     }
 
     public function tryToReadSkill(FunctionalTester $I)
     {
         $I->sendGET('api/skills.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendGET('api/skills.json');
 
@@ -69,17 +66,17 @@ class SkillsCest
         $I->am('Anonymous user');
 
         $I->sendPOST('api/skills.json', $this->skill3);
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendPUT('api/skills/'.$this->skill2Id.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendDELETE('api/skills/'.$this->skill2Id.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->am('ROLE_USER');
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendPOST('api/skills.json', $this->skill3);
         $I->seeResponseCodeIs(403);
@@ -91,7 +88,7 @@ class SkillsCest
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_ADMIN');
-        $I->login($this->admin['email'], $this->admin['password']);
+        $I->login($this->admin['email']);
 
         $I->sendPOST('api/skills.json', $this->skill3);
         $I->seeResponseCodeIs(200);

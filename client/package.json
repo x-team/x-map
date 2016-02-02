@@ -5,6 +5,7 @@
   "dependencies": {
     "deep-equal": "^1.0.1",
     "es6-promise": "^3.0.2",
+    "google-client-api": "^1.0.4",
     "google-maps": "^3.1.0",
     "history": "^1.0.0",
     "react": "^0.14.0",

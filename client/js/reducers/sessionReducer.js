@@ -1,10 +1,7 @@
 import {
   APP_LOGIN_SUCCESS,
   APP_LOGIN_FAILURE,
-  APP_LOGOUT_SUCCESS,
-  APP_LOGOUT_FAILURE,
-  USER_GET_CURRENT_SUCCESS,
-  USER_GET_CURRENT_FAILURE,
+  APP_LOGOUT,
   USER_LIST_SUCCESS,
   USER_LIST_FAILURE,
   TEAM_LIST_SUCCESS,
@@ -29,14 +26,12 @@ function sessionReducer(session = initialState, action) {
 
   switch (action.type) {
     case APP_LOGIN_SUCCESS:
-    case USER_GET_CURRENT_SUCCESS:
       return assignToEmpty(session, {
         currentUserId: action.user.id,
         isAdmin: action.user.isAdmin,
         currentUserLoaded: true
       });
-    case USER_GET_CURRENT_FAILURE:
-    case APP_LOGOUT_SUCCESS:
+    case APP_LOGOUT:
       return assignToEmpty(session, {
         currentUserId: null,
         isAdmin: false,
@@ -88,7 +83,6 @@ function sessionReducer(session = initialState, action) {
       return assignToEmpty(session, {
         mapMode: MAP_MODE_SHOW
       });
-    case APP_LOGOUT_FAILURE:
     default:
       return session;
   }

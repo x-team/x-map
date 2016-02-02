@@ -2,9 +2,7 @@ import {
   APP_ROUTE_CHANGED,
   APP_LOGIN,
   APP_LOGIN_FAILURE,
-  APP_LOGOUT_SUCCESS,
-  USER_CREATE,
-  USER_CREATE_FAILURE,
+  APP_LOGOUT,
   USER_UPDATE,
   USER_UPDATE_FAILURE,
   TEAM_CREATE,
@@ -18,8 +16,8 @@ function errorsReducer(errors = {}, action) {
   Object.freeze(errors);
 
   switch (action.type) {
-    // clear errors when user leaves current page
     case APP_ROUTE_CHANGED:
+      // clear errors when user leaves current page
       return {};
     case APP_LOGIN:
       return assignToEmpty(errors, {
@@ -28,14 +26,6 @@ function errorsReducer(errors = {}, action) {
     case APP_LOGIN_FAILURE:
       return assignToEmpty(errors, {
         appLogin: parseErrors(action.errors)
-      });
-    case USER_CREATE:
-      return assignToEmpty(errors, {
-        userCreate: {}
-      });
-    case USER_CREATE_FAILURE:
-      return assignToEmpty(errors, {
-        userCreate: parseErrors(action.errors)
       });
     case USER_UPDATE:
       return assignToEmpty(errors, {
@@ -61,7 +51,7 @@ function errorsReducer(errors = {}, action) {
       return assignToEmpty(errors, {
         teamUpdate: parseErrors(action.errors)
       });
-    case APP_LOGOUT_SUCCESS:
+    case APP_LOGOUT:
       return {};
     default:
       return errors;

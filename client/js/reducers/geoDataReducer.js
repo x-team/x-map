@@ -1,6 +1,6 @@
 import {
   APP_LOGIN_FAILURE,
-  APP_LOGOUT_SUCCESS,
+  APP_LOGOUT,
   APP_LOGIN_SUCCESS,
   USER_LIST_SUCCESS,
   USER_LIST_FAILURE,
@@ -37,7 +37,7 @@ function geoDataReducer(geoData = initialState, action) {
     case USER_DELETE_SUCCESS:
       return removeFeature(convertToFeature({id: action.id}), assignToEmpty(geoData));
     case APP_LOGIN_FAILURE:
-    case APP_LOGOUT_SUCCESS:
+    case APP_LOGOUT:
     case USER_LIST_FAILURE:
       return initialState;
     default:

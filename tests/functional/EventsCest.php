@@ -5,13 +5,11 @@ use MapBundle\Document\User;
 class EventsCest
 {
     protected $admin = [
-        'password' => 'testtest1',
         'email' => 'bob1@test.pl',
         'isAdmin' => true,
     ];
 
     protected $user = [
-        'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];
 
@@ -53,17 +51,16 @@ class EventsCest
         unset($this->event1['_id']);
         unset($this->event2['_id']);
 
-        $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User(), $this->user['password'])]));
-        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User(), $this->admin['password'])]));
+        $I->haveInCollection('User', $this->user);
+        $I->haveInCollection('User', $this->admin);
     }
 
     public function tryToReadEvent(FunctionalTester $I)
     {
         $I->sendGET('api/events.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendGET('api/events.json');
 
@@ -83,17 +80,17 @@ class EventsCest
         $I->am('Anonymous user');
 
         $I->sendPOST('api/events.json', $this->event3);
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendPUT('api/events/'.$this->event2Id.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendDELETE('api/events/'.$this->event2Id.'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->am('ROLE_USER');
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendPOST('api/events.json', $this->event3);
         $I->seeResponseCodeIs(400);

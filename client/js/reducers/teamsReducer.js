@@ -1,6 +1,6 @@
 import {
   APP_LOGIN_FAILURE,
-  APP_LOGOUT_SUCCESS,
+  APP_LOGOUT,
   TEAM_LIST_SUCCESS,
   TEAM_LIST_FAILURE,
   TEAM_GET_SUCCESS,
@@ -34,7 +34,7 @@ function teamsReducer(teams = {}, action) {
       delete newTeams[action.id];
       return newTeams;
     case APP_LOGIN_FAILURE:
-    case APP_LOGOUT_SUCCESS:
+    case APP_LOGOUT:
     case TEAM_LIST_FAILURE:
       return {};
     default:

@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import getGoogleApiClient from 'google-client-api';
 
 class HeaderAnonymous extends Component {
+  componentDidMount() {
+    getGoogleApiClient(gapi => {
+      gapi.load('signin2', () => {
+        gapi.signin2.render('g-signin2', {
+          longtitle: true,
+          width: 300,
+          height: 60
+        });
+      });
+    });
+  }
+
   render() {
     return (
       <div>
         <nav className="navigation">
-          <Link className="button" to="/login">Login</Link>
-          <Link className="button" to="/register">Register</Link>
+          <div id="g-signin2"></div>
         </nav>
       </div>
     );

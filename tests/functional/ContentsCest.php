@@ -1,17 +1,13 @@
 <?php
 
-use MapBundle\Document\User;
-
 class ContentsCest
 {
     protected $admin = [
-        'password' => 'testtest1',
         'email' => 'bob1@test.pl',
         'isAdmin' => true,
     ];
 
     protected $user = [
-        'password' => 'testtest2',
         'email' => 'bob2@test.pl',
     ];
 
@@ -41,17 +37,16 @@ class ContentsCest
         unset($this->content1['_id']);
         unset($this->content2['_id']);
 
-        $encoder = $I->grabServiceFromContainer('security.password_encoder');
-        $I->haveInCollection('User', array_merge($this->user, ['password' => $encoder->encodePassword(new User(), $this->user['password'])]));
-        $I->haveInCollection('User', array_merge($this->admin, ['password' => $encoder->encodePassword(new User(), $this->admin['password'])]));
+        $I->haveInCollection('User', $this->user);
+        $I->haveInCollection('User', $this->admin);
     }
 
     public function tryToReadContent(FunctionalTester $I)
     {
         $I->sendGET('api/contents.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendGET('api/contents.json');
         $I->seeResponseCodeIs(200);
@@ -70,17 +65,17 @@ class ContentsCest
         $I->am('Anonymous user');
 
         $I->sendPOST('api/contents.json', $this->content3);
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendPUT('api/contents/'.$this->content2['key'].'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->sendDELETE('api/contents/'.$this->content2['key'].'.json');
-        $I->seeResponseCodeIs(403);
+        $I->seeResponseCodeIs(401);
 
         $I->am('ROLE_USER');
 
-        $I->login($this->user['email'], $this->user['password']);
+        $I->login($this->user['email']);
 
         $I->sendPOST('api/contents.json', $this->content3);
         $I->seeResponseCodeIs(403);
@@ -92,7 +87,7 @@ class ContentsCest
         $I->seeResponseCodeIs(403);
 
         $I->am('ROLE_ADMIN');
-        $I->login($this->admin['email'], $this->admin['password']);
+        $I->login($this->admin['email']);
 
         $I->sendPOST('api/contents.json', $this->content3);
         $I->seeResponseCodeIs(200);
@@ -123,5 +118,10 @@ class ContentsCest
 
         $I->sendGET('api/contents/'.$id.'.json');
         $I->seeResponseCodeIs(404);
+
+        $I->logout();
+
+        $I->sendGET('api/contents/'.$id.'.json');
+        $I->seeResponseCodeIs(401);
     }
 }

@@ -18,7 +18,6 @@ class UserVoter implements VoterInterface
             'create',
             'delete',
             'edit_admin',
-            'edit_password',
             'link_event',
             'unlink_event',
             'link_skill',
@@ -66,7 +65,6 @@ class UserVoter implements VoterInterface
                 }
                 break;
             case 'edit':
-            case 'edit_password':
             case 'delete':
                 if ($authUser->hasRole('ROLE_ADMIN') || $authUser->getId() == $user->getId()) {
                     return VoterInterface::ACCESS_GRANTED;

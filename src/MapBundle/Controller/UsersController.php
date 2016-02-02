@@ -5,8 +5,6 @@ namespace MapBundle\Controller;
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
 use MapBundle\Document\User;
-use MapBundle\Form\Type\PasswordType;
-use MapBundle\Form\Type\RegisterUserType;
 use MapBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -55,39 +53,6 @@ class UsersController extends FOSRestController
      *     200 = "Returned when successful"
      *   },
      *   output="MapBundle\Document\User",
-     *   input="MapBundle\Form\Type\RegisterUserType"
-     * )
-     */
-    public function postUserAction(Request $request)
-    {
-        $user = new User();
-
-        $this->denyAccessUnlessGranted('create', $user);
-
-        $form = $this->createForm(new RegisterUserType(), $user);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $encoder = $this->container->get('security.password_encoder');
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-            $this->dm->persist($user);
-            $this->dm->flush();
-            $view = $this->view($user);
-        } else {
-            $view = $this->view($form, 400);
-        }
-
-        return $this->handleView($view);
-    }
-
-    /**
-     * @ApiDoc(
-     *   resource = true,
-     *   section = "users",
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   },
-     *   output="MapBundle\Document\User",
      *   input="MapBundle\Form\Type\UserType"
      * )
      */
@@ -107,41 +72,6 @@ class UsersController extends FOSRestController
         if ($form->isValid()) {
             $this->dm->flush();
             $view = $this->view($user);
-        } else {
-            $view = $this->view($form, 400);
-        }
-
-        return $this->handleView($view);
-    }
-
-    /**
-     * @ApiDoc(
-     *   resource = true,
-     *   section = "users",
-     *   statusCodes = {
-     *     204 = "Returned when successful"
-     *   },
-     *   input="MapBundle\Form\Type\PasswordType"
-     * )
-     */
-    public function putUserPasswordAction(Request $request, $id)
-    {
-        $user = $this->repository->find($id);
-
-        if (!$user) {
-            throw $this->createNotFoundException();
-        }
-
-        $this->denyAccessUnlessGranted('edit_password', $user);
-
-        $form = $this->createForm(new PasswordType(), $user, array('method' => 'PUT'));
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $encoder = $this->container->get('security.password_encoder');
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-            $this->dm->flush();
-            $view = $this->view();
         } else {
             $view = $this->view($form, 400);
         }
