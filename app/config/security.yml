@@ -1,23 +1,13 @@
 security:
   encoders:
-    Symfony\Component\Security\Core\User\User: plaintext
-    MapBundle\Document\User:
-     algorithm: bcrypt
-     cost: 12
+    MapBundle\Document\User: plaintext
 
   role_hierarchy:
     ROLE_ADMIN:        ROLE_USER
-    ROLE_ORGANIZATION_ADMIN: ROLE_USER
-    ROLE_API:        ROLE_USER
-    ROLE_SUPER_ADMIN:    [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
   providers:
     my_mongo_provider:
       mongodb: {class: MapBundle\Document\User, property: email}
-    in_memory:
-      memory:
-        users:
-          restapi:  { password: secretpw, roles: [ 'ROLE_API' ] }
 
   firewalls:
     dev:
