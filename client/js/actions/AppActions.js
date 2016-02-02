@@ -3,7 +3,9 @@ import {
   APP_LOGIN,
   APP_LOGIN_SUCCESS,
   APP_LOGIN_FAILURE,
-  APP_LOGOUT
+  APP_LOGOUT,
+  APP_GOOGLE_SIGNED_IN,
+  APP_GOOGLE_SIGNED_OUT
 } from '../constants/AppConstants';
 
 import request from '../utils/request';
@@ -16,21 +18,20 @@ export function routeChanged() {
 export function authenticate(onSuccess, onFailure) {
   return (dispatch) => {
     getGoogleApiClient((gapi) => {
-      gapi.load('auth2', () => {
-        const auth2 = gapi.auth2.init(process.env.GOOGLE_SETTINGS);
-
-        auth2.currentUser.listen(googleUser => {
-          if (googleUser.isSignedIn()) {
-            dispatch(login(googleUser.getAuthResponse().id_token, onSuccess));
-          } else {
-            dispatch(logout(onFailure));
-          }
-        });
-
-        if (auth2.isSignedIn.get()) {
-          auth2.signIn();
+      const auth2 = gapi.auth2.getAuthInstance();
+      auth2.currentUser.listen(googleUser => {
+        if (googleUser.isSignedIn()) {
+          dispatch(googleSignedIn());
+          dispatch(login(googleUser.getAuthResponse().id_token, onSuccess));
+        } else {
+          dispatch(googleSignedOut());
+          dispatch(logout(onFailure));
         }
       });
+
+      if (auth2.isSignedIn.get()) {
+        auth2.signIn();
+      }
     });
   };
 }
@@ -64,6 +65,14 @@ export function loginSuccess(user, token) {
 
 export function loginFailure(errors) {
   return {type: APP_LOGIN_FAILURE, errors};
+}
+
+function googleSignedIn() {
+  return {type: APP_GOOGLE_SIGNED_IN};
+}
+
+function googleSignedOut() {
+  return {type: APP_GOOGLE_SIGNED_OUT};
 }
 
 export function logout(onSuccess) {

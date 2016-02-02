@@ -29,18 +29,17 @@ class TeamsPage extends Component {
       );
     }
 
-    let teamsList;
-    if (teamProfiles.length) {
-      teamsList = (
-        <section>
-          {teamProfiles}
-        </section>
-      );
+    if (!teamProfiles.length) {
+      teamProfiles.push(<p className="alert">No teams yet.</p>);
     }
 
-    let addLink = <span/>;
+    let adminMenu = null;
     if (isAdmin) {
-      addLink = <Link to="/team/new">Add team</Link>;
+      adminMenu = (
+        <section className="navigation">
+          <Link to="/team/new" className="button">Add team</Link>
+        </section>
+      );
     }
 
     return (
@@ -48,12 +47,12 @@ class TeamsPage extends Component {
         <article id="teamProfiles">
           <header>
             <h2>Teams</h2>
+            {adminMenu}
           </header>
 
-          {teamsList}
-
-          {addLink}
-
+          <section>
+            {teamProfiles}
+          </section>
         </article>
       </div>
     );

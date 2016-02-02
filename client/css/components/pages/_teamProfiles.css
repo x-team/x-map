@@ -1,0 +1,12 @@
+#teamProfiles h3,
+#teamProfiles p {
+  margin: 0;
+}
+
+#teamProfiles section > div {
+  width: 100%;
+}
+
+#teamProfiles section > div:hover a {
+  text-decoration: underline;
+}

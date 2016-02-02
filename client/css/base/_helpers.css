@@ -1,0 +1,16 @@
+/* Helpers */
+
+#map img {
+  max-width: none;
+  max-height: none;
+}
+
+.horizontal-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.horizontal-list li {
+  display: inline-block;
+}
