@@ -9,4 +9,4 @@ parameters:
 
     jwt_key_pass_phrase:  'ThisPassPhraseIsNotSoSecretChangeIt' # ssh key pass phrase
     google_application_name: x-map
-    google_developer_key: ''
+    google_developer_key: '225705573373-2q29jr53tpacq5ri1k8qqggshsb3i27u.apps.googleusercontent.com'
