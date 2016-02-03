@@ -24,7 +24,7 @@ class Map extends Component {
 
   componentDidUpdate(prevProps) {
     if (!deepEqual(this.props.users, prevProps.users)) {
-      this.loadData();
+      this.loadData(this.props.users, prevProps.users);
     }
     this.updateCurrentLocationMarker();
     this.updateMapStyle();
@@ -75,12 +75,23 @@ class Map extends Component {
       }
     });
 
-    this.loadData();
+    this.loadData(this.props.users);
     this.updateMapStyle();
   }
 
-  loadData() {
-    this.map.data.addGeoJson(this.props.users);
+  loadData(users, prevUsers) {
+    if (prevUsers) {
+      // do a diff, remove features that don't exist in new dataset
+      const newData = new window.google.maps.Data();
+      newData.addGeoJson(users);
+      this.map.data.forEach(feature => {
+        if (!newData.getFeatureById(feature.getId())) {
+          this.map.data.remove(feature);
+        }
+      });
+    }
+
+    this.map.data.addGeoJson(users);
   }
 
   updateCurrentLocationMarker() {
