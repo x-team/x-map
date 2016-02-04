@@ -5,6 +5,7 @@ import * as TeamActions from '../../actions/TeamActions';
 import * as UserActions from '../../actions/UserActions';
 import TeamForm from '../forms/TeamForm';
 import assignToEmpty from '../../utils/assign';
+import DocumentTitle from 'react-document-title';
 
 class TeamEditPage extends Component {
   componentDidMount() {
@@ -35,13 +36,16 @@ class TeamEditPage extends Component {
     }
 
     return (
-      <div className="panel">
-        <article>
-          <section>
-            <TeamForm team={team} onSubmit={actions.teamUpdate} onSuccess={this.redirectToTeamPage.bind(this, params.id)} errors={errors}/>
-          </section>
-        </article>
-      </div>
+      <DocumentTitle title={`Edit team: ${team.name} | X-Map`}>
+        <div className="panel">
+          <article>
+            <section>
+              <TeamForm team={team} onSubmit={actions.teamUpdate}
+                        onSuccess={this.redirectToTeamPage.bind(this, params.id)} errors={errors}/>
+            </section>
+          </article>
+        </div>
+      </DocumentTitle>
     );
   }
 }

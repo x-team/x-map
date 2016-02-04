@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as UserActions from '../../actions/UserActions';
 import { Link } from 'react-router';
 import Profile from '../fragments/Profile';
+import DocumentTitle from 'react-document-title';
 
 class ProfilePage extends Component {
   componentDidMount() {
@@ -42,20 +43,22 @@ class ProfilePage extends Component {
     }
 
     return (
-      <div className="panel">
-        <article id="userProfile">
-          <header>
-            <h2>User #{user.id}</h2>
-          </header>
+      <DocumentTitle title={`Profile: ${user.firstName} ${user.lastName} | X-Map`}>
+        <div className="panel">
+          <article id="userProfile">
+            <header>
+              <h2>User #{user.id}</h2>
+            </header>
 
-          <section>
-            <Profile user={user}/>
-            {editLink}
-            {setLocationLink}
-            {adminLink}
-          </section>
-        </article>
-      </div>
+            <section>
+              <Profile user={user}/>
+              {editLink}
+              {setLocationLink}
+              {adminLink}
+            </section>
+          </article>
+        </div>
+      </DocumentTitle>
     );
   }
 }

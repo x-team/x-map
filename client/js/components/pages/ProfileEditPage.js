@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UserActions from '../../actions/UserActions';
 import ProfileForm from '../forms/ProfileForm';
+import DocumentTitle from 'react-document-title';
 
 class ProfileEditPage extends Component {
   componentDidMount() {
@@ -32,13 +33,16 @@ class ProfileEditPage extends Component {
     }
 
     return (
-      <div className="panel">
-        <article>
-          <section>
-            <ProfileForm user={user} onSubmit={actions.userUpdate} onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
-          </section>
-        </article>
-      </div>
+      <DocumentTitle title={`Edit profile: ${user.firstName} ${user.lastName} | X-Map`}>
+        <div className="panel">
+          <article>
+            <section>
+              <ProfileForm user={user} onSubmit={actions.userUpdate}
+                           onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
+            </section>
+          </article>
+        </div>
+      </DocumentTitle>
     );
   }
 }

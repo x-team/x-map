@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as UserActions from '../../actions/UserActions';
+import DocumentTitle from 'react-document-title';
 
 class ProfileSetLocationPage extends Component {
   componentDidMount() {
@@ -40,13 +41,15 @@ class ProfileSetLocationPage extends Component {
     }
 
     return (
-      <div className="panel">
-        <article>
-          <h3>Select location on the map</h3>
-          <button type="button" disabled={!currentLocation} onClick={this.save.bind(this)}>Save</button>
-          <Link to={`/profile/${params.id}`}>Cancel</Link>
-        </article>
-      </div>
+      <DocumentTitle title={`Set location: ${user.firstName} ${user.lastName} | X-Map`}>
+        <div className="panel">
+          <article>
+            <h3>Select location on the map</h3>
+            <button type="button" disabled={!currentLocation} onClick={this.save.bind(this)}>Save</button>
+            <Link to={`/profile/${params.id}`}>Cancel</Link>
+          </article>
+        </div>
+      </DocumentTitle>
     );
   }
 }

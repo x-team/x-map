@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as UserActions from '../../actions/UserActions';
 import MiniProfile from '../fragments/MiniProfile';
+import DocumentTitle from 'react-document-title';
 
 class ProfilesPage extends Component {
   markUserAsActive(id) {
@@ -30,19 +31,21 @@ class ProfilesPage extends Component {
     }
 
     return (
-      <div className="panel">
-        <article id="userProfiles">
-          <header>
-            <h2>Profiles</h2>
-          </header>
+      <DocumentTitle title="Profiles | X-Map">
+        <div className="panel">
+          <article id="userProfiles">
+            <header>
+              <h2>Profiles</h2>
+            </header>
 
-          <section>
-            <ul className="horizontal-list">
-              {profiles}
-            </ul>
-          </section>
-        </article>
-      </div>
+            <section>
+              <ul className="horizontal-list">
+                {profiles}
+              </ul>
+            </section>
+          </article>
+        </div>
+      </DocumentTitle>
     );
   }
 }

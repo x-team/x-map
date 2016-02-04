@@ -6,6 +6,7 @@ import * as UserActions from '../../actions/UserActions';
 import { Link } from 'react-router';
 import MiniTeam from '../fragments/MiniTeam';
 import assignToEmpty from '../../utils/assign';
+import DocumentTitle from 'react-document-title';
 
 class TeamsPage extends Component {
   markTeamAsActive(id) {
@@ -23,7 +24,8 @@ class TeamsPage extends Component {
     const teamProfiles = [];
     for (const id in teams) {
       teamProfiles.push(
-        <div key={id} onMouseOver={this.markTeamAsActive.bind(this, id)} onMouseOut={this.markTeamAsInactive.bind(this)}>
+        <div key={id} onMouseOver={this.markTeamAsActive.bind(this, id)}
+             onMouseOut={this.markTeamAsInactive.bind(this)}>
           <MiniTeam team={teams[id]}/>
         </div>
       );
@@ -43,18 +45,20 @@ class TeamsPage extends Component {
     }
 
     return (
-      <div className="panel">
-        <article id="teamProfiles">
-          <header>
-            <h2>Teams</h2>
-            {adminMenu}
-          </header>
+      <DocumentTitle title="Teams | X-Map">
+        <div className="panel">
+          <article id="teamProfiles">
+            <header>
+              <h2>Teams</h2>
+              {adminMenu}
+            </header>
 
-          <section>
-            {teamProfiles}
-          </section>
-        </article>
-      </div>
+            <section>
+              {teamProfiles}
+            </section>
+          </article>
+        </div>
+      </DocumentTitle>
     );
   }
 }
