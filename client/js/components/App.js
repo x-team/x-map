@@ -9,6 +9,7 @@ import assignToEmpty from '../utils/assign';
 import Header from './fragments/Header';
 import Loader from './fragments/Loader';
 import Map from './fragments/Map';
+import DocumentTitle from 'react-document-title';
 
 class App extends Component {
   constructor(props, context) {
@@ -50,7 +51,11 @@ class App extends Component {
         </span>
       );
     } else {
-      content = <Loader isSignedIn={isSignedIn}/>;
+      content = (
+        <DocumentTitle title="Login | X-Map">
+          <Loader isSignedIn={isSignedIn}/>
+        </DocumentTitle>
+      );
     }
 
     return (

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as TeamActions from '../../actions/TeamActions';
 import TeamForm from '../forms/TeamForm';
+import DocumentTitle from 'react-document-title';
 
 class TeamAddPage extends Component {
   redirectToTeamsPage() {
@@ -13,9 +14,11 @@ class TeamAddPage extends Component {
     const { actions, errors } = this.props;
 
     return (
-      <div className="panel">
-        <TeamForm onSubmit={actions.teamCreate} onSuccess={this.redirectToTeamsPage.bind(this)} errors={errors}/>
-      </div>
+      <DocumentTitle title="Add team | X-Map">
+        <div className="panel">
+          <TeamForm onSubmit={actions.teamCreate} onSuccess={this.redirectToTeamsPage.bind(this)} errors={errors}/>
+        </div>
+      </DocumentTitle>
     );
   }
 }

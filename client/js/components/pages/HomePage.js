@@ -1,8 +1,9 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
+import DocumentTitle from 'react-document-title';
 
 class HomePage extends Component {
   render() {
-    return null;
+    return <DocumentTitle title="Homepage | X-Map"/>;
   }
 }
 
