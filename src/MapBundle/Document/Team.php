@@ -28,6 +28,12 @@ class Team
 
     /**
      * @MongoDB\String
+     * @Assert\Length(max=128)
+     */
+    protected $summary;
+
+    /**
+     * @MongoDB\String
      * @Assert\Length(max=1024)
      */
     protected $description;
@@ -70,6 +76,30 @@ class Team
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set summary.
+     *
+     * @param string $summary
+     *
+     * @return self
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+     * Get summary.
+     *
+     * @return string $summary
+     */
+    public function getSummary()
+    {
+        return $this->summary;
     }
 
     /**
