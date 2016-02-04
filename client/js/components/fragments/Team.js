@@ -29,6 +29,10 @@ class Team extends Component {
               <td>{team.name}</td>
             </tr>
             <tr>
+              <th>Summary</th>
+              <td>{team.summary}</td>
+            </tr>
+            <tr>
               <th>Description</th>
               <td>{team.description}</td>
             </tr>

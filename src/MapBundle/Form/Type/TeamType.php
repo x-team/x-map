@@ -10,6 +10,7 @@ class TeamType extends BaseAbstractType
     {
         $builder
             ->add('name')
+            ->add('summary')
             ->add('description')
         ;
     }
