@@ -17,10 +17,6 @@
   line-height: 70px;
 }
 
-#header #logo {
-  margin-left: 20px;
-}
-
 #header .navigation {
   align-self: flex-end;
   margin: 0 10px 0 0;

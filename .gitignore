@@ -16,3 +16,4 @@ web/css
 web/js
 web/*.png
 web/*.html
+npm-debug.log

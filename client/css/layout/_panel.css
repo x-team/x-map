@@ -8,7 +8,7 @@
   z-index: 2;
   background-color: rgba(0, 0, 0, .65);
   color: #fff;
-  border-radius: 5px;
+  border-radius: 6px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -57,7 +57,36 @@
   margin-top: 20px;
 }
 
-.panel article > header > *:last-child,
 .panel article > section > *:last-child {
   margin-bottom: 40px;
+}
+
+
+$size: 500px;
+.panel.panel-homescreen {
+  width: $size;
+  height: $size;
+  position: fixed;
+  top: calc(50% - ($size / 2));
+  left: calc(50% - ($size / 2));
+  z-index: 2;
+  background-image: url(../img/shinyworldglobe.png);
+  box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.55);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.panel.panel-homescreen p,
+.panel.panel-homescreen h1,
+.panel.panel-homescreen h2 {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+.panel.panel-homescreen #g-signin2 {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+  width: auto;
 }

@@ -1,7 +1,18 @@
-#userProfiles .tableHeader {
-  font-weight: bold;
+#userProfiles img {
+  width: 100px;
+  border-radius: 50%;
 }
 
-#userProfiles .row {
-  margin-top: 5px;
+#userProfiles ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#userProfiles ul li {
+  margin-bottom: 20px;
+}
+
+#userProfiles ul li a {
+  display: block;
 }

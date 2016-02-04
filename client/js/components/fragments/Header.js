@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import HeaderAuthenticated from './HeaderAuthenticated';
-import HeaderAnonymous from './HeaderAnonymous';
 
 import Logo from '../../../img/logo.png';
 import 'file?name=[name].[ext]!../../../img/logo.png';
@@ -10,22 +8,25 @@ class Header extends Component {
   render() {
     const { user, onLogout } = this.props;
 
-    let header;
+    let header = null;
     if (user && user.id) {
-      header = <HeaderAuthenticated user={user} onLogout={onLogout}/>;
-    } else {
-      header = <HeaderAnonymous />;
+      header = (
+        <header id="header">
+          <Link id="logo" to="/">
+            <img className="logo" src={Logo} alt="X-Team"/>
+          </Link>
+          <h1>X-Map</h1>
+          <nav className="navigation">
+            <Link className="button" to="/profiles">Profiles</Link>
+            <Link className="button" to="/teams">Teams</Link>
+            <Link className="button" to={'/profile/' + user.id}>My profile</Link>
+            <button className="button" onClick={onLogout}>Logout</button>
+          </nav>
+        </header>
+      );
     }
 
-    return (
-      <header id="header">
-        <Link id="logo" to="/">
-          <img className="logo" src={Logo} alt="X-Map brand"/>
-        </Link>
-        <h1>X-Map</h1>
-        {header}
-      </header>
-    );
+    return header;
   }
 }
 

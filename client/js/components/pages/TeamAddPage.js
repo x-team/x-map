@@ -14,11 +14,7 @@ class TeamAddPage extends Component {
 
     return (
       <div className="panel">
-        <article>
-          <section>
-            <TeamForm onSubmit={actions.teamCreate} onSuccess={this.redirectToTeamsPage.bind(this)} errors={errors}/>
-          </section>
-        </article>
+        <TeamForm onSubmit={actions.teamCreate} onSuccess={this.redirectToTeamsPage.bind(this)} errors={errors}/>
       </div>
     );
   }

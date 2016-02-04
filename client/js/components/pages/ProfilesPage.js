@@ -19,25 +19,27 @@ class ProfilesPage extends Component {
     const profiles = [];
     for (const id in users) {
       profiles.push(
-        <div key={id} onMouseOver={this.markUserAsActive.bind(this, id)} onMouseOut={this.markUserAsInactive.bind(this)}>
+        <li key={id} onMouseOver={this.markUserAsActive.bind(this, id)} onMouseOut={this.markUserAsInactive.bind(this)}>
           <MiniProfile user={users[id]}/>
-        </div>
+        </li>
       );
     }
 
     if (!profiles.length) {
-      return <span/>;
+      profiles.push(<p className="alert error">Something has gone wrong. No profiles found.</p>);
     }
 
     return (
       <div className="panel">
         <article id="userProfiles">
           <header>
-            <h2>Users</h2>
+            <h2>Profiles</h2>
           </header>
 
           <section>
-            {profiles}
+            <ul className="horizontal-list">
+              {profiles}
+            </ul>
           </section>
         </article>
       </div>
