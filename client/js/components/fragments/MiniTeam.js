@@ -7,14 +7,16 @@ class MiniTeam extends Component {
 
     let summary = null;
     if (team.summary) {
-      summary = <p>{team.summary}</p>;
+      summary = <p className="text-muted">{team.summary}</p>;
     }
 
     return (
-      <span>
-        <h3><Link to={`/team/${team.id}`}>{team.name}</Link></h3>
-        {summary}
-      </span>
+      <Link className="miniTeam media" to={`/team/${team.id}`} title={team.name}>
+        <span className="media-body">
+          <h4 className="media-heading">{team.name}</h4>
+          {summary}
+        </span>
+      </Link>
     );
   }
 }

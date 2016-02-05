@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+import DocumentTitle from 'react-document-title';
+
 import * as TeamActions from '../../actions/TeamActions';
 import * as UserActions from '../../actions/UserActions';
-import TeamForm from '../forms/TeamForm';
 import assignToEmpty from '../../utils/assign';
-import DocumentTitle from 'react-document-title';
+
+/* Components */
+import TeamForm from '../forms/TeamForm';
 
 class TeamEditPage extends Component {
   componentDidMount() {
@@ -37,14 +41,20 @@ class TeamEditPage extends Component {
 
     return (
       <DocumentTitle title={`Edit team: ${team.name} | X-Map`}>
-        <div className="panel">
-          <article>
-            <section>
-              <TeamForm team={team} onSubmit={actions.teamUpdate}
-                        onSuccess={this.redirectToTeamPage.bind(this, params.id)} errors={errors}/>
-            </section>
-          </article>
-        </div>
+        <article id="TeamEditPage" className="page card">
+          <Link to="/" className="close btn btn-secondary">&times;</Link>
+
+          <header className="card-header">
+            <h3 className="card-title">{team.name}</h3>
+            <p className="card-subtitle">Edit team</p>
+            <Link className="text-muted" to={`/team/${team.id}`} title={`Go to ${team.name} team page`}>#{team.id}</Link>
+          </header>
+
+          <div className="card-block">
+            <TeamForm team={team} onSubmit={actions.teamUpdate}
+              onSuccess={this.redirectToTeamPage.bind(this, params.id)} errors={errors}/>
+          </div>
+        </article>
       </DocumentTitle>
     );
   }

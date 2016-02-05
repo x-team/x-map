@@ -1,15 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import DocumentTitle from 'react-document-title';
+
 import getGoogleApiClient from 'google-client-api';
+
 import * as AppActions from '../actions/AppActions';
 import * as UserActions from '../actions/UserActions';
 import * as TeamActions from '../actions/TeamActions';
 import assignToEmpty from '../utils/assign';
+
+/* Components */
 import Header from './fragments/Header';
 import Loader from './fragments/Loader';
 import Map from './fragments/Map';
-import DocumentTitle from 'react-document-title';
 
 class App extends Component {
   constructor(props, context) {
@@ -45,10 +49,10 @@ class App extends Component {
     let content;
     if (currentUserId && usersLoaded && teamsLoaded) {
       content = (
-        <span>
+        <div>
           <Header user={users[currentUserId]} onLogout={actions.logout.bind(null, this.redirectToHomePage.bind(this))}/>
           { this.props.children }
-        </span>
+        </div>
       );
     } else {
       content = (
@@ -60,6 +64,7 @@ class App extends Component {
 
     return (
       <div>
+        <h1 className="sr-only sr-only-focusable">X-Map</h1>
         {content}
         <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>
       </div>

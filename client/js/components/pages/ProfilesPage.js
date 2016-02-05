@@ -1,9 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as UserActions from '../../actions/UserActions';
-import MiniProfile from '../fragments/MiniProfile';
+import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+
+import * as UserActions from '../../actions/UserActions';
+
+/* Components */
+import MiniProfile from '../fragments/MiniProfile';
 
 class ProfilesPage extends Component {
   markUserAsActive(id) {
@@ -20,7 +24,8 @@ class ProfilesPage extends Component {
     const profiles = [];
     for (const id in users) {
       profiles.push(
-        <li key={id} onMouseOver={this.markUserAsActive.bind(this, id)} onMouseOut={this.markUserAsInactive.bind(this)}>
+        <li className="list-group-item" key={id}
+          onMouseOver={this.markUserAsActive.bind(this, id)} onMouseOut={this.markUserAsInactive.bind(this)}>
           <MiniProfile user={users[id]}/>
         </li>
       );
@@ -32,19 +37,18 @@ class ProfilesPage extends Component {
 
     return (
       <DocumentTitle title="Profiles | X-Map">
-        <div className="panel">
-          <article id="userProfiles">
-            <header>
-              <h2>Profiles</h2>
-            </header>
+        <article id="ProfilesPage" className="page card">
+          <Link to="/" className="close btn btn-secondary">&times;</Link>
 
-            <section>
-              <ul className="horizontal-list">
-                {profiles}
-              </ul>
-            </section>
-          </article>
-        </div>
+          <header className="card-header">
+            <h3 className="card-title">Profiles</h3>
+            <p className="text-muted">Listing all profiles</p>
+          </header>
+
+          <ul className="list-group list-group-flush">
+            {profiles}
+          </ul>
+        </article>
       </DocumentTitle>
     );
   }

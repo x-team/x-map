@@ -3,7 +3,7 @@ import DocumentTitle from 'react-document-title';
 
 class HomePage extends Component {
   render() {
-    return <DocumentTitle title="Homepage | X-Map"/>;
+    return <DocumentTitle title="X-Map | X-Team"/>;
   }
 }
 

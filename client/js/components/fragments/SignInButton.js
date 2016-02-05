@@ -9,7 +9,11 @@ class SignInButton extends Component {
   }
 
   render() {
-    return <p><a ref={this.attachSignInHandler}>Sign in with Google</a></p>;
+    return (
+      <p id="SignInButton" className="text-xs-center">
+        <a className="btn btn-success-outline" ref={this.attachSignInHandler}>Sign in with Google</a>
+      </p>
+    );
   }
 }
 

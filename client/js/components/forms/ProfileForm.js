@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+
+/* Components */
 import ErrorList from '../forms/ErrorList';
 
 class ProfileForm extends Component {
@@ -21,37 +24,67 @@ class ProfileForm extends Component {
     const { errors } = this.props;
 
     return (
-      <div>
+      <div id="ProfileForm">
         <ErrorList errors={errors} showFieldErrors/>
-        <h3>Edit profile #{this.state.id}</h3>
-        <form id="profileEditForm" onSubmit={this.onSubmit.bind(this)}>
-          <div className="row">
-            <input type="email" placeholder="Email" value={this.state.email} onChange={this.onInputChange.bind(this, 'email')} required/>
-          </div>
-          <div className="row">
-            <input type="text" placeholder="First name" value={this.state.firstName} onChange={this.onInputChange.bind(this, 'firstName')} required/>
-          </div>
-          <div className="row">
-            <input type="text" placeholder="Last name" value={this.state.lastName} onChange={this.onInputChange.bind(this, 'lastName')} required/>
-          </div>
-          <div className="row">
-            <input type="text" placeholder="Skype ID" value={this.state.skypeId} onChange={this.onInputChange.bind(this, 'skypeId')}/>
-          </div>
-          <div className="row">
-            <input type="text" placeholder="Slack ID" value={this.state.slackId} onChange={this.onInputChange.bind(this, 'slackId')}/>
-          </div>
-          <div className="row">
-            <input type="text" placeholder="Website" value={this.state.website} onChange={this.onInputChange.bind(this, 'website')}/>
-          </div>
-          <div className="row">
-            <input type="text" placeholder="Nationality" value={this.state.nationality} onChange={this.onInputChange.bind(this, 'nationality')}/>
-          </div>
-          <div className="row">
-            <textarea placeholder="About me" value={this.state.aboutMe} onChange={this.onInputChange.bind(this, 'aboutMe')}/>
-          </div>
-          <div className="row">
-            <button className="button" type="submit">Save</button>
-          </div>
+        <form onSubmit={this.onSubmit.bind(this)}>
+          <fieldset className="form-group">
+            <label>Email</label>
+            <input type="email" className="form-control" placeholder="Email" value={this.state.email}
+              onChange={this.onInputChange.bind(this, 'email')} required/>
+            <small className="text-muted"><strong>Required information.</strong></small>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>First name</label>
+            <input type="text" className="form-control" placeholder="First name" value={this.state.firstName}
+              onChange={this.onInputChange.bind(this, 'firstName')} required/>
+            <small className="text-muted"><strong>Required information.</strong></small>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Last name</label>
+            <input type="text" className="form-control" placeholder="Last name" value={this.state.lastName}
+              onChange={this.onInputChange.bind(this, 'lastName')} required/>
+            <small className="text-muted"><strong>Required information.</strong></small>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Slack ID</label>
+            <input type="text" className="form-control" placeholder="Slack ID" value={this.state.slackId}
+              onChange={this.onInputChange.bind(this, 'slackId')}/>
+            <small className="text-muted"><strong>Required information.</strong></small>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Skype ID</label>
+            <input type="text" className="form-control" placeholder="Skype ID" value={this.state.skypeId}
+              onChange={this.onInputChange.bind(this, 'skypeId')}/>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Website</label>
+            <input type="text" className="form-control" placeholder="Website" value={this.state.website}
+              onChange={this.onInputChange.bind(this, 'website')}/>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Nationality</label>
+            <input type="text" className="form-control" placeholder="Nationality" value={this.state.nationality}
+              onChange={this.onInputChange.bind(this, 'nationality')}/>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>About me</label>
+            <textarea className="form-control" placeholder="About me" value={this.state.aboutMe}
+              rows="5" onChange={this.onInputChange.bind(this, 'aboutMe')}/>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <button className="btn btn-primary" type="submit">Save</button>
+            <span> </span>
+            <Link className="btn btn-secondary" to={`/profile/${this.state.id}`}
+              title={`${this.state.firstName} ${this.state.lastName}`}>Cancel</Link>
+          </fieldset>
         </form>
       </div>
     );
