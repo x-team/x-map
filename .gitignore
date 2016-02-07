@@ -15,5 +15,7 @@ app/bootstrap.php.cache
 web/css
 web/js
 web/*.png
+web/*.jpg
 web/*.html
 npm-debug.log
+client/npm-debug.log

@@ -305,7 +305,9 @@ class User implements UserInterface
 
     public function addTeam(Team $team)
     {
-        $this->teams[] = $team;
+        if (!$this->teams->contains($team)) {
+            $this->teams[] = $team;
+        }
     }
 
     public function removeTeam(Team $team)
@@ -413,7 +415,9 @@ class User implements UserInterface
      */
     public function addSkill(Skill $skill)
     {
-        $this->skills[] = $skill;
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
+        }
     }
 
     /**
@@ -461,7 +465,9 @@ class User implements UserInterface
      */
     public function addEvent(Event $event)
     {
-        $this->events[] = $event;
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+        }
     }
 
     /**

@@ -213,7 +213,9 @@ class Event
      */
     public function addUser(User $user)
     {
-        $this->users[] = $user;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
     }
 
     /**
