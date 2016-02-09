@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import * as UserActions from '../../actions/UserActions';
 import DocumentTitle from 'react-document-title';
+
+import * as UserActions from '../../actions/UserActions';
 
 class ProfileSetLocationPage extends Component {
   componentDidMount() {
@@ -42,13 +43,22 @@ class ProfileSetLocationPage extends Component {
 
     return (
       <DocumentTitle title={`Set location: ${user.firstName} ${user.lastName} | X-Map`}>
-        <div className="panel">
-          <article>
-            <h3>Select location on the map</h3>
-            <button type="button" disabled={!currentLocation} onClick={this.save.bind(this)}>Save</button>
-            <Link to={`/profile/${params.id}`}>Cancel</Link>
-          </article>
-        </div>
+        <article id="ProfileSetLocationPage" className="page card">
+          <Link to="/" className="close btn btn-secondary">&times;</Link>
+
+          <header className="card-header">
+            <h3 className="card-title">{user.firstName} {user.lastName}</h3>
+            <p className="card-subtitle">Set location</p>
+            <Link className="text-muted" to={`/profile/${params.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>#{user.id}</Link>
+          </header>
+
+          <div className="card-block">
+            <p className="card-text">Click in the map to select current location then click save.</p>
+            <button className="btn btn-primary" type="button" disabled={!currentLocation} onClick={this.save.bind(this)}>Save</button>
+            <span> </span>
+            <Link className="btn btn-secondary" to={`/profile/${params.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>Cancel</Link>
+          </div>
+        </article>
       </DocumentTitle>
     );
   }

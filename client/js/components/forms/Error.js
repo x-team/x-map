@@ -12,7 +12,9 @@ class Error extends Component {
 
     return (
       <div>
-        <strong>{fieldString}{error}</strong>
+        <strong>{fieldString}</strong>
+        <br/>
+        {error}
       </div>
     );
   }

@@ -6,16 +6,15 @@ import {
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as UserActions from '../../actions/UserActions';
+
 import GoogleMapsLoader from 'google-maps';
 import deepEqual from 'deep-equal';
 
+import * as UserActions from '../../actions/UserActions';
+
+/* Assets */
 import blueMarker from '../../../img/blueMarker.png';
 import 'file?name=[name].[ext]!../../../img/blueMarker.png';
-
-// https://developers.google.com/maps/documentation/javascript/reference
-// https://developers.google.com/maps/documentation/javascript/libraries
-// https://developers.google.com/maps/documentation/javascript/controls
 
 class Map extends Component {
   componentDidMount() {
@@ -31,11 +30,10 @@ class Map extends Component {
   }
 
   configureMap(google) {
-    this.map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 0, lng: 50},
+    this.map = new google.maps.Map(document.getElementById('Map'), {
+      center: {lat: 0, lng: 0},
       zoom: 2,
-      minZoom: 2,
-      mapTypeId: google.maps.MapTypeId.SATELLITE,
+      mapTypeId: google.maps.MapTypeId.HYBRID,
       mapTypeIds: [
         google.maps.MapTypeId.HYBRID,
         google.maps.MapTypeId.ROADMAP,
@@ -45,16 +43,15 @@ class Map extends Component {
       scaleControl: true,
       mapTypeControl: true,
       mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-        position: google.maps.ControlPosition.LEFT_BOTTOM
+        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
       },
       streetViewControl: true,
       streetViewControlOptions: {
-        position: google.maps.ControlPosition.LEFT_BOTTOM
+        position: google.maps.ControlPosition.LEFT_CENTER
       },
       zoomControl: true,
       zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_BOTTOM
+        position: google.maps.ControlPosition.LEFT_CENTER
       }
     });
 
@@ -72,6 +69,9 @@ class Map extends Component {
     this.map.data.addListener('click', event => {
       if (this.props.mapMode === MAP_MODE_SHOW && this.props.onFeatureClick) {
         this.props.onFeatureClick(event.feature.getId());
+
+        const latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng() + 35);
+        this.map.panTo(latLng);
       }
     });
 
@@ -119,7 +119,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div id="map"></div>
+      <div id="Map"></div>
     );
   }
 }

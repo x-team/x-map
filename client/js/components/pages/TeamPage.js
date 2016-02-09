@@ -2,11 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import Team from '../fragments/Team';
+import DocumentTitle from 'react-document-title';
+
 import * as TeamActions from '../../actions/TeamActions';
 import * as UserActions from '../../actions/UserActions';
 import assignToEmpty from '../../utils/assign';
-import DocumentTitle from 'react-document-title';
+
+/* Components */
+import Team from '../fragments/Team';
 
 class TeamPage extends Component {
   componentDidMount() {
@@ -43,29 +46,34 @@ class TeamPage extends Component {
     let editLink;
     let deleteButton;
     if (isAdmin) {
-      editLink = <Link to={`/team/${team.id}/edit`}>Edit team</Link>;
-      deleteButton =
-        <button type="button" className="button" onClick={this.deleteTeam.bind(this, team.id)}>Delete</button>;
+      editLink = (
+        <Link className="btn btn-secondary btn-sm" to={`/team/${team.id}/edit`}>Edit team</Link>
+      );
+
+      deleteButton = (
+        <button className="btn btn-secondary btn-sm" type="button"
+          onClick={this.deleteTeam.bind(this, team.id)}>Delete</button>
+      );
     }
 
     return (
       <DocumentTitle title={`Team: ${team.name} | X-Map`}>
-        <div className="panel">
-          <article id="teamProfile">
-            <header>
-              <h2>Team #{team.id}</h2>
-            </header>
+        <article id="TeamPage" className="page card">
+          <Link to="/" className="close btn btn-secondary">&times;</Link>
 
-            <section>
-              <Team team={team}/>
-            </section>
+          <header className="card-header">
+            <h3 className="card-title">{team.name}</h3>
+            <p className="card-subtitle">Team profile</p>
+            <p className="text-muted">#{team.id}</p>
+            <div className="btn-group" role="group" aria-label="Actions menu">
+              {editLink}{deleteButton}
+            </div>
+          </header>
 
-            {editLink}
-
-            {deleteButton}
-
-          </article>
-        </div>
+          <div className="card-block">
+            <Team team={team}/>
+          </div>
+        </article>
       </DocumentTitle>
     );
   }
