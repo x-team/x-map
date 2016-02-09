@@ -19,6 +19,7 @@ class App extends Component {
   constructor(props, context) {
     super(props, context);
     props.history.listen(props.actions.routeChanged);
+    props.history.listenBefore(this.preventLeavingProfileEditIfNeeded.bind(this));
   }
 
   componentDidMount() {
@@ -30,6 +31,7 @@ class App extends Component {
         actions.authenticate(() => {
           actions.userList();
           actions.teamList();
+          this.redirectToProfileFormIfNeeded();
         }, this.redirectToHomePage.bind(this));
       });
     });
@@ -41,6 +43,22 @@ class App extends Component {
 
   redirectToProfilePage(id) {
     this.props.history.push('/profile/' + id);
+  }
+
+  redirectToProfileFormIfNeeded() {
+    const { currentUserId, isProfileFilled, history } = this.props;
+    const profileEditPath = '/profile/' + currentUserId + '/edit';
+    if (currentUserId && !isProfileFilled && !history.isActive(profileEditPath)) {
+      this.props.history.push(profileEditPath);
+    }
+  }
+
+  preventLeavingProfileEditIfNeeded(nextLocation) {
+    const { currentUserId, isProfileFilled, history } = this.props;
+    const profileEditPath = '/profile/' + currentUserId + '/edit';
+    if (currentUserId && !isProfileFilled && (history.isActive(profileEditPath) || nextLocation.pathname !== profileEditPath)) {
+      return false;
+    }
   }
 
   render() {
@@ -80,14 +98,16 @@ App.propTypes = {
   actions: PropTypes.object,
   users: PropTypes.object,
   history: PropTypes.object.isRequired,
-  children: PropTypes.object
+  children: PropTypes.object,
+  isProfileFilled: PropTypes.bool.isRequired
 };
 
 App.defaultProps = {
   isSignedIn: false,
   usersLoaded: false,
   teamsLoaded: false,
-  users: {}
+  users: {},
+  isProfileFilled: false
 };
 
 function mapStateToProps(state) {
@@ -96,7 +116,8 @@ function mapStateToProps(state) {
     isSignedIn: state.session.isSignedIn,
     usersLoaded: state.session.usersLoaded,
     teamsLoaded: state.session.teamsLoaded,
-    users: state.users
+    users: state.users,
+    isProfileFilled: state.session.isProfileFilled
   };
 }
 

@@ -23,7 +23,7 @@ class User implements UserInterface
     /**
      * @MongoDB\String
      * @Assert\Email
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"registration"})
      */
     protected $email;
 
