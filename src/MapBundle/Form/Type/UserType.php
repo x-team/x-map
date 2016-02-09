@@ -3,6 +3,7 @@
 namespace MapBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends BaseAbstractType
 {
@@ -19,5 +20,14 @@ class UserType extends BaseAbstractType
             ->add('lat')
             ->add('lng')
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'validation_groups' => ['Default', 'registration'],
+        ]);
     }
 }

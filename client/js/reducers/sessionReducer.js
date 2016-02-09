@@ -12,6 +12,7 @@ import {
   USER_UPDATES_LOCATION,
   USER_UPDATED_LOCATION,
   USER_SELECTED_LOCATION,
+  USER_UPDATE_SUCCESS,
   MAP_MODE_SELECT,
   MAP_MODE_SHOW
 } from '../constants/AppConstants';
@@ -32,7 +33,8 @@ function sessionReducer(session = initialState, action) {
     case APP_LOGIN_SUCCESS:
       return assignToEmpty(session, {
         currentUserId: action.user.id,
-        isAdmin: action.user.isAdmin
+        isAdmin: action.user.isAdmin,
+        isProfileFilled: !!action.user.firstName && !!action.user.lastName && !!action.user.slackId && !!action.user.email
       });
     case APP_LOGOUT:
       return assignToEmpty(session, {
@@ -96,6 +98,13 @@ function sessionReducer(session = initialState, action) {
       return assignToEmpty(session, {
         mapMode: MAP_MODE_SHOW
       });
+    case USER_UPDATE_SUCCESS:
+      if (action.user.id === session.currentUserId) {
+        return assignToEmpty(session, {
+          isProfileFilled: !!action.user.firstName && !!action.user.lastName && !!action.user.slackId && !!action.user.email
+        });
+      }
+      return session;
     default:
       return session;
   }

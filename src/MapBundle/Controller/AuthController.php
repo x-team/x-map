@@ -50,12 +50,12 @@ class AuthController extends FOSRestController
     {
         $token = $request->get('token');
         if (empty($token)) {
-            return $this->handleView($this->view('Invalid credentials.', 400));
+            return $this->handleView($this->view('Missing token.', 400));
         }
 
         $loginTicket = $this->googleClient->getAuth()->verifyIdToken($token, $this->container->getParameter('google_developer_key'));
         if (empty($loginTicket)) {
-            return $this->handleView($this->view('Invalid credentials.', 400));
+            return $this->handleView($this->view('Invalid token.', 400));
         }
 
         $payload = $loginTicket->getAttributes()['payload'];
@@ -69,7 +69,7 @@ class AuthController extends FOSRestController
         $user = $this->repository->findOneByEmail($email) ?: new User();
         $this->updateUserWithPayload($user, $payload);
 
-        if (!count($this->validator->validate($user))) {
+        if (!count($this->validator->validate($user, null, ['registration']))) {
             $this->dm->persist($user);
             $this->dm->flush();
 

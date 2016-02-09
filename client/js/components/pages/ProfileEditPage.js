@@ -28,7 +28,7 @@ class ProfileEditPage extends Component {
   }
 
   render() {
-    const { actions, errors, users, params, history } = this.props;
+    const { actions, errors, users, params, history, currentUserId, isProfileFilled } = this.props;
 
     const user = users[params.id];
     if (!user) {
@@ -36,20 +36,31 @@ class ProfileEditPage extends Component {
       return <span/>;
     }
 
+    let header = (
+      <header className="card-header">
+        <h3 className="card-title">{user.firstName} {user.lastName}</h3>
+        <p className="card-subtitle">Edit profile</p>
+        <Link className="text-muted" to={`/profile/${user.id}`}
+              title={`Go to ${user.firstName} ${user.lastName} profile page`}>#{user.id}</Link>
+      </header>
+    );
+    if (!isProfileFilled && currentUserId === params.id) {
+      header = (
+        <header className="card-header">
+          <p className="card-subtitle">Please fill in required fields to proceed.</p>
+        </header>);
+    }
+
     return (
-      <DocumentTitle title={`Edit profile: ${user.firstName} ${user.lastName} | X-Map`}>
+      <DocumentTitle title={`Edit profile: ${user.firstName || ''} ${user.lastName || ''} | X-Map`}>
         <article id="TeamEditPage" className="page card">
           <Link to="/" className="close btn btn-secondary">&times;</Link>
 
-          <header className="card-header">
-            <h3 className="card-title">{user.firstName} {user.lastName}</h3>
-            <p className="card-subtitle">Edit profile</p>
-            <Link className="text-muted" to={`/profile/${user.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>#{user.id}</Link>
-          </header>
+          {header}
 
           <div className="card-block">
             <ProfileForm user={user} onSubmit={actions.userUpdate}
-              onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
+                         onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
           </div>
         </article>
       </DocumentTitle>
@@ -67,13 +78,17 @@ ProfileEditPage.propTypes = {
   errors: PropTypes.shape({
     globalErrors: PropTypes.array,
     fieldErrors: PropTypes.object
-  })
+  }),
+  isProfileFilled: PropTypes.bool,
+  currentUserId: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     users: state.users,
-    errors: state.errors.userUpdate
+    errors: state.errors.userUpdate,
+    isProfileFilled: state.session.isProfileFilled,
+    currentUserId: state.session.currentUserId
   };
 }
 

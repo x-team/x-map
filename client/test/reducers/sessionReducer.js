@@ -16,7 +16,7 @@ describe('sessionReducer', () => {
 
   it('should set current user on APP_LOGIN_SUCCESS action', () => {
     const user = { id: 42, isAdmin: true };
-    const expected = { currentUserId: 42, isAdmin: true};
+    const expected = { currentUserId: 42, isAdmin: true, isProfileFilled: false};
     expect(sessionReducer({}, {type: AppConstants.APP_LOGIN_SUCCESS, user})).toEqual(expected);
   });
 

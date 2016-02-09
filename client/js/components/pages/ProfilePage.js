@@ -56,7 +56,7 @@ class ProfilePage extends Component {
     }
 
     return (
-      <DocumentTitle title={`Profile: ${user.firstName} ${user.lastName} | X-Map`}>
+      <DocumentTitle title={`Profile: ${user.firstName || ''} ${user.lastName || ''} | X-Map`}>
         <article id="ProfilePage" className="page card">
           <Link to="/" className="close btn btn-secondary">&times;</Link>
 
