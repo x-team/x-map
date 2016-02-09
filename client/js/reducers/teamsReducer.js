@@ -8,7 +8,6 @@ import {
   TEAM_CREATE_SUCCESS,
   TEAM_UPDATE_SUCCESS,
   TEAM_DELETE_SUCCESS,
-  TEAM_LINK_USER_SUCCESS,
   TEAM_UNLINK_USER_SUCCESS
 } from '../constants/AppConstants';
 import assignToEmpty from '../utils/assign';
@@ -39,8 +38,6 @@ function teamsReducer(teams = {}, action) {
     case APP_LOGOUT:
     case TEAM_LIST_FAILURE:
       return {};
-    case TEAM_LINK_USER_SUCCESS:
-      return teams;
     case TEAM_UNLINK_USER_SUCCESS:
       newTeams = assignToEmpty(teams);
       if (newTeams[action.id]) {

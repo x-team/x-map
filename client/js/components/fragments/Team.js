@@ -17,7 +17,8 @@ class Team extends Component {
 
 Team.defaultProps = {
   canLink: false,
-  canUnlink: false
+  canUnlink: false,
+  users: {}
 };
 
 Team.propTypes = {
@@ -27,7 +28,8 @@ Team.propTypes = {
   canLink: PropTypes.bool.isRequired,
   canUnlink: PropTypes.bool.isRequired,
   onLink: PropTypes.func,
-  onUnlink: PropTypes.func
+  onUnlink: PropTypes.func,
+  users: PropTypes.object
 };
 
 export default Team;

@@ -35,7 +35,7 @@ class TeamPage extends Component {
   }
 
   render() {
-    const { teams, history, params, isAdmin, actions } = this.props;
+    const { teams, history, params, isAdmin, actions, users } = this.props;
 
     const team = teams[params.id];
     if (!team) {
@@ -76,7 +76,7 @@ class TeamPage extends Component {
           </header>
 
           <div className="card-block">
-            <Team team={team} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink}/>
+            <Team team={team} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} users={users}/>
           </div>
         </article>
       </DocumentTitle>
@@ -86,6 +86,7 @@ class TeamPage extends Component {
 
 TeamPage.propTypes = {
   teams: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
@@ -97,6 +98,7 @@ TeamPage.propTypes = {
 function mapStateToProps(state) {
   return {
     teams: state.teams,
+    users: state.users,
     isAdmin: state.session.isAdmin
   };
 }

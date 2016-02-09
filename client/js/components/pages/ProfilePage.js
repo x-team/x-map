@@ -25,7 +25,7 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { users, history, params, currentUserId, isAdmin, actions } = this.props;
+    const { users, history, params, currentUserId, isAdmin, actions, teams } = this.props;
 
     const user = users[params.id];
     if (!user) {
@@ -79,7 +79,7 @@ class ProfilePage extends Component {
           </header>
 
           <div className="card-block">
-            <Profile user={user} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink}/>
+            <Profile user={user} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} teams={teams}/>
           </div>
         </article>
       </DocumentTitle>
@@ -95,12 +95,14 @@ ProfilePage.propTypes = {
   history: PropTypes.object.isRequired,
   currentUserId: PropTypes.string,
   isAdmin: PropTypes.bool,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  teams: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
     users: state.users,
+    teams: state.teams,
     currentUserId: state.session.currentUserId,
     isAdmin: state.session.isAdmin
   };

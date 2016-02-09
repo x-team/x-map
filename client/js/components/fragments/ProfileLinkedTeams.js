@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 /* Components */
 import MiniTeam from './MiniTeam';
+import ProfileLinkTeams from './ProfileLinkTeams';
 
 class ProfileLinkedTeams extends Component {
   render() {
@@ -42,6 +43,7 @@ class ProfileLinkedTeams extends Component {
           <section id="ProfileLinkedTeamsCollapse" className="panel-collapse collapse"
             role="tabpanel" aria-labelledby="ProfileLinkedTeamsHeading">
             {profileLinkedTeams}
+            <ProfileLinkTeams {...this.props}/>
           </section>
         </section>
       </div>
@@ -50,7 +52,6 @@ class ProfileLinkedTeams extends Component {
 }
 
 ProfileLinkedTeams.defaultProps = {
-  canLink: false,
   canUnlink: false
 };
 
@@ -59,9 +60,10 @@ ProfileLinkedTeams.propTypes = {
     id: PropTypes.string.isRequired
   }).isRequired,
   canLink: PropTypes.bool.isRequired,
-  canUnlink: PropTypes.bool.isRequired,
   onLink: PropTypes.func,
-  onUnlink: PropTypes.func
+  canUnlink: PropTypes.bool.isRequired,
+  onUnlink: PropTypes.func,
+  teams: PropTypes.object
 };
 
 export default ProfileLinkedTeams;

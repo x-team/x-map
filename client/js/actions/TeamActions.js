@@ -22,6 +22,8 @@ import {
   TEAM_UNLINK_USER_FAILURE
 } from '../constants/AppConstants';
 
+import { userList } from '../actions/UserActions';
+
 import request from '../utils/request';
 
 export function teamCreate(data, onSuccess) {
@@ -149,6 +151,8 @@ export function teamLinkUser(id, userId, onSuccess) {
       method: 'PUT'
     })
       .then(() => dispatch(teamLinkUserSuccess(id, userId)))
+      .then(() => dispatch(teamList()))
+      .then(() => dispatch(userList()))
       .then(onSuccess)
       .catch((errors) => dispatch(teamLinkUserFailure(id, userId, errors)));
   };
