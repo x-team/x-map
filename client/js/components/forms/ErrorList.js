@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+
+/* Components */
 import Error from './Error';
 
 class ErrorList extends Component {
@@ -22,7 +24,7 @@ class ErrorList extends Component {
     }
 
     return (
-      <div className="alert error">
+      <div className="alert alert-danger" role="alert">
         {errorList}
       </div>
     );

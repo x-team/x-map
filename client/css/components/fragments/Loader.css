@@ -1,0 +1,32 @@
+$size: 500px;
+#Loader {
+  width: $size;
+  min-height: $size;
+  position: fixed;
+  top: calc(50% - ($size / 2));
+  left: calc(50% - ($size / 2));
+  z-index: 2;
+  background-image: url(../img/shinyworldglobe.png);
+  box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.55);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: white;
+  border: none;
+}
+
+#Loader a {
+  color: white;
+  font-weight: bolder;
+}
+
+#Loader a:hover {
+  text-decoration: underline;
+}
+
+#Loader h2 {
+  margin-bottom: 30px;
+}
+
+.gmnoprint.gm-style-mtc {
+  top: 60px !important;
+}

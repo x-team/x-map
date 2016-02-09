@@ -1,15 +1,5 @@
 /* Generic */
 
-html {
-  box-sizing: border-box
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit
-}
-
 html,
 body {
   margin: 0;
@@ -17,9 +7,5 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-}
-
-body {
-  font-family: $text-font-stack;
   overflow: hidden;
 }

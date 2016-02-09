@@ -1,24 +1,11 @@
 @charset 'utf-8';
 
-@import './vendor/_normalize.css';
-
 @import './utilities/_functions.css';
 @import './utilities/_mixins.css';
 @import './utilities/_animations.css';
 
 @import './base/_variables.css';
-@import './base/_generic.css';
-@import './base/_typography.css';
-@import './base/_forms.css';
-@import './base/_tables.css';
-@import './base/_helpers.css';
-@import './base/_errors.css';
+@import './base/_general.css';
 
-@import './layout/_collapsible.css';
-@import './layout/_control.css';
-@import './layout/_navigation.css';
-@import './layout/_panel.css';
-
-@import './components/*.css';
-@import './components/fragments/*.css';
-@import './components/pages/*.css';
+@import './layout/*.css';
+@import './components/**/*.css';
