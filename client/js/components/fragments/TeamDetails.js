@@ -17,7 +17,7 @@ class TeamDetails extends Component {
             role="tabpanel" aria-labelledby="TeamDetailsHeading">
             <div>
               <label className="input-group">
-                <h5 className="input-group-addon">Team name</h5>
+                <h5 className="input-group-addon">Name</h5>
                 <div className="form-control">{team.name}</div>
               </label>
               <label className="input-group">

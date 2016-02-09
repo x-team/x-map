@@ -1,7 +1,5 @@
 <?php
 
-use MapBundle\Document\User;
-
 class TeamsCest
 {
     protected $admin = [
@@ -15,21 +13,21 @@ class TeamsCest
 
     protected $team1 = [
         'name' => 'namename1',
-        'description' => 'description1',
+        'summary' => 'summary1',
     ];
 
     protected $team1Id;
 
     protected $team2 = [
         'name' => 'namename2',
-        'description' => 'description3',
+        'summary' => 'summary3',
     ];
 
     protected $team2Id;
 
     protected $team3 = [
         'name' => 'namename3',
-        'description' => 'description3',
+        'summary' => 'summary3',
     ];
 
     public function _before(FunctionalTester $I)

@@ -22,12 +22,13 @@ class Team
     /**
      * @MongoDB\String
      * @Assert\NotBlank
-     * @Assert\Length(min=6,max=32)
+     * @Assert\Length(min=2,max=32)
      */
     protected $name;
 
     /**
      * @MongoDB\String
+     * @Assert\NotBlank
      * @Assert\Length(max=128)
      */
     protected $summary;

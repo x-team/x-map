@@ -1,11 +1,12 @@
 <?php
 
-use MapBundle\Document\User;
-
 class UsersCest
 {
     protected $user = [
         'email' => 'bob1@test.pl',
+        'firstName' => 'firstName',
+        'lastName' => 'lastName',
+        'slackId' => 'slackId',
     ];
 
     protected $userId;
@@ -38,9 +39,10 @@ class UsersCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson(array_merge(['id' => $id], $this->user));
 
-        $I->sendPUT('api/users/'.$id.'.json', ['nationality' => 'Polish']);
+        $this->user['nationality'] = 'Polish';
+        $I->sendPUT('api/users/'.$id.'.json', $this->user);
         $I->seeResponseCodeIs(200);
-        $I->seeResponseContainsJson(array_merge(['id' => $id], $this->user, ['nationality' => 'Polish']));
+        $I->seeResponseContainsJson(array_merge(['id' => $id], $this->user));
 
         $anotherUser = $I->grabFromCollection('User', ['email' => $this->admin['email']]);
 
