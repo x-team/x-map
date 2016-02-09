@@ -36,7 +36,7 @@ class Header extends Component {
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span className="sr-only">Toggle Dropdown</span>
                   </button>
-                  <div className="dropdown-menu">
+                  <div className="dropdown-menu dropdown-menu-right">
                     <a className="dropdown-item" onClick={onLogout}>Logout</a>
                   </div>
                 </div>
