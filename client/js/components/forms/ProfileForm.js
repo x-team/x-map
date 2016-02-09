@@ -31,34 +31,34 @@ class ProfileForm extends Component {
             <label>Email</label>
             <input type="email" className="form-control" placeholder="Email" value={this.state.email}
               onChange={this.onInputChange.bind(this, 'email')} required/>
-            <small className="text-muted"><strong>Required information.</strong></small>
+            <small className="text-muted"><strong>Required.</strong></small>
           </fieldset>
 
           <fieldset className="form-group">
             <label>First name</label>
             <input type="text" className="form-control" placeholder="First name" value={this.state.firstName}
-              onChange={this.onInputChange.bind(this, 'firstName')} required/>
-            <small className="text-muted"><strong>Required information.</strong></small>
+              onChange={this.onInputChange.bind(this, 'firstName')} maxLength="64" required/>
+            <small className="text-muted"><strong>Required.</strong></small>
           </fieldset>
 
           <fieldset className="form-group">
             <label>Last name</label>
             <input type="text" className="form-control" placeholder="Last name" value={this.state.lastName}
-              onChange={this.onInputChange.bind(this, 'lastName')} required/>
-            <small className="text-muted"><strong>Required information.</strong></small>
+              onChange={this.onInputChange.bind(this, 'lastName')} maxLength="64" required/>
+            <small className="text-muted"><strong>Required.</strong></small>
           </fieldset>
 
           <fieldset className="form-group">
             <label>Slack ID</label>
             <input type="text" className="form-control" placeholder="Slack ID" value={this.state.slackId}
-              onChange={this.onInputChange.bind(this, 'slackId')}/>
-            <small className="text-muted"><strong>Required information.</strong></small>
+              onChange={this.onInputChange.bind(this, 'slackId')} maxLength="64" required/>
+            <small className="text-muted"><strong>Required.</strong></small>
           </fieldset>
 
           <fieldset className="form-group">
             <label>Skype ID</label>
             <input type="text" className="form-control" placeholder="Skype ID" value={this.state.skypeId}
-              onChange={this.onInputChange.bind(this, 'skypeId')}/>
+              onChange={this.onInputChange.bind(this, 'skypeId')} maxLength="64"/>
           </fieldset>
 
           <fieldset className="form-group">
@@ -70,13 +70,14 @@ class ProfileForm extends Component {
           <fieldset className="form-group">
             <label>Nationality</label>
             <input type="text" className="form-control" placeholder="Nationality" value={this.state.nationality}
-              onChange={this.onInputChange.bind(this, 'nationality')}/>
+              onChange={this.onInputChange.bind(this, 'nationality')} maxLength="64"/>
           </fieldset>
 
           <fieldset className="form-group">
             <label>About me</label>
             <textarea className="form-control" placeholder="About me" value={this.state.aboutMe}
-              rows="5" onChange={this.onInputChange.bind(this, 'aboutMe')}/>
+              rows="5" onChange={this.onInputChange.bind(this, 'aboutMe')} maxLength="1024"/>
+            <small className="text-muted">Max. length: 1024 characters.</small>
           </fieldset>
 
           <fieldset className="form-group">

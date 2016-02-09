@@ -1,7 +1,5 @@
 <?php
 
-use MapBundle\Document\User;
-
 class EventsCest
 {
     protected $admin = [

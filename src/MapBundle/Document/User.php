@@ -29,12 +29,14 @@ class User implements UserInterface
 
     /**
      * @MongoDB\String
+     * @Assert\NotBlank
      * @Assert\Length(max=64)
      */
     protected $firstName;
 
     /**
      * @MongoDB\String
+     * @Assert\NotBlank
      * @Assert\Length(max=64)
      */
     protected $lastName;
@@ -53,6 +55,7 @@ class User implements UserInterface
 
     /**
      * @MongoDB\String
+     * @Assert\NotBlank
      * @Assert\Length(max=64)
      */
     protected $slackId;
