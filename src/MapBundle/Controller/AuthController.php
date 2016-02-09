@@ -84,9 +84,9 @@ class AuthController extends FOSRestController
 
     protected function updateUserWithPayload(User $user, $payload)
     {
-        $user->setEmail($payload['email']);
-        $user->setFirstName($payload['given_name']);
-        $user->setLastName($payload['family_name']);
-        $user->setAvatar($payload['picture']);
+        $user->setEmail(strlen(trim($user->getEmail())) ? $user->getEmail() : $payload['email']);
+        $user->setFirstName(strlen(trim($user->getFirstName())) ? $user->getFirstName() : $payload['given_name']);
+        $user->setLastName(strlen(trim($user->getLastName())) ? $user->getLastName() : $payload['family_name']);
+        $user->setAvatar(strlen(trim($user->getAvatar())) ? $user->getAvatar() : $payload['picture']);
     }
 }

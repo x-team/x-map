@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+import assignToEmpty from '../../utils/assign';
 
 import * as UserActions from '../../actions/UserActions';
 
@@ -21,15 +22,15 @@ class ProfileSetLocationPage extends Component {
   }
 
   save() {
-    const { actions, currentLocation, params } = this.props;
+    const { actions, currentLocation, params, users } = this.props;
 
+    const user = users[params.id];
     const changeset = {
-      id: params.id,
       lat: currentLocation.lat,
       lng: currentLocation.lng
     };
 
-    actions.userUpdate(changeset, this.redirectToProfilePage.bind(this, params.id));
+    actions.userUpdate(assignToEmpty(user, changeset), this.redirectToProfilePage.bind(this, params.id));
   }
 
   render() {

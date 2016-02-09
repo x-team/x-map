@@ -31,7 +31,7 @@ class ProfileLinkedTeams extends Component {
           <header className="panel-heading" role="tab" id="ProfileLinkedTeamsHeading">
             <h4 className="panel-title" data-toggle="collapse" data-parent="#ProfileLinkedTeams"
               aria-expanded="true" aria-controls="ProfileLinkedTeamsCollapse"
-              href="#ProfileLinkedTeamsCollapse">Teams</h4>
+              href="#ProfileLinkedTeamsCollapse">Teams ({teamProfiles.length})</h4>
           </header>
 
           <section id="ProfileLinkedTeamsCollapse" className="panel-collapse collapse"
