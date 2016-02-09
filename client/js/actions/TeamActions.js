@@ -145,7 +145,7 @@ export function teamDeleteFailure(id, errors) {
 export function teamLinkUser(id, userId, onSuccess) {
   return (dispatch) => {
     dispatch(doTeamLinkUser(id, userId));
-    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '/admin.json', {
+    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '.json', {
       method: 'PUT'
     })
       .then(() => dispatch(teamLinkUserSuccess(id, userId)))
@@ -169,7 +169,7 @@ export function teamLinkUserFailure(id, userId, errors) {
 export function teamUnlinkUser(id, userId, onSuccess) {
   return (dispatch) => {
     dispatch(doTeamUnlinkUser(id, userId));
-    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '/admin.json', {
+    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '.json', {
       method: 'DELETE'
     })
       .then(() => dispatch(teamUnlinkUserSuccess(id, userId)))

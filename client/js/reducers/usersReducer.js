@@ -8,7 +8,9 @@ import {
   USER_UPDATE_SUCCESS,
   USER_DELETE_SUCCESS,
   USER_GRANT_ADMIN_SUCCESS,
-  USER_REVOKE_ADMIN_SUCCESS
+  USER_REVOKE_ADMIN_SUCCESS,
+  TEAM_LINK_USER_SUCCESS,
+  TEAM_UNLINK_USER_SUCCESS
 } from '../constants/AppConstants';
 import assignToEmpty from '../utils/assign';
 
@@ -45,6 +47,16 @@ function usersReducer(users = {}, action) {
     case APP_LOGOUT:
     case USER_LIST_FAILURE:
       return {};
+    case TEAM_LINK_USER_SUCCESS:
+      return users;
+    case TEAM_UNLINK_USER_SUCCESS:
+      newUsers = assignToEmpty(users);
+      if (newUsers[action.userId]) {
+        newUsers[action.userId].teams = newUsers[action.userId].teams.filter(team => {
+          return team.id !== action.id;
+        });
+      }
+      return newUsers;
     default:
       return users;
   }

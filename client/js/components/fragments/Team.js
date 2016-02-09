@@ -6,21 +6,28 @@ import TeamLinkedProfiles from './TeamLinkedProfiles';
 
 class Team extends Component {
   render() {
-    const { team } = this.props;
-
     return (
       <div id="Team" className="list-group">
-        <TeamDetails team={team}/>
-        <TeamLinkedProfiles team={team}/>
+        <TeamDetails team={this.props.team}/>
+        <TeamLinkedProfiles {...this.props}/>
       </div>
     );
   }
 }
 
+Team.defaultProps = {
+  canLink: false,
+  canUnlink: false
+};
+
 Team.propTypes = {
   team: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  canLink: PropTypes.bool.isRequired,
+  canUnlink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func
 };
 
 export default Team;

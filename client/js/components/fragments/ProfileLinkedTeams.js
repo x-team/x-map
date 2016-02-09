@@ -5,13 +5,18 @@ import MiniTeam from './MiniTeam';
 
 class ProfileLinkedTeams extends Component {
   render() {
-    const { user } = this.props;
+    const { user, canUnlink, onUnlink } = this.props;
 
     const teamProfiles = [];
     for (const id in user.teams) {
+      let unlinkButton = null;
+      if (canUnlink) {
+        unlinkButton = <button onClick={onUnlink.bind(null, user.teams[id].id, user.id)}>&times;</button>;
+      }
+
       teamProfiles.push(
         <li className="list-group-item" key={id}>
-          <MiniTeam team={user.teams[id]}/>
+          <MiniTeam team={user.teams[id]}/> {unlinkButton}
         </li>
       );
     }
@@ -44,10 +49,19 @@ class ProfileLinkedTeams extends Component {
   }
 }
 
+ProfileLinkedTeams.defaultProps = {
+  canLink: false,
+  canUnlink: false
+};
+
 ProfileLinkedTeams.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  canLink: PropTypes.bool.isRequired,
+  canUnlink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func
 };
 
 export default ProfileLinkedTeams;

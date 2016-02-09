@@ -5,13 +5,18 @@ import MiniProfile from './MiniProfile';
 
 class TeamLinkedProfiles extends Component {
   render() {
-    const { team } = this.props;
+    const { team, canUnlink, onUnlink } = this.props;
 
     const userProfiles = [];
     for (const id in team.users) {
+      let unlinkButton = null;
+      if (canUnlink) {
+        unlinkButton = <button onClick={onUnlink.bind(null, team.id, team.users[id].id)}>&times;</button>;
+      }
+
       userProfiles.push(
         <li className="list-group-item" key={id}>
-          <MiniProfile user={team.users[id]}/>
+          <MiniProfile user={team.users[id]}/> {unlinkButton}
         </li>
       );
     }
@@ -47,7 +52,11 @@ class TeamLinkedProfiles extends Component {
 TeamLinkedProfiles.propTypes = {
   team: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  canLink: PropTypes.bool.isRequired,
+  canUnlink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func
 };
 
 export default TeamLinkedProfiles;

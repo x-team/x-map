@@ -3,8 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+import assignToEmpty from '../../utils/assign';
 
 import * as UserActions from '../../actions/UserActions';
+import * as TeamActions from '../../actions/TeamActions';
 
 /* Components */
 import Profile from '../fragments/Profile';
@@ -55,6 +57,11 @@ class ProfilePage extends Component {
       adminLink = <a className="btn btn-secondary btn-sm" onClick={grantRevokeAction}>{grantRevokeText}</a>;
     }
 
+    const canLink = isAdmin || user.id === currentUserId;
+    const canUnlink = canLink;
+    const onLink = actions.teamLinkUser;
+    const onUnlink = actions.teamUnlinkUser;
+
     return (
       <DocumentTitle title={`Profile: ${user.firstName || ''} ${user.lastName || ''} | X-Map`}>
         <article id="ProfilePage" className="page card">
@@ -72,7 +79,7 @@ class ProfilePage extends Component {
           </header>
 
           <div className="card-block">
-            <Profile user={user}/>
+            <Profile user={user} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink}/>
           </div>
         </article>
       </DocumentTitle>
@@ -101,7 +108,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    actions: bindActionCreators(assignToEmpty(UserActions, TeamActions), dispatch)
   };
 }
 

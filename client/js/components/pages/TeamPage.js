@@ -35,7 +35,7 @@ class TeamPage extends Component {
   }
 
   render() {
-    const { teams, history, params, isAdmin } = this.props;
+    const { teams, history, params, isAdmin, actions } = this.props;
 
     const team = teams[params.id];
     if (!team) {
@@ -56,6 +56,11 @@ class TeamPage extends Component {
       );
     }
 
+    const canLink = isAdmin;
+    const canUnlink = canLink;
+    const onLink = actions.teamLinkUser;
+    const onUnlink = actions.teamUnlinkUser;
+
     return (
       <DocumentTitle title={`Team: ${team.name} | X-Map`}>
         <article id="TeamPage" className="page card">
@@ -71,7 +76,7 @@ class TeamPage extends Component {
           </header>
 
           <div className="card-block">
-            <Team team={team}/>
+            <Team team={team} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink}/>
           </div>
         </article>
       </DocumentTitle>
