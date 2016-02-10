@@ -1,24 +1,72 @@
 # x-map
 
-## Setting up server environment
+## Setup
 
- 1. Install [VirtualBox](https://www.virtualbox.org)
- 2. Install [Vagrant](https://www.vagrantup.com/)
- 3. Install **Homestead** box with `vagrant box add laravel/homestead`
- 4. Install **Homestead** with `git clone https://github.com/laravel/homestead.git Homestead`
- 5. Execute `bash init.sh` in `Homestead` folder - this will create `.homestead` folder in home directory
- 6. Clone repository with `git clone https://github.com/x-team/x-map.git x-map`
- 7. Copy `Homestead.yml` file to `.homestead`, update `map` path to reflect actual path to `x-map` project
- 8. Execute `vagrant up` and then `vagrant ssh` in `Homestead` folder - do the following in the SSH console:
-    1. Execute `sudo apt-get remove php7*`
-    2. Execute `sudo apt-get install mongodb php5-mongo php5-fpm php5-cli php5-curl`
-    3. Overwrite `/etc/nginx/sites-enabled/x-map.app` with `x-map.app`
-    4. sudo service nginx restart
-    5. Go to project folder
-    6. Execute `composer install`. It will ask to provide values to some parameteres at the end - leave them empty
-    7. Go to `client` folder
-    8. Execute `npm install`
- 9. Add `192.168.10.10 x-map.app` to your `/etc/hosts`
- 10. Run client with `npm start`
- 11. Application will be available at `http://localhost:3000`
+In order to run the application locally, you'll need to install:
+
+- [Docker Toolbox](https://www.docker.com/products/docker-toolbox)
+- [docker-machine-nfs](https://github.com/adlogix/docker-machine-nfs#install)
+
+Start ```Docker Quickstart Terminal```. 
+
+Once in the terminal type:
+```
+docker-machine-nfs default
+```
+
+This will enable NFS on your Docker default Virtual Machine.
+
+Next, run:
+```
+docker-machine ip default
+```
+
+This will display the IP of the virtual machine that will be running the application.
+You need to add it to your ```/etc/hosts```.
+Given that ```192.168.99.100`` was the IP, add the following line there:
+```
+192.168.99.100 x-map.app
+```
+
+In order to install dependencies and build the application, run:
+```
+docker-compose run web composer build
+```
+
+Application is ready to run. Execute the following:
+```
+docker-compose up -d
+```
+
+``x-map`` appliction should be available at the [http://x-map.app](http://x-map.app)
+
+To stop the application run:
+```
+docker-compose down
+```
+
+## Development
+
+All changes done to PHP source files will be reflected immediately. All changes to frontend files (HTML, CSS, JS, images) 
+will require the following command to be run:
+```
+docker-compose run web composer build-frontend
+```
  
+If you want to update frontend layer and have the live updates in the browser, run ```npm start``` in ```client/``` 
+folder - application will be available at ```localhost:3000```
+ 
+## Composer commands
+
+The following composer commands are available:
+
+- ```docker-compose run web composer build``` - build frontend and backend
+- ```docker-compose run web composer build-frontend``` - build frontend
+- ```docker-compose run web composer build-backend``` - build backend
+- ```docker-compose run web composer lint``` - run linter on frontend and backend code
+- ```docker-compose run web composer lint-frontend``` - run linter on frontend code
+- ```docker-compose run web composer lint-backend``` - run linter on backend code
+- ```docker-compose run web composer lint-fix-backend``` - run fixer on backend code
+- ```docker-compose run web composer test``` - run frontend and backend tests
+- ```docker-compose run web composer test-frontend``` - run frontend tests
+- ```docker-compose run web composer test-backend``` - run backend tests

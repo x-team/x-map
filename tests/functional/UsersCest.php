@@ -21,8 +21,12 @@ class UsersCest
     public function _before(FunctionalTester $I)
     {
         $I->haveInCollection('User', $this->user);
-        $this->userId = (string) $I->grabFromCollection('User', ['email' => $this->user['email']])['_id'];
         $I->haveInCollection('User', $this->admin);
+
+        unset($this->user['_id']);
+        unset($this->admin['_id']);
+
+        $this->userId = (string) $I->grabFromCollection('User', ['email' => $this->user['email']])['_id'];
         $this->adminId = (string) $I->grabFromCollection('User', ['email' => $this->admin['email']])['_id'];
     }
 
