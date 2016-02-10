@@ -27,7 +27,9 @@ class TeamPage extends Component {
   }
 
   deleteTeam(id) {
-    this.props.actions.teamDelete(id, this.redirectToTeamsPage.bind(this));
+    if (confirm(`Are you sure you want to permanently delete this team?`)) {
+      this.props.actions.teamDelete(id, this.redirectToTeamsPage.bind(this));
+    }
   }
 
   redirectToTeamsPage() {
@@ -35,7 +37,7 @@ class TeamPage extends Component {
   }
 
   render() {
-    const { teams, history, params, isAdmin } = this.props;
+    const { teams, history, params, isAdmin, actions, users } = this.props;
 
     const team = teams[params.id];
     if (!team) {
@@ -56,10 +58,15 @@ class TeamPage extends Component {
       );
     }
 
+    const canLink = isAdmin;
+    const canUnlink = canLink;
+    const onLink = actions.teamLinkUser;
+    const onUnlink = actions.teamUnlinkUser;
+
     return (
       <DocumentTitle title={`Team: ${team.name} | X-Map`}>
         <article id="TeamPage" className="page card">
-          <Link to="/" className="close btn btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
 
           <header className="card-header">
             <h3 className="card-title">{team.name}</h3>
@@ -71,7 +78,7 @@ class TeamPage extends Component {
           </header>
 
           <div className="card-block">
-            <Team team={team}/>
+            <Team team={team} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} users={users}/>
           </div>
         </article>
       </DocumentTitle>
@@ -81,6 +88,7 @@ class TeamPage extends Component {
 
 TeamPage.propTypes = {
   teams: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
@@ -92,6 +100,7 @@ TeamPage.propTypes = {
 function mapStateToProps(state) {
   return {
     teams: state.teams,
+    users: state.users,
     isAdmin: state.session.isAdmin
   };
 }

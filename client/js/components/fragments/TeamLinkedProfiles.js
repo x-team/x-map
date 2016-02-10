@@ -2,15 +2,28 @@ import React, { Component, PropTypes } from 'react';
 
 /* Components */
 import MiniProfile from './MiniProfile';
+import TeamLinkProfiles from './TeamLinkProfiles';
 
 class TeamLinkedProfiles extends Component {
+  onUnlink(id, userId) {
+    if (confirm(`Are you sure you want to remove this user from current team?`)) {
+      this.props.onUnlink(id, userId);
+    }
+  }
+
   render() {
-    const { team } = this.props;
+    const { team, canUnlink } = this.props;
 
     const userProfiles = [];
     for (const id in team.users) {
+      let unlinkButton = null;
+      if (canUnlink) {
+        unlinkButton = <a className="close btn btn-sm btn-secondary" onClick={this.onUnlink.bind(this, team.id, team.users[id].id)}>&times;</a>;
+      }
+
       userProfiles.push(
         <li className="list-group-item" key={id}>
+          {unlinkButton}
           <MiniProfile user={team.users[id]}/>
         </li>
       );
@@ -36,6 +49,7 @@ class TeamLinkedProfiles extends Component {
 
           <section id="TeamLinkedProfilesCollapse" className="panel-collapse collapse"
             role="tabpanel" aria-labelledby="TeamLinkedProfilesHeading">
+            <TeamLinkProfiles {...this.props}/>
             {teamLinkedProfiles}
           </section>
         </section>
@@ -47,7 +61,12 @@ class TeamLinkedProfiles extends Component {
 TeamLinkedProfiles.propTypes = {
   team: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  canLink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  canUnlink: PropTypes.bool.isRequired,
+  onUnlink: PropTypes.func,
+  users: PropTypes.object
 };
 
 export default TeamLinkedProfiles;

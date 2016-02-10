@@ -3,8 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+import assignToEmpty from '../../utils/assign';
 
 import * as UserActions from '../../actions/UserActions';
+import * as TeamActions from '../../actions/TeamActions';
 
 /* Components */
 import Profile from '../fragments/Profile';
@@ -23,7 +25,7 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { users, history, params, currentUserId, isAdmin, actions } = this.props;
+    const { users, history, params, currentUserId, isAdmin, actions, teams } = this.props;
 
     const user = users[params.id];
     if (!user) {
@@ -55,10 +57,15 @@ class ProfilePage extends Component {
       adminLink = <a className="btn btn-secondary btn-sm" onClick={grantRevokeAction}>{grantRevokeText}</a>;
     }
 
+    const canLink = isAdmin || user.id === currentUserId;
+    const canUnlink = canLink;
+    const onLink = actions.teamLinkUser;
+    const onUnlink = actions.teamUnlinkUser;
+
     return (
       <DocumentTitle title={`Profile: ${user.firstName || ''} ${user.lastName || ''} | X-Map`}>
         <article id="ProfilePage" className="page card">
-          <Link to="/" className="close btn btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
 
           {poster}
 
@@ -72,7 +79,7 @@ class ProfilePage extends Component {
           </header>
 
           <div className="card-block">
-            <Profile user={user}/>
+            <Profile user={user} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} teams={teams}/>
           </div>
         </article>
       </DocumentTitle>
@@ -88,12 +95,14 @@ ProfilePage.propTypes = {
   history: PropTypes.object.isRequired,
   currentUserId: PropTypes.string,
   isAdmin: PropTypes.bool,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  teams: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
     users: state.users,
+    teams: state.teams,
     currentUserId: state.session.currentUserId,
     isAdmin: state.session.isAdmin
   };
@@ -101,7 +110,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(UserActions, dispatch)
+    actions: bindActionCreators(assignToEmpty(UserActions, TeamActions), dispatch)
   };
 }
 

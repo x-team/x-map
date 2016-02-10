@@ -28,13 +28,6 @@ class ProfileForm extends Component {
         <ErrorList errors={errors} showFieldErrors/>
         <form onSubmit={this.onSubmit.bind(this)}>
           <fieldset className="form-group">
-            <label>Email</label>
-            <input type="email" className="form-control" placeholder="Email" value={this.state.email}
-              onChange={this.onInputChange.bind(this, 'email')} required/>
-            <small className="text-muted"><strong>Required.</strong></small>
-          </fieldset>
-
-          <fieldset className="form-group">
             <label>First name</label>
             <input type="text" className="form-control" placeholder="First name" value={this.state.firstName}
               onChange={this.onInputChange.bind(this, 'firstName')} maxLength="64" required/>

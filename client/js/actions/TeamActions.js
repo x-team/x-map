@@ -22,6 +22,8 @@ import {
   TEAM_UNLINK_USER_FAILURE
 } from '../constants/AppConstants';
 
+import { userList } from '../actions/UserActions';
+
 import request from '../utils/request';
 
 export function teamCreate(data, onSuccess) {
@@ -145,10 +147,12 @@ export function teamDeleteFailure(id, errors) {
 export function teamLinkUser(id, userId, onSuccess) {
   return (dispatch) => {
     dispatch(doTeamLinkUser(id, userId));
-    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '/admin.json', {
+    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '.json', {
       method: 'PUT'
     })
       .then(() => dispatch(teamLinkUserSuccess(id, userId)))
+      .then(() => dispatch(teamList()))
+      .then(() => dispatch(userList()))
       .then(onSuccess)
       .catch((errors) => dispatch(teamLinkUserFailure(id, userId, errors)));
   };
@@ -169,7 +173,7 @@ export function teamLinkUserFailure(id, userId, errors) {
 export function teamUnlinkUser(id, userId, onSuccess) {
   return (dispatch) => {
     dispatch(doTeamUnlinkUser(id, userId));
-    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '/admin.json', {
+    request(process.env.API_BASE_URL + 'teams/' + id + '/users/' + userId + '.json', {
       method: 'DELETE'
     })
       .then(() => dispatch(teamUnlinkUserSuccess(id, userId)))
