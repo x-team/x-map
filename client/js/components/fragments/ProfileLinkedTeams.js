@@ -12,12 +12,13 @@ class ProfileLinkedTeams extends Component {
     for (const id in user.teams) {
       let unlinkButton = null;
       if (canUnlink) {
-        unlinkButton = <button onClick={onUnlink.bind(null, user.teams[id].id, user.id)}>&times;</button>;
+        unlinkButton = <a className="close btn btn-sm btn-secondary" onClick={onUnlink.bind(null, user.teams[id].id, user.id)}>&times;</a>;
       }
 
       teamProfiles.push(
         <li className="list-group-item" key={id}>
-          <MiniTeam team={user.teams[id]}/> {unlinkButton}
+          {unlinkButton}
+          <MiniTeam team={user.teams[id]}/>
         </li>
       );
     }
@@ -42,8 +43,8 @@ class ProfileLinkedTeams extends Component {
 
           <section id="ProfileLinkedTeamsCollapse" className="panel-collapse collapse"
             role="tabpanel" aria-labelledby="ProfileLinkedTeamsHeading">
-            {profileLinkedTeams}
             <ProfileLinkTeams {...this.props}/>
+            {profileLinkedTeams}
           </section>
         </section>
       </div>

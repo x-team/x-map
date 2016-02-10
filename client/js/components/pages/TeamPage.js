@@ -64,7 +64,7 @@ class TeamPage extends Component {
     return (
       <DocumentTitle title={`Team: ${team.name} | X-Map`}>
         <article id="TeamPage" className="page card">
-          <Link to="/" className="close btn btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
 
           <header className="card-header">
             <h3 className="card-title">{team.name}</h3>

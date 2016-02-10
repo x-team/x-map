@@ -40,17 +40,20 @@ class TeamLinkProfiles extends Component {
     }
 
     return (
-      <span>
-        <p>Add users:</p>
-        <select onChange={this.onInputChange.bind(this, 'selectedUserId')} defaultValue={null}>
-          <option>Select user:</option>
-          {unlinkedProfilesList.map(user => <option key={user.id}
-                                                    value={user.id}>{user.firstName} {user.lastName}</option>)}
-        </select>
-        <button disabled={!this.state.selectedUserId} onClick={this.onLink.bind(this, team.id, this.state.selectedUserId)}>
-          Add
-        </button>
-      </span>
+      <fieldset className="form-group">
+        <label>Add users:</label>
+        <span className="input-group">
+          <select className="form-control" onChange={this.onInputChange.bind(this, 'selectedUserId')} defaultValue={null}>
+            <option>Select user:</option>
+            {unlinkedProfilesList.map(user => <option key={user.id}
+              value={user.id}>{user.firstName} {user.lastName}</option>)}
+          </select>
+          <span className="input-group-btn">
+            <button className="btn btn-secondary" disabled={!this.state.selectedUserId}
+            onClick={this.onLink.bind(this, team.id, this.state.selectedUserId)}>Add</button>
+          </span>
+        </span>
+      </fieldset>
     );
   }
 }
