@@ -18,3 +18,7 @@
   height: 30px;
   display: inline-block;
 }
+
+#Header .dropdown-menu {
+  min-width: 136px;
+}
