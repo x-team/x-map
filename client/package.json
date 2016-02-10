@@ -70,7 +70,7 @@
     "url": "git://github.com/x-team/x-map.git"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint --max-warnings=0 .",
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch",
     "start": "cross-env NODE_ENV=development node server.dev.js",

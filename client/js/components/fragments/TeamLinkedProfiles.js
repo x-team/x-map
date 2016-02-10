@@ -5,14 +5,20 @@ import MiniProfile from './MiniProfile';
 import TeamLinkProfiles from './TeamLinkProfiles';
 
 class TeamLinkedProfiles extends Component {
+  onUnlink(id, userId) {
+    if (confirm(`Are you sure you want to remove this user from current team?`)) {
+      this.props.onUnlink(id, userId);
+    }
+  }
+
   render() {
-    const { team, canUnlink, onUnlink } = this.props;
+    const { team, canUnlink } = this.props;
 
     const userProfiles = [];
     for (const id in team.users) {
       let unlinkButton = null;
       if (canUnlink) {
-        unlinkButton = <a className="close btn btn-sm btn-secondary" onClick={onUnlink.bind(null, team.id, team.users[id].id)}>&times;</a>;
+        unlinkButton = <a className="close btn btn-sm btn-secondary" onClick={this.onUnlink.bind(this, team.id, team.users[id].id)}>&times;</a>;
       }
 
       userProfiles.push(
