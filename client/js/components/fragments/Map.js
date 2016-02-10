@@ -111,7 +111,11 @@ class Map extends Component {
 
       if (this.props.activeUserIds.indexOf(feature.getId()) !== -1) {
         return {
-          icon: blueMarker
+          icon: (feature.getProperty('avatar') ? (feature.getProperty('avatar') + '?sz=50') : blueMarker)
+        };
+      } else if (feature.getProperty('avatar')) {
+        return {
+          icon: feature.getProperty('avatar') + '?sz=35'
         };
       }
     });
