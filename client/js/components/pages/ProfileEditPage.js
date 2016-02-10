@@ -54,7 +54,7 @@ class ProfileEditPage extends Component {
     return (
       <DocumentTitle title={`Edit profile: ${user.firstName || ''} ${user.lastName || ''} | X-Map`}>
         <article id="TeamEditPage" className="page card">
-          <Link to="/" className="close btn btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
 
           {header}
 

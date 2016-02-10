@@ -2,15 +2,22 @@ import React, { Component, PropTypes } from 'react';
 
 /* Components */
 import MiniTeam from './MiniTeam';
+import ProfileLinkTeams from './ProfileLinkTeams';
 
 class ProfileLinkedTeams extends Component {
   render() {
-    const { user } = this.props;
+    const { user, canUnlink, onUnlink } = this.props;
 
     const teamProfiles = [];
     for (const id in user.teams) {
+      let unlinkButton = null;
+      if (canUnlink) {
+        unlinkButton = <a className="close btn btn-sm btn-secondary" onClick={onUnlink.bind(null, user.teams[id].id, user.id)}>&times;</a>;
+      }
+
       teamProfiles.push(
         <li className="list-group-item" key={id}>
+          {unlinkButton}
           <MiniTeam team={user.teams[id]}/>
         </li>
       );
@@ -36,6 +43,7 @@ class ProfileLinkedTeams extends Component {
 
           <section id="ProfileLinkedTeamsCollapse" className="panel-collapse collapse"
             role="tabpanel" aria-labelledby="ProfileLinkedTeamsHeading">
+            <ProfileLinkTeams {...this.props}/>
             {profileLinkedTeams}
           </section>
         </section>
@@ -44,10 +52,19 @@ class ProfileLinkedTeams extends Component {
   }
 }
 
+ProfileLinkedTeams.defaultProps = {
+  canUnlink: false
+};
+
 ProfileLinkedTeams.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  canLink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  canUnlink: PropTypes.bool.isRequired,
+  onUnlink: PropTypes.func,
+  teams: PropTypes.object
 };
 
 export default ProfileLinkedTeams;

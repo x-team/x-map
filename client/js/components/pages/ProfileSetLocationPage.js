@@ -45,7 +45,7 @@ class ProfileSetLocationPage extends Component {
     return (
       <DocumentTitle title={`Set location: ${user.firstName} ${user.lastName} | X-Map`}>
         <article id="ProfileSetLocationPage" className="page card">
-          <Link to="/" className="close btn btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
 
           <header className="card-header">
             <h3 className="card-title">{user.firstName} {user.lastName}</h3>

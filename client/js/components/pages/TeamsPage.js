@@ -50,7 +50,7 @@ class TeamsPage extends Component {
     return (
       <DocumentTitle title="Teams | X-Map">
         <article id="TeamsPage" className="page card">
-          <Link to="/" className="close btn btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
 
           <header className="card-header">
             <h3 className="card-title">Teams</h3>
