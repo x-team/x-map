@@ -27,7 +27,9 @@ class TeamPage extends Component {
   }
 
   deleteTeam(id) {
-    this.props.actions.teamDelete(id, this.redirectToTeamsPage.bind(this));
+    if (confirm(`Are you sure you want to permanently delete this team?`)) {
+      this.props.actions.teamDelete(id, this.redirectToTeamsPage.bind(this));
+    }
   }
 
   redirectToTeamsPage() {
