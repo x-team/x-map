@@ -11,11 +11,16 @@ import ProfileForm from '../forms/ProfileForm';
 
 class ProfileEditPage extends Component {
   componentDidMount() {
+    this.validateProps();
     this.props.actions.userActiveChanged([this.props.params.id]);
   }
 
   componentWillUpdate(props) {
     props.actions.userActiveChanged([props.params.id]);
+  }
+
+  componentDidUpdate() {
+    this.validateProps();
   }
 
   componentWillUnmount() {
@@ -27,14 +32,16 @@ class ProfileEditPage extends Component {
     history.pushState(null, '/profile/' + id);
   }
 
-  render() {
-    const { actions, errors, users, params, history, currentUserId, isProfileFilled } = this.props;
-
-    const user = users[params.id];
-    if (!user) {
+  validateProps() {
+    const { users, params, history } = this.props;
+    if (!users[params.id]) {
       history.pushState(null, '/404');
-      return <span/>;
     }
+  }
+
+  render() {
+    const { actions, errors, users, params, currentUserId, isProfileFilled } = this.props;
+    const user = users[params.id];
 
     let header = (
       <header className="card-header">

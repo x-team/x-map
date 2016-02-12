@@ -13,6 +13,7 @@ import TeamForm from '../forms/TeamForm';
 
 class TeamEditPage extends Component {
   componentDidMount() {
+    this.validateProps();
     const { actions, params, teams } = this.props;
     actions.userActiveChanged(teams[params.id].users.map(user => user.id));
   }
@@ -20,6 +21,10 @@ class TeamEditPage extends Component {
   componentWillUpdate(props) {
     const { actions, params, teams } = props;
     actions.userActiveChanged(teams[params.id].users.map(user => user.id));
+  }
+
+  componentDidUpdate() {
+    this.validateProps();
   }
 
   componentWillUnmount() {
@@ -30,14 +35,17 @@ class TeamEditPage extends Component {
     this.props.history.pushState(null, '/team/' + id);
   }
 
-  render() {
-    const { actions, errors, teams, params, history } = this.props;
-
-    const team = teams[params.id];
-    if (!team) {
+  validateProps() {
+    const { teams, params, history } = this.props;
+    if (!teams[params.id]) {
       history.pushState(null, '/404');
       return <span/>;
     }
+  }
+
+  render() {
+    const { actions, errors, teams, params } = this.props;
+    const team = teams[params.id];
 
     return (
       <DocumentTitle title={`Edit team: ${team.name} | X-Map`}>
