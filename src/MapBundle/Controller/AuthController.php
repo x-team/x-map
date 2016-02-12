@@ -87,6 +87,6 @@ class AuthController extends FOSRestController
         $user->setEmail($payload['email']);
         $user->setFirstName(strlen(trim($user->getFirstName())) ? $user->getFirstName() : $payload['given_name']);
         $user->setLastName(strlen(trim($user->getLastName())) ? $user->getLastName() : $payload['family_name']);
-        $user->setAvatar(strlen(trim($user->getAvatar())) ? $user->getAvatar() : $payload['picture']);
+        $user->setAvatar($payload['picture']);
     }
 }
