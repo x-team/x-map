@@ -13,6 +13,7 @@ import Profile from '../fragments/Profile';
 
 class ProfilePage extends Component {
   componentDidMount() {
+    this.validateProps();
     this.props.actions.userActiveChanged([this.props.params.id]);
   }
 
@@ -20,18 +21,24 @@ class ProfilePage extends Component {
     props.actions.userActiveChanged([props.params.id]);
   }
 
+  componentDidUpdate() {
+    this.validateProps();
+  }
+
   componentWillUnmount() {
     this.props.actions.userActiveChanged([]);
   }
 
-  render() {
-    const { users, history, params, currentUserId, isAdmin, actions, teams } = this.props;
-
-    const user = users[params.id];
-    if (!user) {
+  validateProps() {
+    const { users, history, params } = this.props;
+    if (!users[params.id]) {
       history.pushState(null, '/404');
-      return <span/>;
     }
+  }
+
+  render() {
+    const { users, params, currentUserId, isAdmin, actions, teams } = this.props;
+    const user = users[params.id];
 
     let poster = null;
     if (user.avatar) {

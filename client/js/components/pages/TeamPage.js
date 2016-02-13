@@ -13,6 +13,7 @@ import Team from '../fragments/Team';
 
 class TeamPage extends Component {
   componentDidMount() {
+    this.validateProps();
     const { actions, params, teams } = this.props;
     actions.userActiveChanged(teams[params.id].users.map(user => user.id));
   }
@@ -20,6 +21,10 @@ class TeamPage extends Component {
   componentWillUpdate(props) {
     const { actions, params, teams } = props;
     actions.userActiveChanged(teams[params.id].users.map(user => user.id));
+  }
+
+  componentDidUpdate() {
+    this.validateProps();
   }
 
   componentWillUnmount() {
@@ -36,14 +41,17 @@ class TeamPage extends Component {
     this.props.history.pushState(null, '/teams');
   }
 
-  render() {
-    const { teams, history, params, isAdmin, actions, users } = this.props;
-
-    const team = teams[params.id];
-    if (!team) {
+  validateProps() {
+    const { teams, params, history } = this.props;
+    if (!teams[params.id]) {
       history.pushState(null, '/404');
       return <span/>;
     }
+  }
+
+  render() {
+    const { teams, params, isAdmin, actions, users } = this.props;
+    const team = teams[params.id];
 
     let editLink;
     let deleteButton;

@@ -9,8 +9,13 @@ import * as UserActions from '../../actions/UserActions';
 
 class ProfileSetLocationPage extends Component {
   componentDidMount() {
+    this.validateProps();
     const user = this.props.users[this.props.params.id];
     this.props.actions.userUpdatesLocation(user.lat, user.lng);
+  }
+
+  componentDidUpdate() {
+    this.validateProps();
   }
 
   componentWillUnmount() {
@@ -19,6 +24,13 @@ class ProfileSetLocationPage extends Component {
 
   redirectToProfilePage(id) {
     this.props.history.push('/profile/' + id);
+  }
+
+  validateProps() {
+    const { users, history, params } = this.props;
+    if (!users[params.id]) {
+      history.pushState(null, '/404');
+    }
   }
 
   save() {
@@ -34,13 +46,8 @@ class ProfileSetLocationPage extends Component {
   }
 
   render() {
-    const { users, params, history, currentLocation } = this.props;
-
+    const { users, params, currentLocation } = this.props;
     const user = users[params.id];
-    if (!user) {
-      history.pushState(null, '/404');
-      return <span/>;
-    }
 
     return (
       <DocumentTitle title={`Set location: ${user.firstName} ${user.lastName} | X-Map`}>
