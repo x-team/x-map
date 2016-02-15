@@ -15,10 +15,13 @@ import Header from './fragments/Header';
 import Loader from './fragments/Loader';
 import Map from './fragments/Map';
 
-class App extends Component {
+export class App extends Component {
   constructor(props, context) {
     super(props, context);
-    props.history.listen(props.actions.routeChanged);
+    if (props.actions && props.actions.routeChanged) {
+      props.history.listen(props.actions.routeChanged);
+    }
+
     props.history.listenBefore(this.preventLeavingProfileEditIfNeeded.bind(this));
   }
 
@@ -79,7 +82,6 @@ class App extends Component {
         </DocumentTitle>
       );
     }
-
     return (
       <div>
         <h1 className="sr-only sr-only-focusable">X-Map</h1>
@@ -95,7 +97,10 @@ App.propTypes = {
   isSignedIn: PropTypes.bool,
   usersLoaded: PropTypes.bool,
   teamsLoaded: PropTypes.bool,
-  actions: PropTypes.object,
+  actions: PropTypes.shape({
+    logout: PropTypes.func.isRequired,
+    routeChanged: PropTypes.func
+  }).isRequired,
   users: PropTypes.object,
   history: PropTypes.object.isRequired,
   children: PropTypes.object,

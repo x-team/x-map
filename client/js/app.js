@@ -16,7 +16,7 @@ import TeamsPage from './components/pages/TeamsPage';
 import TeamPage from './components/pages/TeamPage';
 import TeamEditPage from './components/pages/TeamEditPage';
 import TeamAddPage from './components/pages/TeamAddPage';
-import App from './components/App';
+import { App } from './components/App';
 
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
 import '../css/main.css';
