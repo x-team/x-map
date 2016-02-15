@@ -10,3 +10,5 @@ deploy:
   - provider: script
     skip_cleanup: true
     script: ./deploy.sh staging
+    on:
+      branch: develop
