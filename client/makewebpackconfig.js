@@ -101,7 +101,7 @@ module.exports = function(options) {
           loaders: sassLoaders
         }, {
           test: /\.jpe?g$|\.gif$|\.png$/i,
-          loader: "url-loader?limit=10000"
+          loader: "url-loader?limit=100000"
         }
       ]
     },
