@@ -53,6 +53,44 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "build": [
+            "@build-frontend",
+            "@build-backend"
+        ],
+        "build-frontend": [
+            "cd client && npm config set progress false",
+            "cd client && npm install",
+            "cd client && npm run build",
+            "rm -rf web/css/ web/js/ *.png",
+            "cp -rf client/build/* web/"
+        ],
+        "build-backend": [
+            "composer install --prefer-dist --no-interaction",
+            "composer dump-autoload --no-dev --optimize"
+        ],
+        "test": [
+            "@test-frontend",
+            "@test-backend"
+        ],
+        "test-frontend": [
+            "cd client && npm run test"
+        ],
+        "test-backend": [
+            "php app/console server:start 127.0.0.1:8008 && bin/codecept build && bin/codecept run -vvv; RESULT=$?; php app/console server:stop 127.0.0.1:8008; exit $RESULT"
+        ],
+        "lint": [
+            "@lint-frontend",
+            "@lint-backend"
+        ],
+        "lint-frontend": [
+            "cd client && npm run lint"
+        ],
+        "lint-backend": [
+            "vendor/fabpot/php-cs-fixer/php-cs-fixer fix . --dry-run --config-file=.php_cs"
+        ],
+        "lint-fix-backend": [
+            "vendor/fabpot/php-cs-fixer/php-cs-fixer fix . --config-file=.php_cs"
         ]
     },
     "config": {
@@ -63,7 +101,11 @@
         "symfony-web-dir": "web",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "mongodb_host": "MONGODB_HOST",
+                "key_folder": "KEY_FOLDER"
+            }
         },
         "branch-alias": {
             "dev-master": "2.7-dev"

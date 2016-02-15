@@ -357,16 +357,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "c4ffef2b2296e9d0179eb0b5248e5ae25c9bba3b"
+                "reference": "e9c2ccf573b59b7cea566390f34254fed3c20ed9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/c4ffef2b2296e9d0179eb0b5248e5ae25c9bba3b",
-                "reference": "c4ffef2b2296e9d0179eb0b5248e5ae25c9bba3b",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/e9c2ccf573b59b7cea566390f34254fed3c20ed9",
+                "reference": "e9c2ccf573b59b7cea566390f34254fed3c20ed9",
                 "shasum": ""
             },
             "require": {
@@ -382,6 +382,7 @@
                 "doctrine/orm": "~2.3",
                 "phpunit/phpunit": "~4",
                 "satooshi/php-coveralls": "~0.6.1",
+                "symfony/phpunit-bridge": "~2.7|~3.0",
                 "symfony/validator": "~2.2|~3.0",
                 "symfony/yaml": "~2.2|~3.0",
                 "twig/twig": "~1.10"
@@ -431,7 +432,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2015-11-16 17:11:46"
+            "time": "2016-01-10 17:21:44"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -3570,16 +3571,16 @@
     "packages-dev": [
         {
             "name": "codeception/codeception",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "4ee562f421fd404139dd7b73ae46d075396a4baf"
+                "reference": "b199941f5e59d1e7fd32d78296c8ab98db873d89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/4ee562f421fd404139dd7b73ae46d075396a4baf",
-                "reference": "4ee562f421fd404139dd7b73ae46d075396a4baf",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/b199941f5e59d1e7fd32d78296c8ab98db873d89",
+                "reference": "b199941f5e59d1e7fd32d78296c8ab98db873d89",
                 "shasum": ""
             },
             "require": {
@@ -3646,7 +3647,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2015-12-20 12:11:42"
+            "time": "2016-02-09 22:27:48"
         },
         {
             "name": "doctrine/data-fixtures",

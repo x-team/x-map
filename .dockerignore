@@ -1,0 +1,12 @@
+/app/cache/*
+/app/logs/*
+/app/var/*
+/client/node_modules
+/client/build
+/tests/_output
+/web
+!/web/.htaccess
+!/web/app.php
+!/web/app_dev.php
+!/web/app_test.php
+!/web/robots.txt
