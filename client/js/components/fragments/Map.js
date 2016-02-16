@@ -29,10 +29,20 @@ class Map extends Component {
     this.updateMapStyle();
   }
 
+  getCenterLatLng(lat, lng) {
+    const northEast = this.map.getBounds().getNorthEast();
+    const southWest = this.map.getBounds().getSouthWest();
+
+    const lngWidth = northEast.lng() - southWest.lng();
+
+    return new window.google.maps.LatLng(lat, lng + lngWidth * 0.25);
+  }
+
   configureMap(google) {
     this.map = new google.maps.Map(document.getElementById('Map'), {
       center: {lat: 0, lng: 0},
       zoom: 2,
+      minZoom: 2,
       mapTypeId: google.maps.MapTypeId.HYBRID,
       mapTypeIds: [
         google.maps.MapTypeId.HYBRID,
@@ -67,11 +77,12 @@ class Map extends Component {
     });
 
     this.map.data.addListener('click', event => {
-      if (this.props.mapMode === MAP_MODE_SHOW && this.props.onFeatureClick) {
-        this.props.onFeatureClick(event.feature.getId());
+      if (this.props.mapMode === MAP_MODE_SHOW) {
+        if (this.props.onFeatureClick) {
+          this.props.onFeatureClick(event.feature.getId());
+        }
 
-        const latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng() + 35);
-        this.map.panTo(latLng);
+        this.map.panTo(this.getCenterLatLng(event.latLng.lat(), event.latLng.lng()));
       }
     });
 
@@ -110,6 +121,10 @@ class Map extends Component {
       }
 
       if (this.props.activeUserIds.indexOf(feature.getId()) !== -1) {
+        if (this.props.activeUserIds.length === 1) {
+          this.map.panTo(this.getCenterLatLng(feature.getGeometry().get().lat(), feature.getGeometry().get().lng()));
+        }
+
         return {
           icon: (feature.getProperty('avatar') ? (feature.getProperty('avatar') + '?sz=50') : blueMarker)
         };

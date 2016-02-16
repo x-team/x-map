@@ -24,18 +24,23 @@ class TeamsPage extends Component {
   render() {
     const { teams, isAdmin } = this.props;
 
-    const teamProfiles = [];
+    let teamProfiles = [];
     for (const id in teams) {
       teamProfiles.push(
-        <li className="list-group-item" key={id} onMouseOver={this.markTeamAsActive.bind(this, id)}
-             onMouseOut={this.markTeamAsInactive.bind(this)}>
+        <li className="list-group-item" key={id} onMouseOver={this.markTeamAsActive.bind(this, id)} onMouseOut={this.markTeamAsInactive.bind(this)}>
           <MiniTeam team={teams[id]}/>
         </li>
       );
     }
 
     if (!teamProfiles.length) {
-      teamProfiles.push(<p className="alert">No teams yet.</p>);
+      teamProfiles = <p className="alert">No teams yet.</p>;
+    } else {
+      teamProfiles = (
+        <ul className="list-group list-group-flush">
+          {teamProfiles}
+        </ul>
+      );
     }
 
     let adminMenu = null;
@@ -58,9 +63,8 @@ class TeamsPage extends Component {
             {adminMenu}
           </header>
 
-          <ul className="list-group list-group-flush">
-            {teamProfiles}
-          </ul>
+          {teamProfiles}
+
         </article>
       </DocumentTitle>
     );
