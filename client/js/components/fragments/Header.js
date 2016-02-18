@@ -52,8 +52,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.object,
-  onLogout: PropTypes.func.isRequired
+  onLogout: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 export default Header;

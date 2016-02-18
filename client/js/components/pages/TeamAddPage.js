@@ -9,7 +9,7 @@ import * as TeamActions from '../../actions/TeamActions';
 /* Components */
 import TeamForm from '../forms/TeamForm';
 
-class TeamAddPage extends Component {
+export class TeamAddPage extends Component {
   redirectToTeamsPage() {
     this.props.history.pushState(null, '/teams');
   }
@@ -37,12 +37,12 @@ class TeamAddPage extends Component {
 }
 
 TeamAddPage.propTypes = {
-  history: PropTypes.object.isRequired,
   actions: PropTypes.object,
   errors: PropTypes.shape({
-    globalErrors: PropTypes.array,
-    fieldErrors: PropTypes.object
-  })
+    fieldErrors: PropTypes.object,
+    globalErrors: PropTypes.array
+  }),
+  history: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

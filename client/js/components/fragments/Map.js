@@ -16,7 +16,7 @@ import * as UserActions from '../../actions/UserActions';
 import blueMarker from '../../../img/blueMarker.png';
 import 'file?name=[name].[ext]!../../../img/blueMarker.png';
 
-class Map extends Component {
+export class Map extends Component {
   componentDidMount() {
     GoogleMapsLoader.load(this.configureMap.bind(this));
   }
@@ -144,15 +144,15 @@ class Map extends Component {
 }
 
 Map.propTypes = {
-  users: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   activeUserIds: PropTypes.array,
-  mapMode: PropTypes.oneOf([MAP_MODE_SELECT, MAP_MODE_SHOW]).isRequired,
   currentLocation: PropTypes.shape({
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired
   }),
-  actions: PropTypes.object.isRequired,
-  onFeatureClick: PropTypes.func
+  mapMode: PropTypes.oneOf([MAP_MODE_SELECT, MAP_MODE_SHOW]).isRequired,
+  onFeatureClick: PropTypes.func,
+  users: PropTypes.object.isRequired
 };
 
 Map.defaultProps = {

@@ -21,8 +21,8 @@ class Error extends Component {
 }
 
 Error.propTypes = {
-  field: PropTypes.string,
-  error: PropTypes.string.isRequired
+  error: PropTypes.string.isRequired,
+  field: PropTypes.string
 };
 
 export default Error;

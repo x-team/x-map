@@ -7,7 +7,7 @@ import assignToEmpty from '../../utils/assign';
 
 import * as UserActions from '../../actions/UserActions';
 
-class ProfileSetLocationPage extends Component {
+export class ProfileSetLocationPage extends Component {
   componentDidMount() {
     this.validateProps();
     const user = this.props.users[this.props.params.id];
@@ -73,16 +73,16 @@ class ProfileSetLocationPage extends Component {
 }
 
 ProfileSetLocationPage.propTypes = {
-  users: PropTypes.object.isRequired,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired,
-  history: PropTypes.object.isRequired,
   actions: PropTypes.object,
   currentLocation: PropTypes.shape({
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired
-  })
+  }),
+  history: PropTypes.object.isRequired,
+  params: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired,
+  users: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

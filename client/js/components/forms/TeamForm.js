@@ -62,9 +62,9 @@ class TeamForm extends Component {
 }
 
 TeamForm.propTypes = {
+  errors: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onSuccess: PropTypes.func,
-  errors: PropTypes.object,
   team: PropTypes.shape({
     id: PropTypes.string
   })

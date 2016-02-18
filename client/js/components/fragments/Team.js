@@ -22,13 +22,13 @@ Team.defaultProps = {
 };
 
 Team.propTypes = {
-  team: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired,
   canLink: PropTypes.bool.isRequired,
   canUnlink: PropTypes.bool.isRequired,
   onLink: PropTypes.func,
   onUnlink: PropTypes.func,
+  team: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired,
   users: PropTypes.object
 };
 

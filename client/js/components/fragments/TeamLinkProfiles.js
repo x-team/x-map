@@ -50,7 +50,7 @@ class TeamLinkProfiles extends Component {
           </select>
           <span className="input-group-btn">
             <button className="btn btn-secondary" disabled={!this.state.selectedUserId}
-            onClick={this.onLink.bind(this, team.id, this.state.selectedUserId)}>Add</button>
+              onClick={this.onLink.bind(this, team.id, this.state.selectedUserId)}>Add</button>
           </span>
         </span>
       </fieldset>
@@ -59,12 +59,12 @@ class TeamLinkProfiles extends Component {
 }
 
 TeamLinkProfiles.propTypes = {
+  canLink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
   team: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  users: PropTypes.object,
-  canLink: PropTypes.bool.isRequired,
-  onLink: PropTypes.func
+  users: PropTypes.object
 };
 
 export default TeamLinkProfiles;

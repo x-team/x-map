@@ -21,13 +21,13 @@ Profile.defaultProps = {
 };
 
 Profile.propTypes = {
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired,
   canLink: PropTypes.bool.isRequired,
   canUnlink: PropTypes.bool.isRequired,
   onLink: PropTypes.func,
-  onUnlink: PropTypes.func
+  onUnlink: PropTypes.func,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default Profile;

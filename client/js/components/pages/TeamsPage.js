@@ -11,7 +11,7 @@ import assignToEmpty from '../../utils/assign';
 /* Components */
 import MiniTeam from '../fragments/MiniTeam';
 
-class TeamsPage extends Component {
+export class TeamsPage extends Component {
   markTeamAsActive(id) {
     const { actions, teams } = this.props;
     actions.userActiveChanged(teams[id].users.map(user => user.id));
@@ -72,9 +72,9 @@ class TeamsPage extends Component {
 }
 
 TeamsPage.propTypes = {
-  teams: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  isAdmin: PropTypes.bool
+  isAdmin: PropTypes.bool,
+  teams: PropTypes.object.isRequired
 };
 
 TeamsPage.defaultProps = {

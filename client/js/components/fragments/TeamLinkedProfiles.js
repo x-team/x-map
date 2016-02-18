@@ -59,13 +59,13 @@ class TeamLinkedProfiles extends Component {
 }
 
 TeamLinkedProfiles.propTypes = {
+  canLink: PropTypes.bool.isRequired,
+  canUnlink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func,
   team: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  canLink: PropTypes.bool.isRequired,
-  onLink: PropTypes.func,
-  canUnlink: PropTypes.bool.isRequired,
-  onUnlink: PropTypes.func,
   users: PropTypes.object
 };
 
