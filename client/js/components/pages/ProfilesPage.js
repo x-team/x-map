@@ -9,7 +9,7 @@ import * as UserActions from '../../actions/UserActions';
 /* Components */
 import MiniProfile from '../fragments/MiniProfile';
 
-class ProfilesPage extends Component {
+export class ProfilesPage extends Component {
   markUserAsActive(id) {
     this.props.actions.userActiveChanged([id]);
   }
@@ -55,8 +55,8 @@ class ProfilesPage extends Component {
 }
 
 ProfilesPage.propTypes = {
-  users: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

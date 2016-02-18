@@ -11,7 +11,7 @@ import * as TeamActions from '../../actions/TeamActions';
 /* Components */
 import Profile from '../fragments/Profile';
 
-class ProfilePage extends Component {
+export class ProfilePage extends Component {
   componentDidMount() {
     this.validateProps();
     this.props.actions.userActiveChanged([this.props.params.id]);
@@ -95,15 +95,15 @@ class ProfilePage extends Component {
 }
 
 ProfilePage.propTypes = {
-  users: PropTypes.object.isRequired,
+  actions: PropTypes.object,
+  currentUserId: PropTypes.string,
+  history: PropTypes.object.isRequired,
+  isAdmin: PropTypes.bool,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  history: PropTypes.object.isRequired,
-  currentUserId: PropTypes.string,
-  isAdmin: PropTypes.bool,
-  actions: PropTypes.object,
-  teams: PropTypes.object
+  teams: PropTypes.object,
+  users: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

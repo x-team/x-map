@@ -86,9 +86,9 @@ class ProfileForm extends Component {
 }
 
 ProfileForm.propTypes = {
+  errors: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onSuccess: PropTypes.func,
-  errors: PropTypes.object,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired

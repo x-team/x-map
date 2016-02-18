@@ -32,18 +32,18 @@ class ErrorList extends Component {
 }
 
 ErrorList.propTypes = {
-  showGlobalErrors: PropTypes.bool,
-  showFieldErrors: PropTypes.bool,
   errors: PropTypes.shape({
     globalErrors: PropTypes.array,
     fieldErrors: PropTypes.object
-  })
+  }),
+  showFieldErrors: PropTypes.bool,
+  showGlobalErrors: PropTypes.bool
 };
 
 ErrorList.defaultProps = {
-  showGlobalErrors: true,
+  errors: {},
   showFieldErrors: false,
-  errors: {}
+  showGlobalErrors: true
 };
 
 export default ErrorList;

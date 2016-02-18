@@ -43,19 +43,19 @@ class ProfileLinkedTeams extends Component {
         <section className="panel panel-default">
           <header className="panel-heading" role="tab" id="ProfileLinkedTeamsHeading">
             <h4 className="panel-title"
-                data-toggle="collapse"
-                data-parent="#ProfileLinkedTeams"
-                aria-expanded="true"
-                aria-controls="ProfileLinkedTeamsCollapse"
-                href="#ProfileLinkedTeamsCollapse">
+              data-toggle="collapse"
+              data-parent="#ProfileLinkedTeams"
+              aria-expanded="true"
+              aria-controls="ProfileLinkedTeamsCollapse"
+              href="#ProfileLinkedTeamsCollapse">
               Teams ({teamProfiles.length})
             </h4>
           </header>
 
           <section id="ProfileLinkedTeamsCollapse"
-                   className="panel-collapse collapse"
-                   role="tabpanel"
-                   aria-labelledby="ProfileLinkedTeamsHeading">
+            className="panel-collapse collapse"
+            role="tabpanel"
+            aria-labelledby="ProfileLinkedTeamsHeading">
             <ProfileLinkTeams {...this.props}/>
             {profileLinkedTeams}
           </section>
@@ -70,14 +70,14 @@ ProfileLinkedTeams.defaultProps = {
 };
 
 ProfileLinkedTeams.propTypes = {
+  canLink: PropTypes.bool.isRequired,
+  canUnlink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func,
+  teams: PropTypes.object,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired,
-  canLink: PropTypes.bool.isRequired,
-  onLink: PropTypes.func,
-  canUnlink: PropTypes.bool.isRequired,
-  onUnlink: PropTypes.func,
-  teams: PropTypes.object
+  }).isRequired
 };
 
 export default ProfileLinkedTeams;

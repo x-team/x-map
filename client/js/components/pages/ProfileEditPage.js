@@ -9,7 +9,7 @@ import * as UserActions from '../../actions/UserActions';
 /* Components */
 import ProfileForm from '../forms/ProfileForm';
 
-class ProfileEditPage extends Component {
+export class ProfileEditPage extends Component {
   componentDidMount() {
     this.validateProps();
     this.props.actions.userActiveChanged([this.props.params.id]);
@@ -48,7 +48,7 @@ class ProfileEditPage extends Component {
         <h3 className="card-title">{user.firstName} {user.lastName}</h3>
         <p className="card-subtitle">Edit profile</p>
         <Link className="text-muted" to={`/profile/${user.id}`}
-              title={`Go to ${user.firstName} ${user.lastName} profile page`}>#{user.id}</Link>
+          title={`Go to ${user.firstName} ${user.lastName} profile page`}>#{user.id}</Link>
       </header>
     );
     if (!isProfileFilled && currentUserId === params.id) {
@@ -67,7 +67,7 @@ class ProfileEditPage extends Component {
 
           <div className="card-block">
             <ProfileForm user={user} onSubmit={actions.userUpdate}
-                         onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
+              onSuccess={this.redirectToProfilePage.bind(this, params.id)} errors={errors}/>
           </div>
         </article>
       </DocumentTitle>
@@ -76,18 +76,18 @@ class ProfileEditPage extends Component {
 }
 
 ProfileEditPage.propTypes = {
-  users: PropTypes.object.isRequired,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired,
-  history: PropTypes.object.isRequired,
   actions: PropTypes.object,
+  currentUserId: PropTypes.string.isRequired,
   errors: PropTypes.shape({
     globalErrors: PropTypes.array,
     fieldErrors: PropTypes.object
   }),
+  history: PropTypes.object.isRequired,
   isProfileFilled: PropTypes.bool,
-  currentUserId: PropTypes.string.isRequired
+  params: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired,
+  users: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

@@ -58,12 +58,12 @@ class ProfileLinkTeams extends Component {
 }
 
 ProfileLinkTeams.propTypes = {
+  canLink: PropTypes.bool.isRequired,
+  onLink: PropTypes.func,
+  teams: PropTypes.object,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired,
-  teams: PropTypes.object,
-  canLink: PropTypes.bool.isRequired,
-  onLink: PropTypes.func
+  }).isRequired
 };
 
 export default ProfileLinkTeams;

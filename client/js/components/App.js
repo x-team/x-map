@@ -72,7 +72,7 @@ export class App extends Component {
       content = (
         <div>
           <Header user={users[currentUserId]} onLogout={actions.logout.bind(null, this.redirectToHomePage.bind(this))}/>
-          { this.props.children }
+          {this.props.children}
         </div>
       );
     } else {
@@ -93,18 +93,18 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  currentUserId: PropTypes.string,
-  isSignedIn: PropTypes.bool,
-  usersLoaded: PropTypes.bool,
-  teamsLoaded: PropTypes.bool,
   actions: PropTypes.shape({
     logout: PropTypes.func.isRequired,
     routeChanged: PropTypes.func
   }).isRequired,
-  users: PropTypes.object,
-  history: PropTypes.object.isRequired,
   children: PropTypes.object,
-  isProfileFilled: PropTypes.bool.isRequired
+  currentUserId: PropTypes.string,
+  history: PropTypes.object.isRequired,
+  isProfileFilled: PropTypes.bool.isRequired,
+  isSignedIn: PropTypes.bool,
+  teamsLoaded: PropTypes.bool,
+  users: PropTypes.object,
+  usersLoaded: PropTypes.bool
 };
 
 App.defaultProps = {

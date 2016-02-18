@@ -11,7 +11,7 @@ import assignToEmpty from '../../utils/assign';
 /* Components */
 import Team from '../fragments/Team';
 
-class TeamPage extends Component {
+export class TeamPage extends Component {
   componentDidMount() {
     this.validateProps();
     const { actions, params, teams } = this.props;
@@ -95,14 +95,14 @@ class TeamPage extends Component {
 }
 
 TeamPage.propTypes = {
-  teams: PropTypes.object.isRequired,
-  users: PropTypes.object.isRequired,
+  actions: PropTypes.object,
+  history: PropTypes.object.isRequired,
+  isAdmin: PropTypes.bool,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  history: PropTypes.object.isRequired,
-  isAdmin: PropTypes.bool,
-  actions: PropTypes.object
+  teams: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
