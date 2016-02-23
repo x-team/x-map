@@ -61,10 +61,9 @@ class AuthController extends FOSRestController
         $payload = $loginTicket->getAttributes()['payload'];
         $email = $payload['email'];
 
-// Disabled temporarily to make testing multiple accounts easier
-//        if (!preg_match('/@x-team.com$/', $email)) {
-//            return $this->handleView($this->view('Invalid email address.', 400));
-//        }
+        if (!preg_match('/@x-team.com$/', $email)) {
+            return $this->handleView($this->view('Invalid email address.', 400));
+        }
 
         $user = $this->repository->findOneByEmail($email) ?: new User();
         $this->updateUserWithPayload($user, $payload);
@@ -88,5 +87,12 @@ class AuthController extends FOSRestController
         $user->setFirstName(strlen(trim($user->getFirstName())) ? $user->getFirstName() : $payload['given_name']);
         $user->setLastName(strlen(trim($user->getLastName())) ? $user->getLastName() : $payload['family_name']);
         $user->setAvatar($payload['picture']);
+
+        // grant admin if it's the only user
+        $qb = $this->repository->createQueryBuilder('u');
+        $qb->where(sprintf('this.email !== "%s"', $payload['email']));
+        if (!$qb->getQuery()->count()) {
+            $user->setIsAdmin(true);
+        }
     }
 }
