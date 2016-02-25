@@ -13,7 +13,7 @@ deploy:
     on:
       branch: develop
   - provider: script
-      skip_cleanup: true
-      script: ./deploy.sh latest
-      on:
-        branch: master
+    skip_cleanup: true
+    script: ./deploy.sh latest
+    on:
+      branch: master
