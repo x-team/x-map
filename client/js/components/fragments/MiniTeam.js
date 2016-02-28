@@ -5,17 +5,12 @@ class MiniTeam extends Component {
   render() {
     const { team } = this.props;
 
-    let summary = null;
-    if (team.summary) {
-      summary = <p className="text-muted">{team.summary}</p>;
-    }
-
     return (
-      <Link className="miniTeam media" to={`/team/${team.id}`} title={team.name}>
-        <span className="media-body">
-          <h4 className="media-heading">{team.name}</h4>
-          {summary}
-        </span>
+      <Link className="miniTeam list-group-item" to={`/team/${team.id}`} title={`View ${team.name}'s profile page`}>
+        <h4 className="list-group-item-heading">{team.name}</h4>
+        {(() => { if (team.summary != '') { return (
+          <p className="list-group-item-text">{team.summary}</p>
+        )}})()}
       </Link>
     );
   }

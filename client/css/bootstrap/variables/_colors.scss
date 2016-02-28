@@ -1,0 +1,22 @@
+// Colors
+//
+// Grayscale and brand colors for use across Bootstrap.
+
+// Bootstrap overriding
+
+$gray-dark:                       #000;
+$gray:                            #282828;
+$gray-light:                      #555;
+$gray-lighter:                    #888;
+$gray-lightest:                   #ADAFAE;
+
+$brand-primary:                   #0275d8;
+$brand-success:                   #77B300;
+$brand-info:                      #9933CC;
+$brand-warning:                   #FF8800;
+$brand-danger:                    #CC0000;
+
+// Customs, used in setup.scss
+
+$background-dark-alpha: rgba(0,0,0,.5);
+$background-slightly-alpha: rgba(0,0,0,.3);

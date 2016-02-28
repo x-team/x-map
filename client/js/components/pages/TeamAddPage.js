@@ -20,11 +20,11 @@ export class TeamAddPage extends Component {
     return (
       <DocumentTitle title="Add team | X-Map">
         <article id="TeamAddPage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary" title="close page">&times;</Link>
 
           <header className="card-header">
-            <h3 className="card-title">Add team</h3>
-            <p className="card-subtitle">Create a new team</p>
+            <h2 className="card-title">Add team</h2>
+            <p className="text-muted">Create a new team</p>
           </header>
 
           <div className="card-block">

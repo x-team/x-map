@@ -1,2 +1,170 @@
-body {
+// Setup Sass
+//
+// Use Bootstrap rules, write here properties that relies in this css framework.
+// The code here override framework defaults.
+
+/* card-block */
+.card {
+  margin-bottom: 0;
 }
+
+.card-img-top {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.card-img-top .figure-img {
+  margin: 0;
+  max-height: 100px;
+}
+
+.card-header > :last-child {
+  margin-bottom: 0;
+}
+
+.card .close {
+  float: initial;
+  position: absolute;
+  right: .5em;
+  top: .5em;
+}
+
+.card > .list-group:last-child .list-group-item:last-child {
+  border-radius: 0;
+}
+
+/* list-group */
+.list-group-item:first-child {
+  @include border-top-radius(0);
+}
+
+/* accordion */
+.accordion {
+  margin-bottom: 0;
+  border-bottom: 1px solid $gray-dark;
+}
+
+.accordion:last-child {
+  border-bottom: none;
+}
+
+.accordion:last-child .accordion-body {
+  margin-bottom: 0;
+}
+
+.accordion-header {
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: background 100ms ease-out;
+}
+
+.accordion-header:hover {
+  background: $background-slightly-alpha;
+  transition: background 100ms ease-out;
+}
+
+.accordion-title {
+  padding: 1.35rem 1.25rem;
+  margin-bottom: 0;
+}
+
+.accordion-body {
+  margin-bottom: 1rem;
+}
+
+.accordion .form-group {
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  padding-left: 2.75rem;
+  padding-right: 2.75rem;
+  margin: 0;
+}
+
+.accordion .form-group,
+.accordion .list-group-item {
+  padding-left: 2.75rem;
+  padding-right: 2.75rem;
+}
+
+.accordion .list-group-item .list-group-item {
+  padding-left: 2.75rem;
+  padding-right: 2.75rem;
+}
+
+/* list-group */
+ul.list-group .list-group-item {
+  padding: 0;
+}
+
+ul.list-group a.list-group-item {
+  padding: .75rem 1.25rem;
+  display: block;
+}
+
+ul.list-group a.list-group-item:hover {
+  cursor: pointer;
+  background: $background-slightly-alpha;
+  transition: background 100ms ease-out;
+}
+
+ul.list-group a.list-group-item img {
+  width: 50px;
+  max-height: 50px;
+  margin-right: 1rem;
+}
+
+ul.list-group a.list-group-item .list-group-item-heading {
+  color: #fff;
+  margin-top: .5rem;
+}
+
+ul.list-group a.list-group-item .list-group-item-text:last-child {
+  margin-bottom: .5rem;
+}
+
+ul.list-group a.list-group-item .list-group-item-text:first-child {
+  margin-bottom: 1rem;
+}
+
+ul.list-group li.list-group-item .close {
+  opacity: 0;
+  transition: all 100ms ease-out;
+  cursor: pointer;
+  color: #fff;
+}
+
+ul.list-group li.list-group-item:hover .close {
+  opacity: .7;
+}
+
+ul.list-group li.list-group-item .close:hover {
+  opacity: 1;
+}
+
+.list-group-item-text:last-child {
+  margin-bottom: 0;
+}
+
+/* buttons */
+.btn {
+  border-width: 1px;
+}
+
+.btn-secondary,
+.btn-danger {
+  color: #fff;
+  opacity: .6;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  opacity: .8;
+  border: 1px solid $gray-lightest;
+}
+
+.btn-danger:hover {
+  opacity: .8;
+  border: 1px solid rgba($brand-danger, .9);
+}
+

@@ -55,10 +55,10 @@ export class TeamsPage extends Component {
     return (
       <DocumentTitle title="Teams | X-Map">
         <article id="TeamsPage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary" title="close page">&times;</Link>
 
           <header className="card-header">
-            <h3 className="card-title">Teams</h3>
+            <h2 className="card-title">Teams</h2>
             <p className="text-muted">Listing all teams</p>
             {adminMenu}
           </header>

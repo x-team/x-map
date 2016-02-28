@@ -1,0 +1,44 @@
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background and border color.
+
+$btn-padding-x:                    1rem;
+$btn-padding-y:                    .375rem;
+$btn-font-weight:                  normal;
+
+$btn-primary-color:                #2F2F2F;
+$btn-primary-bg:                   #fff;
+$btn-primary-border:               #E6E6E6;
+
+$btn-secondary-color:              #fff;
+$btn-secondary-bg:                 transparent;
+$btn-secondary-border:             rgba(255,255,255,.2);
+
+$btn-info-color:                   #fff;
+$btn-info-bg:                      $brand-info;
+$btn-info-border:                  $btn-info-bg;
+
+$btn-success-color:                #fff;
+$btn-success-bg:                   $brand-success;
+$btn-success-border:               $btn-success-bg;
+
+$btn-warning-color:                #fff;
+$btn-warning-bg:                   $brand-warning;
+$btn-warning-border:               $btn-warning-bg;
+
+$btn-danger-color:                 #fff;
+$btn-danger-bg:                    transparent;
+$btn-danger-border:                rgba($brand-danger,.5);
+
+$btn-link-disabled-color:          $gray-light;
+
+$btn-padding-x-sm:                 .75rem;
+$btn-padding-y-sm:                 .25rem;
+
+$btn-padding-x-lg:                 1.25rem;
+$btn-padding-y-lg:                 .75rem;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius:                $border-radius;
+$btn-border-radius-lg:             $border-radius-lg;
+$btn-border-radius-sm:             $border-radius-sm;

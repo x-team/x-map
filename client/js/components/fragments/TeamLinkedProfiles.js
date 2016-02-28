@@ -18,40 +18,33 @@ class TeamLinkedProfiles extends Component {
     for (const id in team.users) {
       let unlinkButton = null;
       if (canUnlink) {
-        unlinkButton = <a className="close btn btn-sm btn-secondary" onClick={this.onUnlink.bind(this, team.id, team.users[id].id)}>&times;</a>;
+        unlinkButton = <a className="close btn btn-sm btn-danger" title="Remove this user from current team." onClick={this.onUnlink.bind(this, team.id, team.users[id].id)}>&times;</a>;
       }
 
       userProfiles.push(
         <li className="list-group-item" key={id}>
-          {unlinkButton}
           <MiniProfile user={team.users[id]}/>
+          {unlinkButton}
         </li>
       );
     }
 
-    let teamLinkedProfiles = (<i className="text-muted">Currently nobody in this team.</i>);
-    if (userProfiles.length) {
-      teamLinkedProfiles = (
-        <ul className="list-group list-group-flush">
-          {userProfiles}
-        </ul>
-      );
-    }
+    let teamLinkedProfiles = (userProfiles.length) ?
+      <ul className="list-group">{userProfiles}</ul> :
+      <p className="alert text-xs-center">Currently nobody in this team.</p>;
 
     return (
-      <div id="TeamLinkedProfiles" className="accordion list-group-item" role="tablist" aria-multiselectable="true">
-        <section className="panel panel-default">
-          <header className="panel-heading" role="tab" id="TeamLinkedProfilesHeading">
-            <h4 className="panel-title" data-toggle="collapse" data-parent="#TeamLinkedProfiles"
-              aria-expanded="true" aria-controls="TeamLinkedProfilesCollapse"
-              href="#TeamLinkedProfilesCollapse">Users ({userProfiles.length})</h4>
-          </header>
+      <div id="TeamLinkedProfiles" className="accordion" role="tablist" aria-multiselectable="true">
+        <header className="accordion-header" role="tab" id="TeamLinkedProfilesHeading">
+          <h3 className="accordion-title" data-toggle="collapse" data-parent="#TeamLinkedProfiles"
+            aria-expanded="true" aria-controls="TeamLinkedProfilesCollapse"
+            href="#TeamLinkedProfilesCollapse">Users <span className="label label-primary pull-xs-right">{userProfiles.length}</span></h3>
+        </header>
 
-          <section id="TeamLinkedProfilesCollapse" className="panel-collapse collapse"
-            role="tabpanel" aria-labelledby="TeamLinkedProfilesHeading">
-            <TeamLinkProfiles {...this.props}/>
-            {teamLinkedProfiles}
-          </section>
+        <section id="TeamLinkedProfilesCollapse" className="collapse in accordion-body"
+          role="tabpanel" aria-labelledby="TeamLinkedProfilesHeading">
+          <TeamLinkProfiles {...this.props}/>
+          {teamLinkedProfiles}
         </section>
       </div>
     );
