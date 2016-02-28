@@ -7,16 +7,18 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import * as UserActions from '../../actions/UserActions';
+
 import GoogleMapsLoader from 'google-maps';
 import deepEqual from 'deep-equal';
-
-import * as UserActions from '../../actions/UserActions';
+import nite from '../../utils/nite';
 
 /* Assets */
 import blueMarker from '../../../img/blueMarker.png';
 import 'file?name=[name].[ext]!../../../img/blueMarker.png';
 
-import nite from '../../utils/nite';
+/* CSS Module */
+import styles from '../../../css/components/fragments/Map.css';
 
 export class Map extends Component {
   componentDidMount() {
@@ -55,15 +57,16 @@ export class Map extends Component {
       scaleControl: true,
       mapTypeControl: true,
       mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+        position: google.maps.ControlPosition.LEFT_BOTTOM
       },
       streetViewControl: true,
       streetViewControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER
+        position: google.maps.ControlPosition.LEFT_BOTTOM
       },
       zoomControl: true,
       zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER
+        position: google.maps.ControlPosition.LEFT_BOTTOM
       }
     });
 
@@ -142,7 +145,7 @@ export class Map extends Component {
 
   render() {
     return (
-      <div id="Map"></div>
+      <div id="Map" className={styles.map}></div>
     );
   }
 }

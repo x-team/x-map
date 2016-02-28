@@ -1,24 +1,51 @@
-#Header {
+.header {
   z-index: 9;
-  height: 56px;
 }
 
-#Header .logo h1 {
-  font-size: 1rem;
-  display: inline-block;
+.header :global .navbar {
+  background: none;
+}
+
+.header :global .nav {
+  padding-top: .5rem;
+}
+
+.header :global .logo {
+  position: relative;
+}
+
+.header :global .logo h2 {
   margin-bottom: 0;
 }
 
-#Header .logo span {
+.header :global .logo h2:after {
+  font-size: 1.5rem;
+  position: absolute;
+  content: '-Map';
+  white-space: nowrap;
+  top: 7px;
+  left: 25px;
+  color: #fff;
+  background-color: transparent;
+  text-shadow: #999 0px 1px 0px, #ccc 1px 2px 0px;
+}
+
+.header :global .logo span {
   transform: translateY(3px);
   display: inline-block;
 }
 
-#Header .logo img {
+.header :global .logo img {
   height: 30px;
   display: inline-block;
 }
 
-#Header .dropdown-menu {
-  min-width: 136px;
+.header :global .dropdown-menu {
+  min-width: 105px;
+  padding: 0;
+}
+
+.header :global .dropdown-item {
+  padding: .5rem 1rem;
+  cursor: pointer;
 }

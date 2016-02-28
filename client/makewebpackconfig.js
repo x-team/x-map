@@ -15,7 +15,7 @@ module.exports = function(options) {
       "bootstrap-loader/extractStyles"
     ];
     sassLoaders = ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!sass-loader');
-    cssLoaders = ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader');
+    cssLoaders = ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader');
     // Plugins
     plugins = [// Plugins for Webpack
       new webpack.optimize.UglifyJsPlugin({ // Optimize the JavaScript...
@@ -60,7 +60,7 @@ module.exports = function(options) {
       "bootstrap-loader"
     ];
     sassLoaders = 'style-loader!css-loader!postcss-loader!sass-loader';
-    cssLoaders = 'style-loader!css-loader!postcss-loader';
+    cssLoaders = 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader';
     // Only plugin is the hot module replacement plugin
     plugins = [
       new webpack.HotModuleReplacementPlugin(), // Make hot loading work
@@ -102,6 +102,9 @@ module.exports = function(options) {
         }, {
           test: /\.jpe?g$|\.gif$|\.png$/i,
           loader: "url-loader?limit=100000"
+        }, {
+          test: /\.svg$/,
+          loader: 'babel!svg-react'
         }
       ]
     },

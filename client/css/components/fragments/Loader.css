@@ -1,32 +1,45 @@
 $size: 500px;
-#Loader {
+.loader {
   width: $size;
+  max-width: $size;
   min-height: $size;
+  max-height: $size;
   position: fixed;
   top: calc(50% - ($size / 2));
-  left: calc(50% - ($size / 2));
+  right: calc(50% - ($size / 2));
   z-index: 2;
-  background-image: url(../img/shinyworldglobe.png);
   box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.55);
-  padding-top: 20px;
+  padding-top: 50px;
   padding-bottom: 20px;
   color: white;
   border: none;
+  font-size: 1rem;
+  background-image: url(/img/worldglobe.png);
+  border-radius: .5rem;
 }
 
-#Loader a {
+.loader p {
+  font-size: 1.5em;
+}
+
+.loader p:last-child {
+  margin-top: 2rem;
+}
+
+.loader a {
   color: white;
   font-weight: bolder;
 }
 
-#Loader a:hover {
-  text-decoration: underline;
-}
-
-#Loader h2 {
+.loader h2 {
   margin-bottom: 30px;
 }
 
-.gmnoprint.gm-style-mtc {
-  top: 60px !important;
+.loader h2 svg {
+  width: 320px;
+  height: 230px;
+}
+
+.loader h2 svg g {
+  transform: scale(0.5);
 }

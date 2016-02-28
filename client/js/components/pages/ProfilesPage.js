@@ -38,10 +38,10 @@ export class ProfilesPage extends Component {
     return (
       <DocumentTitle title="Profiles | X-Map">
         <article id="ProfilesPage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary" title="close page">&times;</Link>
 
           <header className="card-header">
-            <h3 className="card-title">Profiles</h3>
+            <h2 className="card-title">Profiles</h2>
             <p className="text-muted">Listing all profiles</p>
           </header>
 
