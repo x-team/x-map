@@ -16,6 +16,8 @@ import * as UserActions from '../../actions/UserActions';
 import blueMarker from '../../../img/blueMarker.png';
 import 'file?name=[name].[ext]!../../../img/blueMarker.png';
 
+import nite from '../../utils/nite';
+
 export class Map extends Component {
   componentDidMount() {
     GoogleMapsLoader.load(this.configureMap.bind(this));
@@ -64,6 +66,8 @@ export class Map extends Component {
         position: google.maps.ControlPosition.LEFT_CENTER
       }
     });
+
+    nite.init(this.map);
 
     this.currentLocationMarker = new google.maps.Marker({
       icon: blueMarker
