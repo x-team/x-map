@@ -28,7 +28,8 @@
         "doctrine/mongodb-odm-bundle": "3.0.*",
         "nelmio/cors-bundle": "^1.4.0",
         "lexik/jwt-authentication-bundle": "^1.4",
-        "happyr/google-api-bundle": "^2.1"
+        "happyr/google-api-bundle": "^2.1",
+        "staffim/rollbar-bundle": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

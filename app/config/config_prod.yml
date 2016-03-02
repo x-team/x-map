@@ -27,3 +27,8 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+
+staffim_rollbar:
+  environment: %rollbar.environment%
+  access_token: %rollbar.token%
+  error_level: -1

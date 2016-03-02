@@ -29,6 +29,10 @@ class AppKernel extends Kernel
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
         );
 
+        if (in_array($this->getEnvironment(), array('prod', 'dev'))) {
+            $bundles[] = new Staffim\RollbarBundle\StaffimRollbarBundle();
+        }
+
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();

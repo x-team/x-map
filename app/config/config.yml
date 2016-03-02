@@ -128,7 +128,7 @@ nelmio_cors:
       max_age: 3600
 
 lexik_jwt_authentication:
-    private_key_path: %key_folder%/private.pem
-    public_key_path:  %key_folder%/public.pem
-    token_ttl:        86400
-    pass_phrase:      %jwt_key_pass_phrase%
+  private_key_path: %key_folder%/private.pem
+  public_key_path:  %key_folder%/public.pem
+  token_ttl:        86400
+  pass_phrase:      %jwt_key_pass_phrase%
