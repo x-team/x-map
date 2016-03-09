@@ -10,7 +10,7 @@ deploy:
     skip_cleanup: true
     script: ./deploy.sh staging
     on:
-      branch: develop
+      branch: theme
   - provider: script
     skip_cleanup: true
     script: ./deploy.sh latest
