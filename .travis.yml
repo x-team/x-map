@@ -15,4 +15,4 @@ deploy:
     skip_cleanup: true
     script: ./deploy.sh latest
     on:
-      branch: master
+      branch: theme
