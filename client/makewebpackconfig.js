@@ -83,7 +83,6 @@ module.exports = function(options) {
     output: { // Compile into js/build.js
       path: path.resolve(__dirname, 'build'),
       filename: "js/bundle.js",
-      hash: true,
       publicPath: "/"
     },
     module: {

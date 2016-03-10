@@ -5,6 +5,7 @@
   "dependencies": {
     "deep-equal": "^1.0.1",
     "es6-promise": "^3.0.2",
+    "expect": "^1.14.0",
     "google-client-api": "^1.0.4",
     "google-maps": "^3.1.0",
     "history": "^1.0.0",
@@ -71,7 +72,7 @@
   },
   "scripts": {
     "lint": "eslint --max-warnings=0 .",
-    "test": "cross-env NODE_ENV=production mocha --require babel-core/register --require test/setup.js --compilers js:babel-core/register --compilers css:test/noopCompiler.js --compilers png:test/noopCompiler.js --recursive test/reducers",
+    "test": "cross-env NODE_ENV=production mocha --require babel-core/register --require test/setup.js --compilers js:babel-core/register --compilers css:test/noopCompiler.js --compilers png:test/noopCompiler.js --recursive",
     "test:watch": "npm test -- --watch",
     "start": "cross-env NODE_ENV=development node server.dev.js",
     "test-and-build": "npm run test && npm run build",

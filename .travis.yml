@@ -4,15 +4,16 @@ install:
  - 'docker-compose build web mongo'
  - 'docker-compose run web composer build'
 script:
+ - 'docker-compose run web composer lint'
  - 'docker-compose run web composer test'
 deploy:
   - provider: script
     skip_cleanup: true
     script: ./deploy.sh staging
     on:
-      branch: theme
+      branch: develop
   - provider: script
     skip_cleanup: true
     script: ./deploy.sh latest
     on:
-      branch: theme
+      branch: master
