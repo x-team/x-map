@@ -1,0 +1,5 @@
+{% if location %}
+{{ user.firstName }} {{ user.lastName }} (@{{ user.slackId }}) has just updated their location to {{ location }}. Check out <http://map.x-team.com/profile/{{user.id}}|their profile>.
+{%  else %}
+{{ user.firstName }} {{ user.lastName }} (@{{ user.slackId }}) has just updated their location. Check out <http://map.x-team.com/profile/{{user.id}}|their profile>.
+{% endif %}

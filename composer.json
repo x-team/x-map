@@ -4,7 +4,9 @@
     "type": "project",
     "description": "x-map",
     "autoload": {
-        "psr-4": { "": "src/" }
+        "psr-4": {
+            "": "src/"
+        }
     },
     "require": {
         "php": ">=5.4.0",
@@ -28,7 +30,8 @@
         "doctrine/mongodb-odm-bundle": "3.0.*",
         "nelmio/cors-bundle": "^1.4.0",
         "lexik/jwt-authentication-bundle": "^1.4",
-        "happyr/google-api-bundle": "^2.1"
+        "happyr/google-api-bundle": "^2.1",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

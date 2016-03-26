@@ -4,6 +4,7 @@ namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
+use MapBundle\Document\Log;
 use MapBundle\Document\User;
 use MapBundle\Form\Type\UserType;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,12 +67,29 @@ class UsersController extends FOSRestController
 
         $this->denyAccessUnlessGranted('edit', $user);
 
+        $oldLat = $user->getLat();
+        $oldLng = $user->getLng();
+
         $form = $this->createForm(new UserType(), $user, array('method' => 'PUT'));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->dm->flush();
             $view = $this->view($user);
+
+            $log = new Log();
+            $log->setUser($user);
+
+            if ($user->getLng() !== $oldLng || $user->getLat() !== $oldLat) {
+                $log->setAction('user_updated_location');
+                $log->setLat($user->getLat());
+                $log->setLng($user->getLng());
+            } else {
+                $log->setAction('user_updated_profile');
+            }
+
+            $this->dm->persist($log);
+            $this->dm->flush();
+
         } else {
             $view = $this->view($form, 400);
         }

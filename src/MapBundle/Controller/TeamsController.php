@@ -4,6 +4,7 @@ namespace MapBundle\Controller;
 
 use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
+use MapBundle\Document\Log;
 use MapBundle\Document\Team;
 use MapBundle\Form\Type\TeamType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -91,6 +92,14 @@ class TeamsController extends FOSRestController
 
         if ($form->isValid()) {
             $this->dm->persist($team);
+
+            $log = new Log();
+            $log->setUser($this->getUser());
+            $log->setAction('team_created');
+            $log->setData(['team' => ['id' => $team->getId(), 'type' => 'MapBundle:Team']]);
+
+            $this->dm->persist($log);
+
             $this->dm->flush();
             $view = $this->view($team);
         } else {
@@ -183,6 +192,14 @@ class TeamsController extends FOSRestController
 
         $team->addUser($user);
         $user->addTeam($team);
+
+        $log = new Log();
+        $log->setUser($this->getUser());
+        $log->setAction('team_joined');
+        $log->setData([
+            'team' => ['id' => $team->getId(), 'type' => 'MapBundle:Team'],
+            'joiner' => ['id' => $user->getId(), 'type' => 'MapBundle:User']
+        ]);
 
         $this->dm->flush();
 

@@ -6,6 +6,7 @@ use Doctrine\Bundle\MongoDBBundle\ManagerRegistry;
 use FOS\RestBundle\Controller\FOSRestController;
 use Google_Client;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManagerInterface;
+use MapBundle\Document\Log;
 use MapBundle\Document\User;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -68,8 +69,18 @@ class AuthController extends FOSRestController
         $user = $this->repository->findOneByEmail($email) ?: new User();
         $this->updateUserWithPayload($user, $payload);
 
+        $isNew = !$user->getId();
+
         if (!count($this->validator->validate($user, null, ['registration']))) {
             $this->dm->persist($user);
+
+            if ($isNew) {
+                $log = new Log();
+                $log->setUser($user);
+                $log->setAction('user_registered');
+                $this->dm->persist($log);
+            }
+
             $this->dm->flush();
 
             $jwt = $this->tokenManager->create($user);

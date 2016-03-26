@@ -10,7 +10,7 @@ ADD php.ini /usr/local/etc/php/
 RUN apt-get update && apt-get install -y git
 
 # build and enable MongoDB driver for PHP
-RUN apt-get update && apt-get install -y libssl-dev && pecl install mongo && docker-php-ext-enable mongo.so
+RUN apt-get update && apt-get install -y libssl-dev && pecl install mongo mongodb && docker-php-ext-enable mongo.so mongodb.so
 
 # install and enable mbstring, zip and pcntl extensions
 RUN docker-php-ext-install mbstring zip pcntl
