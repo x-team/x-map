@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 
 /* Assets */
 import Logo from '../../../img/logo.png';
-import 'file?name=[name].[ext]!../../../img/logo.png';
 
 /* CSS Module */
 import styles from '../../../css/components/fragments/Header.css';
@@ -15,7 +14,7 @@ class Header extends Component {
     let header = null;
     if (user && user.id) {
       header = (
-        <header id="Header" className={ styles.header }>
+        <header id="Header" className={styles.header}>
 
           <nav className="navbar navbar-fixed-top navbar-full navbar-light bg-faded">
             <Link className="logo navbar-brand" to="/">

@@ -15,7 +15,6 @@ import nite from '../../utils/nite';
 
 /* Assets */
 import blueMarker from '../../../img/blueMarker.png';
-import 'file?name=[name].[ext]!../../../img/blueMarker.png';
 
 /* CSS Module */
 import styles from '../../../css/components/fragments/Map.css';
@@ -89,7 +88,7 @@ export class Map extends Component {
           this.props.onFeatureClick(event.feature.getId());
         }
 
-        //this.map.panTo(this.getCenterLatLng(event.latLng.lat(), event.latLng.lng()));
+        // this.map.panTo(this.getCenterLatLng(event.latLng.lat(), event.latLng.lng()));
       }
     });
 
@@ -129,7 +128,7 @@ export class Map extends Component {
 
       if (this.props.activeUserIds.indexOf(feature.getId()) !== -1) {
         if (this.props.activeUserIds.length === 1) {
-          //this.map.panTo(this.getCenterLatLng(feature.getGeometry().get().lat(), feature.getGeometry().get().lng()));
+          // this.map.panTo(this.getCenterLatLng(feature.getGeometry().get().lat(), feature.getGeometry().get().lng()));
         }
 
         return {

@@ -24,12 +24,16 @@ class TeamDetails extends Component {
             <p className="list-group-item-text">{team.summary}</p>
           </section>
 
-          {(() => { if (team.description) { return (
-            <section className="list-group-item">
-              <h4 className="list-group-item-heading">Description</h4>
-              <p className="list-group-item-text">{team.description}</p>
-            </section>
-          )}})()}
+          {(() => {
+            if (team.description) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">Description</h4>
+                  <p className="list-group-item-text">{team.description}</p>
+                </section>
+              );
+            }
+          })()}
         </div>
       </div>
     );

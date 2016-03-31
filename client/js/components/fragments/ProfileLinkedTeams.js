@@ -29,8 +29,7 @@ class ProfileLinkedTeams extends Component {
       );
     }
 
-
-    let profileLinkedTeams = (teamProfiles.length) ?
+    const profileLinkedTeams = (teamProfiles.length) ?
       <ul className="list-group">{teamProfiles}</ul> :
       <p className="alert text-xs-center">Currently not in any team.</p>;
 

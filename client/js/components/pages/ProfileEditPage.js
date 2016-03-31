@@ -46,7 +46,7 @@ export class ProfileEditPage extends Component {
     let header = (
       <header className="card-header">
         <h2 className="card-title">Edit profile</h2>
-        <Link className="text-muted" to={`/profile/${params.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>{user.firstName} {user.lastName}</Link>
+        <Link className="text-muted" to={`/profile/${user.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>{user.firstName} {user.lastName}</Link>
       </header>
     );
     if (!isProfileFilled && currentUserId === params.id) {

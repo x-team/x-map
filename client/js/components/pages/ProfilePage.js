@@ -43,8 +43,8 @@ export class ProfilePage extends Component {
     let poster = null;
     if (user.avatar) {
       poster = (
-        <figure className="card-img-top figure">
-          <img className="figure-img img-fluid"
+        <figure className="card-img-top figure pull-xs-left">
+          <img className="figure-img"
             src={user.avatar} data-src={user.avatar}
             alt={`${user.firstName} ${user.lastName}`}/>
         </figure>
@@ -75,9 +75,8 @@ export class ProfilePage extends Component {
         <article id="ProfilePage" className="page card">
           <Link to="/" className="close btn btn-sm btn-secondary pull-xs-right" title="close page">&times;</Link>
 
-          {poster}
-
-          <header className="card-header">
+          <header className="card-header clearfix">
+            {poster}
             <h2 className="card-title">{user.firstName} {user.lastName}</h2>
             <div className="btn-group" role="group" aria-label="Actions menu">
               {editLink}{setLocationLink}{adminLink}

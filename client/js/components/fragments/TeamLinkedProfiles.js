@@ -29,7 +29,7 @@ class TeamLinkedProfiles extends Component {
       );
     }
 
-    let teamLinkedProfiles = (userProfiles.length) ?
+    const teamLinkedProfiles = (userProfiles.length) ?
       <ul className="list-group">{userProfiles}</ul> :
       <p className="alert text-xs-center">Currently nobody in this team.</p>;
 

@@ -75,7 +75,7 @@ export class App extends Component {
           <Header user={users[currentUserId]} onLogout={actions.logout.bind(null, this.redirectToHomePage.bind(this))}/>
           <ReactCSSTransitionGroup
             transitionName="transition"
-            transitionAppear={true}
+            transitionAppear
             transitionAppearTimeout={450}
             transitionEnterTimeout={450}
             transitionLeaveTimeout={150}>
@@ -112,6 +112,9 @@ App.propTypes = {
   history: PropTypes.object.isRequired,
   isProfileFilled: PropTypes.bool.isRequired,
   isSignedIn: PropTypes.bool,
+  location: PropTypes.shape({
+    pathname: PropTypes.string
+  }),
   teamsLoaded: PropTypes.bool,
   users: PropTypes.object,
   usersLoaded: PropTypes.bool
