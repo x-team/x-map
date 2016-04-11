@@ -2,6 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var AssetsPlugin = require('assets-webpack-plugin');
+var assetsPluginInstance = new AssetsPlugin();
 
 require('es6-promise').polyfill();
 
@@ -47,7 +49,8 @@ module.exports = function(options) {
           API_BASE_URL: JSON.stringify(options.apiBaseUrl),
           GOOGLE_SETTINGS: JSON.stringify(options.googleSettings)
         }
-      })
+      }),
+      assetsPluginInstance
     ];
 
   // If app is in development
@@ -74,7 +77,8 @@ module.exports = function(options) {
           API_BASE_URL: JSON.stringify(options.apiBaseUrl),
           GOOGLE_SETTINGS: JSON.stringify(options.googleSettings)
         }
-      })
+      }),
+      assetsPluginInstance
     ]
   }
 
@@ -82,7 +86,7 @@ module.exports = function(options) {
     entry: entry,
     output: { // Compile into js/build.js
       path: path.resolve(__dirname, 'build'),
-      filename: "js/bundle.js",
+      filename: "js/[name]_[hash].bundle.js",
       publicPath: "/"
     },
     module: {
