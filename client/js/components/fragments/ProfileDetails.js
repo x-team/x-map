@@ -5,52 +5,85 @@ class ProfileDetails extends Component {
     const { user } = this.props;
 
     return (
-      <div id="ProfileDetails" className="accordion list-group-item" role="tablist" aria-multiselectable="true">
-        <section className="panel panel-default">
-          <header href="#" className="panel-heading list-group-item-heading" role="tab" id="ProfileDetailsHeading">
-            <h4 className="panel-title" data-toggle="collapse" data-parent="#ProfileDetails"
-              aria-expanded="true" aria-controls="ProfileDetailsCollapse"
-              href="#ProfileDetailsCollapse">Details</h4>
-          </header>
+      <div id="ProfileDetails" className="accordion" role="tablist" aria-multiselectable="true">
+        <header href="#" className="accordion-header" role="tab" id="ProfileDetailsHeading">
+          <h3 className="accordion-title" data-toggle="collapse" data-parent="#ProfileDetails"
+            aria-expanded="true" aria-controls="ProfileDetailsCollapse"
+            href="#ProfileDetailsCollapse">Details</h3>
+        </header>
 
-          <section id="ProfileDetailsCollapse" className="panel-collapse collapse in list-group-item-text"
-            role="tabpanel" aria-labelledby="ProfileDetailsHeading">
-            <div>
-              <label className="input-group">
-                <h5 className="input-group-addon">First name</h5>
-                <div className="form-control">{user.firstName}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Last Name</h5>
-                <div className="form-control">{user.lastName}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Email</h5>
-                <div className="form-control">{user.email}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Skype ID</h5>
-                <div className="form-control">{user.skypeId}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Slack ID</h5>
-                <div className="form-control">{user.slackId}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Website</h5>
-                <div className="form-control">{user.website}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Nationality</h5>
-                <div className="form-control">{user.nationality}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">About me</h5>
-                <div className="form-control">{user.aboutMe}</div>
-              </label>
-            </div>
+        <div id="ProfileDetailsCollapse" className="collapse in accordion-body"
+          role="tabpanel" aria-labelledby="ProfileDetailsHeading">
+          <section className="list-group-item">
+            <h4 className="list-group-item-heading">First name</h4>
+            <p className="list-group-item-text">{user.firstName}</p>
           </section>
-        </section>
+
+          <section className="list-group-item">
+            <h4 className="list-group-item-heading">Last Name</h4>
+            <p className="list-group-item-text">{user.lastName}</p>
+          </section>
+
+          <section className="list-group-item">
+            <h4 className="list-group-item-heading">Email</h4>
+            <p className="list-group-item-text"><a href={`mailto:${user.email}`} target="_blank">{user.email}</a></p>
+          </section>
+
+          {(() => {
+            if (user.skypeId) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">Skype ID</h4>
+                  <p className="list-group-item-text">{user.skypeId}</p>
+                </section>
+              );
+            }
+          })()}
+
+          {(() => {
+            if (user.slackId) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">Slack ID</h4>
+                  <p className="list-group-item-text"><a href={`https://x-team.slack.com/messages/@${user.slackId}/`} target="_blank">{user.slackId}</a></p>
+                </section>
+              );
+            }
+          })()}
+
+          {(() => {
+            if (user.website) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">Website</h4>
+                  <p className="list-group-item-text"><a href={user.website} target="_blank">{user.website}</a></p>
+                </section>
+              );
+            }
+          })()}
+
+          {(() => {
+            if (user.nationality) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">Nationality</h4>
+                  <p className="list-group-item-text">{user.nationality}</p>
+                </section>
+              );
+            }
+          })()}
+
+          {(() => {
+            if (user.aboutMe) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">About me</h4>
+                  <p className="list-group-item-text">{user.aboutMe}</p>
+                </section>
+              );
+            }
+          })()}
+        </div>
       </div>
     );
   }

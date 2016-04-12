@@ -1,11 +1,46 @@
+/*
+  PostCSS main file
+
+  - CSS "Sass like" syntax.
+  - Plugins:
+    - CSS Modules
+    - TBP...
+*/
 @charset 'utf-8';
 
-@import './utilities/_functions.css';
-@import './utilities/_mixins.css';
-@import './utilities/_animations.css';
-
-@import './base/_variables.css';
+/*
+  - ITCSS, low specificity comes first.
+  - Settings, Tools, Generic, Base, Objects, Components, Trumps, Theme.
+*/
+@import './settings/_variables.css';
+@import './tools/_functions.css';
+@import './tools/_mixins.css';
+@import './tools/_animations.css';
 @import './base/_general.css';
 
-@import './layout/*.css';
+/*
+  - OOCSS using BEM, block element modifier.
+  - Syntax:
+    - `.block {}`
+    - `.block__element {}`
+    - `.block--modifier {}`
+  - Tip: Override Bootstrap classes increasing specificity prepending the object classname.
+*/
+@import './objects/*.css';
+
+/*
+  - CSS Components mirrors structure of JavaScript Components.
+  - Import the CSS file in the relative JS file, the CSS Modules PostCSS plugin is useful here.
+*/
 @import './components/**/*.css';
+
+/*
+  - Bootstrap CSS Framework is loaded after this part.
+  - Notes:
+    - Using edge version https://github.com/twbs/bootstrap/blob/v4-dev/
+    - Bugs can occour when updating npm packages (bootstrap loader), we can fix.
+    - Bootstrap code is Sass, while everything else is PostCSS.
+    - Look for `.bootstraprc` file for configurations.
+    - Changes that need Bootstrap framework need to be written in Sass inside `/bootstrap` folder.
+    - Custom theme is defined with bootstrap variables `/bootstrap/customizations.scss`.
+*/

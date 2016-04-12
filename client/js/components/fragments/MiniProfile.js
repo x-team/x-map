@@ -8,8 +8,8 @@ class MiniProfile extends Component {
     let avatar = null;
     if (user.avatar) {
       avatar = (
-        <span className="media-left">
-          <img className="media-object img-circle" src={user.avatar} alt={`${user.firstName} ${user.lastName}`}/>
+        <span className="pull-xs-left">
+          <img className="img-circle" src={user.avatar} alt={`${user.firstName} ${user.lastName}`}/>
         </span>
       );
     }
@@ -20,12 +20,10 @@ class MiniProfile extends Component {
     }
 
     return (
-      <Link className="miniProfile media" to={`/profile/${user.id}`} title={`${user.firstName} ${user.lastName}`}>
-          {avatar}
-        <span className="media-body">
-          <h4 className="media-heading">{user.firstName} {user.lastName}</h4>
-          <p className="text-muted">{contact}</p>
-        </span>
+      <Link className="miniProfile list-group-item clearfix" to={`/profile/${user.id}`} title={`View ${user.firstName}'s profile page`}>
+        {avatar}
+        <h4 className="list-group-item-heading">{user.firstName} {user.lastName}</h4>
+        <p className="list-group-item-text">{contact}</p>
       </Link>
     );
   }

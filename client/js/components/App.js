@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import getGoogleApiClient from 'google-client-api';
 
@@ -72,7 +73,16 @@ export class App extends Component {
       content = (
         <div>
           <Header user={users[currentUserId]} onLogout={actions.logout.bind(null, this.redirectToHomePage.bind(this))}/>
-          {this.props.children}
+          <ReactCSSTransitionGroup
+            transitionName="transition"
+            transitionAppear
+            transitionAppearTimeout={450}
+            transitionEnterTimeout={450}
+            transitionLeaveTimeout={150}>
+            {React.cloneElement(this.props.children, {
+              key: this.props.location.pathname
+            })}
+          </ReactCSSTransitionGroup>
         </div>
       );
     } else {
@@ -102,6 +112,9 @@ App.propTypes = {
   history: PropTypes.object.isRequired,
   isProfileFilled: PropTypes.bool.isRequired,
   isSignedIn: PropTypes.bool,
+  location: PropTypes.shape({
+    pathname: PropTypes.string
+  }),
   teamsLoaded: PropTypes.bool,
   users: PropTypes.object,
   usersLoaded: PropTypes.bool

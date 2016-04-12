@@ -5,32 +5,36 @@ class TeamDetails extends Component {
     const { team } = this.props;
 
     return (
-      <div id="TeamDetails" className="accordion list-group-item" role="tablist" aria-multiselectable="true">
-        <section className="panel panel-default">
-          <header href="#" className="panel-heading list-group-item-heading" role="tab" id="TeamDetailsHeading">
-            <h4 className="panel-title" data-toggle="collapse" data-parent="#TeamDetails"
-              aria-expanded="true" aria-controls="TeamDetailsCollapse"
-              href="#TeamDetailsCollapse">Details</h4>
-          </header>
+      <div id="TeamDetails" className="accordion" role="tablist" aria-multiselectable="true">
+        <header className="accordion-header" href="#" role="tab" id="TeamDetailsHeading">
+          <h3 className="accordion-title" data-toggle="collapse" data-parent="#TeamDetails"
+            aria-expanded="true" aria-controls="TeamDetailsCollapse"
+            href="#TeamDetailsCollapse">Details</h3>
+        </header>
 
-          <section id="TeamDetailsCollapse" className="panel-collapse collapse in list-group-item-text"
-            role="tabpanel" aria-labelledby="TeamDetailsHeading">
-            <div>
-              <label className="input-group">
-                <h5 className="input-group-addon">Name</h5>
-                <div className="form-control">{team.name}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Summary</h5>
-                <div className="form-control">{team.summary}</div>
-              </label>
-              <label className="input-group">
-                <h5 className="input-group-addon">Description</h5>
-                <div className="form-control">{team.description}</div>
-              </label>
-            </div>
+        <div id="TeamDetailsCollapse" className="collapse in list-group accordion-body"
+          role="tabpanel" aria-labelledby="TeamDetailsHeading">
+          <section className="list-group-item">
+            <h4 className="list-group-item-heading">Name</h4>
+            <p className="list-group-item-text">{team.name}</p>
           </section>
-        </section>
+
+          <section className="list-group-item">
+            <h4 className="list-group-item-heading">Summary</h4>
+            <p className="list-group-item-text">{team.summary}</p>
+          </section>
+
+          {(() => {
+            if (team.description) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">Description</h4>
+                  <p className="list-group-item-text">{team.description}</p>
+                </section>
+              );
+            }
+          })()}
+        </div>
       </div>
     );
   }

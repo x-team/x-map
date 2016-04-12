@@ -43,10 +43,11 @@ export class ProfilePage extends Component {
     let poster = null;
     if (user.avatar) {
       poster = (
-        <div className="card-img-top text-xs-center">
-          <img src={user.avatar} data-src={user.avatar}
+        <figure className="card-img-top figure pull-xs-left">
+          <img className="figure-img"
+            src={user.avatar} data-src={user.avatar}
             alt={`${user.firstName} ${user.lastName}`}/>
-        </div>
+        </figure>
       );
     }
 
@@ -72,22 +73,17 @@ export class ProfilePage extends Component {
     return (
       <DocumentTitle title={`Profile: ${user.firstName || ''} ${user.lastName || ''} | X-Map`}>
         <article id="ProfilePage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary pull-xs-right" title="close page">&times;</Link>
 
-          {poster}
-
-          <header className="card-header">
-            <h3 className="card-title">{user.firstName} {user.lastName}</h3>
-            <p className="card-subtitle">Profile page</p>
-            <p className="text-muted">#{user.id}</p>
+          <header className="card-header clearfix">
+            {poster}
+            <h2 className="card-title">{user.firstName} {user.lastName}</h2>
             <div className="btn-group" role="group" aria-label="Actions menu">
               {editLink}{setLocationLink}{adminLink}
             </div>
           </header>
 
-          <div className="card-block">
-            <Profile user={user} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} teams={teams}/>
-          </div>
+          <Profile user={user} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} teams={teams}/>
         </article>
       </DocumentTitle>
     );

@@ -52,12 +52,11 @@ export class ProfileSetLocationPage extends Component {
     return (
       <DocumentTitle title={`Set location: ${user.firstName} ${user.lastName} | X-Map`}>
         <article id="ProfileSetLocationPage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary" title="close page">&times;</Link>
 
           <header className="card-header">
-            <h3 className="card-title">{user.firstName} {user.lastName}</h3>
-            <p className="card-subtitle">Set location</p>
-            <Link className="text-muted" to={`/profile/${params.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>#{user.id}</Link>
+            <h2 className="card-title">Set location</h2>
+            <Link className="text-muted" to={`/profile/${params.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>{user.firstName} {user.lastName}</Link>
           </header>
 
           <div className="card-block">

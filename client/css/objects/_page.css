@@ -1,0 +1,35 @@
+/* Page object */
+
+:global .page {
+  min-width: 500px;
+  width: 40%;
+  max-height: calc(100% - 80px);
+  position: fixed !important;
+  top: 50px;
+  right: 10px;
+  z-index: 2;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+:global .page.transition-appear,
+:global .page.transition-enter {
+  right: -100px;
+  opacity: .5;
+}
+
+:global .page.transition-appear.transition-appear-active,
+:global .page.transition-enter.transition-enter-active {
+  right: 10px;
+  opacity: 1;
+  transition: all 70ms ease-in;
+}
+
+:global .page.transition-leave {
+  opacity: 1;
+}
+
+:global .page.transition-leave.transition-leave-active {
+  opacity: 0;
+  transition: all 150ms ease-in;
+}

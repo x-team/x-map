@@ -21,6 +21,7 @@ import App from './components/App';
 // Import the CSS file, which HtmlWebpackPlugin transfers to the build folder
 import '../css/main.css';
 
+/* Assets */
 import 'file?name=[name].[ext]!../img/favicon.png';
 
 // Create store
