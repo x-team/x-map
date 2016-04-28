@@ -6,6 +6,9 @@ web:
     - ./nginx:/etc/nginx/conf.d
   links:
     - mongo
+  environment:
+    SYMFONY__ROLLBAR__TOKEN:
+    SYMFONY__ROLLBAR__ENVIRONMENT: production
 nginx:
   image: nginx
   volumes:
