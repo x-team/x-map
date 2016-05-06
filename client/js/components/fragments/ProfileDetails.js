@@ -30,6 +30,17 @@ class ProfileDetails extends Component {
           </section>
 
           {(() => {
+            if (user.role) {
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">Role</h4>
+                  <p className="list-group-item-text">{user.role}</p>
+                </section>
+              );
+            }
+          })()}
+
+          {(() => {
             if (user.skypeId) {
               return (
                 <section className="list-group-item">
