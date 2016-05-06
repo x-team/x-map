@@ -17,6 +17,7 @@ class UserType extends BaseAbstractType
             ->add('slackId')
             ->add('nationality')
             ->add('website')
+            ->add('role')
             ->add('lat')
             ->add('lng')
         ;

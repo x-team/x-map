@@ -49,6 +49,12 @@ class ProfileForm extends Component {
           </fieldset>
 
           <fieldset className="form-group">
+            <label>Role</label>
+            <input type="text" className="form-control" placeholder="Role" value={this.state.role}
+                   onChange={this.onInputChange.bind(this, 'role')} maxLength="64"/>
+          </fieldset>
+
+          <fieldset className="form-group">
             <label>Skype ID</label>
             <input type="text" className="form-control" placeholder="Skype ID" value={this.state.skypeId}
               onChange={this.onInputChange.bind(this, 'skypeId')} maxLength="64"/>
