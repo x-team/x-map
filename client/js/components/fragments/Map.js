@@ -21,6 +21,7 @@ import styles from '../../../css/components/fragments/Map.css';
 
 export class Map extends Component {
   componentDidMount() {
+    GoogleMapsLoader.KEY = process.env.MAPS_KEY;
     GoogleMapsLoader.load(this.configureMap.bind(this));
   }
 
