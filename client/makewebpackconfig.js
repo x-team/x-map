@@ -46,7 +46,8 @@ module.exports = function(options) {
         "process.env": {
           NODE_ENV: JSON.stringify("production"),
           API_BASE_URL: JSON.stringify(options.apiBaseUrl),
-          GOOGLE_SETTINGS: JSON.stringify(options.googleSettings)
+          GOOGLE_SETTINGS: JSON.stringify(options.googleSettings),
+          MAPS_KEY: JSON.stringify(options.mapsKey)
         }
       }),
       assetsPluginInstance
@@ -74,7 +75,8 @@ module.exports = function(options) {
         "process.env": {
           NODE_ENV: JSON.stringify("development"),
           API_BASE_URL: JSON.stringify(options.apiBaseUrl),
-          GOOGLE_SETTINGS: JSON.stringify(options.googleSettings)
+          GOOGLE_SETTINGS: JSON.stringify(options.googleSettings),
+          MAPS_KEY: JSON.stringify(options.mapsKey)
         }
       }),
       assetsPluginInstance

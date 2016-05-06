@@ -8,4 +8,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     jwt_key_pass_phrase:  ThisPassPhraseIsNotSoSecretChangeIt
     google_application_name: x-map
-    google_developer_key: '225705573373-2q29jr53tpacq5ri1k8qqggshsb3i27u.apps.googleusercontent.com'
+    google_developer_key: '314444994198-lpaod0pmpdrunigb3of205a3iufej9ml.apps.googleusercontent.com'
