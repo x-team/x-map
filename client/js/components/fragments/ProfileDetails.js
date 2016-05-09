@@ -56,7 +56,7 @@ class ProfileDetails extends Component {
               return (
                 <section className="list-group-item">
                   <h4 className="list-group-item-heading">Slack ID</h4>
-                  <p className="list-group-item-text"><a href={`https://x-team.slack.com/messages/@${user.slackId}/`} target="_blank">{user.slackId}</a></p>
+                  <p className="list-group-item-text"><a href={`https://x-team.slack.com/messages/@${user.slackId}/`} target="_blank">@{user.slackId}</a></p>
                 </section>
               );
             }

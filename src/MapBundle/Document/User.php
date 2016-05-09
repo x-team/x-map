@@ -566,7 +566,7 @@ class User implements UserInterface
      */
     public function setSlackId($slackId)
     {
-        $this->slackId = $slackId;
+        $this->slackId = str_replace('@', '', $slackId);
 
         return $this;
     }
