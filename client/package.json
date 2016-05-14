@@ -9,6 +9,7 @@
     "google-client-api": "^1.0.4",
     "google-maps": "^3.1.0",
     "history": "^1.0.0",
+    "ramda": "^0.21.0",
     "react": "^0.14.0",
     "react-document-title": "^2.0.1",
     "react-dom": "^0.14.0",
