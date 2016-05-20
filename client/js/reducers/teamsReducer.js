@@ -12,7 +12,10 @@ import {
 } from '../constants/AppConstants';
 import assignToEmpty from '../utils/assign';
 
-function teamsReducer(teams = {}, action) {
+// Will also be used on tests
+export const initialState = {};
+
+function teamsReducer(teams = initialState, action) {
   Object.freeze(teams);
 
   let newTeams;
