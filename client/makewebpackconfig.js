@@ -8,7 +8,7 @@ var assetsPluginInstance = new AssetsPlugin();
 require('es6-promise').polyfill();
 
 module.exports = function(options) {
-  var entry, jsLoaders, plugins, cssLoaders, sassLoaders;
+  var entry, jsLoaders, plugins, cssLoaders, sassLoaders, eslintLoader;
   // If production is true
   if (options.prod) {
     // Entry
@@ -18,6 +18,8 @@ module.exports = function(options) {
     ];
     sassLoaders = ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!sass-loader');
     cssLoaders = ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader');
+    eslintLoader = {};
+
     // Plugins
     plugins = [// Plugins for Webpack
       new webpack.optimize.UglifyJsPlugin({ // Optimize the JavaScript...
@@ -64,6 +66,12 @@ module.exports = function(options) {
     ];
     sassLoaders = 'style-loader!css-loader!postcss-loader!sass-loader';
     cssLoaders = 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader';
+    eslintLoader = {
+      test: /\.js$/,
+      loader: 'eslint',
+      include: path.join(__dirname, '/js/')
+    };
+
     // Only plugin is the hot module replacement plugin
     plugins = [
       new webpack.HotModuleReplacementPlugin(), // Make hot loading work
@@ -95,7 +103,9 @@ module.exports = function(options) {
           test: /\.js$/, // Transform all .js files required somewhere within an entry point...
           loader: 'babel', // ...with the specified loaders...
           exclude: path.join(__dirname, '/node_modules/') // ...except for the node_modules folder.
-        },{
+        },
+        eslintLoader,
+        {
           test: /bootstrap\/dist\/js\/umd\//,
           loader: 'imports?jQuery=jquery'
         }, {
