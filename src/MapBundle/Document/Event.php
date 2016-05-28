@@ -27,6 +27,12 @@ class Event
 
     /**
      * @MongoDB\String
+     * @Assert\Length(max=1024)
+     */
+    protected $description;
+
+    /**
+     * @MongoDB\String
      * @Assert\NotBlank
      * @Assert\Length(min=3,max=64)
      */
@@ -34,6 +40,7 @@ class Event
 
     /**
      * @MongoDB\Date
+     * @Assert\NotBlank
      * @Serializer\Type("DateTime<'Y-m-d'>")
      */
     protected $dateStart;
@@ -327,5 +334,29 @@ class Event
     public function getCreator()
     {
         return $this->creator;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     *
+     * @return self
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string $description
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import DateRangePicker from 'react-daterange-picker';
 
 /* Components */
 import ErrorList from '../forms/ErrorList';
@@ -20,6 +21,22 @@ class ConferenceForm extends Component {
     this.setState({[field]: e.target.value});
   }
 
+  handleDateRangeSelect(range) {
+    this.setState({
+      dateStart: range.start.format('YYYY-MM-DD'),
+      dateEnd: range.end.format('YYYY-MM-DD')
+    });
+  }
+
+  renderDatePicker() {
+    return (
+      <DateRangePicker
+        firstOfWeek={1}
+        selectionType="range"
+        onSelect={this.handleDateRangeSelect.bind(this)} />
+    );
+  }
+
   render() {
     const { errors } = this.props;
 
@@ -34,6 +51,18 @@ class ConferenceForm extends Component {
             <input type="text" className="form-control" placeholder="Name" value={this.state.name}
               minLength="2" maxLength="32" onChange={this.onInputChange.bind(this, 'name')} required/>
             <small className="text-muted"><strong>Required.</strong> Min. length: 2 characters. Max. length: 32 characters.</small>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Description</label>
+            <textarea className="form-control" placeholder="Description" value={this.state.description}
+                      maxLength="1024" rows="5" onChange={this.onInputChange.bind(this, 'description')}/>
+            <small className="text-muted">Max. length: 1024 characters.</small>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Conference dates</label>
+            {this.renderDatePicker()}
           </fieldset>
 
           <fieldset className="form-group">
