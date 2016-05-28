@@ -37,6 +37,7 @@ class ConferenceForm extends Component {
       <DateRangePicker
         firstOfWeek={1}
         selectionType="range"
+        singleDateRange
         value={moment.range(start, end)}
         onSelect={this.handleDateRangeSelect.bind(this)} />
     );
