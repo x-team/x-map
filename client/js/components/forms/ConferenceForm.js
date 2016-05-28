@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import moment from 'moment';
 import DateRangePicker from 'react-daterange-picker';
 
 /* Components */
@@ -29,10 +30,14 @@ class ConferenceForm extends Component {
   }
 
   renderDatePicker() {
+    const start = this.state.dateStart ? moment(this.state.dateStart, 'YYYY-MM-DD') : moment();
+    const end = this.state.dateEnd ? moment(this.state.dateEnd, 'YYYY-MM-DD') : start;
+
     return (
       <DateRangePicker
         firstOfWeek={1}
         selectionType="range"
+        value={moment.range(start, end)}
         onSelect={this.handleDateRangeSelect.bind(this)} />
     );
   }
