@@ -28,7 +28,9 @@ class Header extends Component {
               <li className="nav-item">
                 <Link className="btn btn-primary" to="/teams">Teams</Link>
               </li>
-
+              <li className="nav-item">
+                <Link className="btn btn-primary" to="/conferences">Conferences</Link>
+              </li>
               <li className="nav-item">
                 <div className="btn-group">
                   <Link className="btn btn-primary" to={'/profile/' + user.id}>My profile</Link>

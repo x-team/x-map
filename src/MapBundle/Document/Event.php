@@ -34,7 +34,6 @@ class Event
 
     /**
      * @MongoDB\Date
-     * @Assert\NotBlank
      * @Serializer\Type("DateTime<'Y-m-d'>")
      */
     protected $dateStart;

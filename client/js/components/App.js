@@ -9,6 +9,7 @@ import getGoogleApiClient from 'google-client-api';
 import * as AppActions from '../actions/AppActions';
 import * as UserActions from '../actions/UserActions';
 import * as TeamActions from '../actions/TeamActions';
+import * as ConferenceActions from '../actions/ConferenceActions';
 import assignToEmpty from '../utils/assign';
 
 /* Components */
@@ -35,6 +36,7 @@ export class App extends Component {
         actions.authenticate(() => {
           actions.userList();
           actions.teamList();
+          actions.conferenceList();
           this.redirectToProfileFormIfNeeded();
         }, this.redirectToHomePage.bind(this));
       });
@@ -70,10 +72,10 @@ export class App extends Component {
   }
 
   render() {
-    const { currentUserId, isSignedIn, usersLoaded, teamsLoaded, users, actions } = this.props;
+    const { currentUserId, isSignedIn, usersLoaded, teamsLoaded, conferencesLoaded, users, actions } = this.props;
 
     let content;
-    if (currentUserId && usersLoaded && teamsLoaded) {
+    if (currentUserId && usersLoaded && teamsLoaded && conferencesLoaded) {
       content = (
         <div>
           <Header user={users[currentUserId]} onLogout={actions.logout.bind(null, this.redirectToHomePage.bind(this))}/>
@@ -120,6 +122,7 @@ App.propTypes = {
     pathname: PropTypes.string
   }),
   teamsLoaded: PropTypes.bool,
+  conferencesLoaded: PropTypes.bool,
   users: PropTypes.object,
   usersLoaded: PropTypes.bool
 };
@@ -128,6 +131,7 @@ App.defaultProps = {
   isSignedIn: false,
   usersLoaded: false,
   teamsLoaded: false,
+  conferencesLoaded: false,
   users: {},
   isProfileFilled: false
 };
@@ -138,6 +142,7 @@ function mapStateToProps(state) {
     isSignedIn: state.session.isSignedIn,
     usersLoaded: state.session.usersLoaded,
     teamsLoaded: state.session.teamsLoaded,
+    conferencesLoaded: state.session.conferencesLoaded,
     users: state.users,
     isProfileFilled: state.session.isProfileFilled
   };
@@ -145,7 +150,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(assignToEmpty(AppActions, UserActions, TeamActions), dispatch)
+    actions: bindActionCreators(assignToEmpty(AppActions, UserActions, TeamActions, ConferenceActions), dispatch)
   };
 }
 
