@@ -60,10 +60,10 @@ class ConferenceLinkProfiles extends Component {
 
 ConferenceLinkProfiles.propTypes = {
   canLink: PropTypes.bool.isRequired,
-  onLink: PropTypes.func,
   conference: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
+  onLink: PropTypes.func,
   users: PropTypes.object
 };
 

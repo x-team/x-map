@@ -54,11 +54,11 @@ class ConferenceLinkedProfiles extends Component {
 ConferenceLinkedProfiles.propTypes = {
   canLink: PropTypes.bool.isRequired,
   canUnlink: PropTypes.bool.isRequired,
-  onLink: PropTypes.func,
-  onUnlink: PropTypes.func,
   conference: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
+  onLink: PropTypes.func,
+  onUnlink: PropTypes.func,
   users: PropTypes.object
 };
 

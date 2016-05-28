@@ -69,6 +69,7 @@ export class ConferenceEditPage extends Component {
 
 ConferenceEditPage.propTypes = {
   actions: PropTypes.object,
+  conferences: PropTypes.object.isRequired,
   errors: PropTypes.shape({
     fieldErrors: PropTypes.object,
     globalErrors: PropTypes.array
@@ -76,8 +77,7 @@ ConferenceEditPage.propTypes = {
   history: PropTypes.object.isRequired,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired,
-  conferences: PropTypes.object.isRequired
+  }).isRequired
 };
 
 function mapStateToProps(state) {

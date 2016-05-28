@@ -59,9 +59,9 @@ ProfileLinkedConferences.defaultProps = {
 ProfileLinkedConferences.propTypes = {
   canLink: PropTypes.bool.isRequired,
   canUnlink: PropTypes.bool.isRequired,
+  conferences: PropTypes.object,
   onLink: PropTypes.func,
   onUnlink: PropTypes.func,
-  conferences: PropTypes.object,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired

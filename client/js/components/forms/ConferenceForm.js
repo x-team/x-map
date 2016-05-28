@@ -48,12 +48,12 @@ class ConferenceForm extends Component {
 }
 
 ConferenceForm.propTypes = {
-  errors: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
-  onSuccess: PropTypes.func,
   conference: PropTypes.shape({
     id: PropTypes.string
-  })
+  }),
+  errors: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func
 };
 
 ConferenceForm.defaultProps = {

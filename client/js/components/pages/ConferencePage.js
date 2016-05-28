@@ -92,12 +92,12 @@ export class ConferencePage extends Component {
 
 ConferencePage.propTypes = {
   actions: PropTypes.object,
+  conferences: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   isAdmin: PropTypes.bool,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  conferences: PropTypes.object.isRequired,
   users: PropTypes.object.isRequired
 };
 

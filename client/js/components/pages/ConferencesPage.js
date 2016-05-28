@@ -38,14 +38,16 @@ export class ConferencesPage extends Component {
   }
 
   render() {
-    const { conferences, isAdmin } = this.props;
+    const { conferences } = this.props;
 
     let conferenceProfiles = [];
     for (const id in conferences) {
       conferenceProfiles.push(conferences[id]);
     }
 
-    //conferenceProfiles.sort(sortConferencesByName);
+    /*
+    conferenceProfiles.sort(sortConferencesByName);
+    */
     conferenceProfiles = conferenceProfiles.map(this.renderConference.bind(this));
 
     return (
@@ -70,7 +72,8 @@ export class ConferencesPage extends Component {
 
 ConferencesPage.propTypes = {
   actions: PropTypes.object.isRequired,
-  conferences: PropTypes.object.isRequired
+  conferences: PropTypes.object.isRequired,
+  isAdmin: PropTypes.bool.isRequired
 };
 
 ConferencesPage.defaultProps = {

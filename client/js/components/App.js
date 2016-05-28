@@ -114,6 +114,7 @@ App.propTypes = {
     routeChanged: PropTypes.func
   }).isRequired,
   children: PropTypes.object,
+  conferencesLoaded: PropTypes.bool,
   currentUserId: PropTypes.string,
   history: PropTypes.object.isRequired,
   isProfileFilled: PropTypes.bool.isRequired,
@@ -122,16 +123,15 @@ App.propTypes = {
     pathname: PropTypes.string
   }),
   teamsLoaded: PropTypes.bool,
-  conferencesLoaded: PropTypes.bool,
   users: PropTypes.object,
   usersLoaded: PropTypes.bool
 };
 
 App.defaultProps = {
   isSignedIn: false,
+  conferencesLoaded: false,
   usersLoaded: false,
   teamsLoaded: false,
-  conferencesLoaded: false,
   users: {},
   isProfileFilled: false
 };
