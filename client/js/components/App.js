@@ -26,10 +26,6 @@ export class App extends Component {
     props.history.listenBefore(this.preventLeavingProfileEditIfNeeded.bind(this));
   }
 
-  renderMap() {
-    return <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>;
-  }
-
   componentDidMount() {
     getGoogleApiClient(gapi => {
       gapi.load('auth2', () => {
@@ -67,6 +63,10 @@ export class App extends Component {
     if (currentUserId && !isProfileFilled && (history.isActive(profileEditPath) || nextLocation.pathname !== profileEditPath)) {
       return false;
     }
+  }
+
+  renderMap() {
+    return <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>;
   }
 
   render() {
