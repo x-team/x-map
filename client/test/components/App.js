@@ -8,6 +8,8 @@ import assignToEmpty from '../../js/utils/assign';
 
 import { App } from '../../js/components/App';
 import Loader from '../../js/components/fragments/Loader';
+import Map from '../../js/components/fragments/Map';
+
 
 const expect = chai.expect;
 const renderer = TestUtils.createRenderer();
@@ -62,6 +64,13 @@ describe('App', () => {
     renderer.render(<App {...props}/>);
     const output = renderer.getRenderOutput();
     expect(nodeContainsType(output, Loader)).to.be.true;
+  });
+
+  it('<Map /> is not displayed if user is not authenticated', () => {
+    const props = assignToEmpty(providedProps, { isSignedIn: false, currentUserId: 5, usersLoaded: false, teamsLoaded: false });
+    renderer.render(<App {...props}/>);
+    const output = renderer.getRenderOutput();
+    expect(nodeContainsType(output, Map)).to.be.false;
   });
 
   it('<Loader /> is not displayed if user is authenticated and data has been loaded', () => {

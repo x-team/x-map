@@ -22,7 +22,7 @@ import App from './components/App';
 import '../css/main.css';
 
 /* Assets */
-import 'file?name=[name].[ext]!../img/favicon.png';
+import '../img/favicon.png';
 
 // Create store
 import configureStore from './store/configureStore';

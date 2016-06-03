@@ -26,6 +26,10 @@ export class App extends Component {
     props.history.listenBefore(this.preventLeavingProfileEditIfNeeded.bind(this));
   }
 
+  renderMap() {
+    return <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>;
+  }
+
   componentDidMount() {
     getGoogleApiClient(gapi => {
       gapi.load('auth2', () => {
@@ -96,7 +100,7 @@ export class App extends Component {
       <div>
         <h1 className="sr-only sr-only-focusable">X-Map</h1>
         {content}
-        <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>
+        {isSignedIn ? this.renderMap() : null}
       </div>
     );
   }
