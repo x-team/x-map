@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import getGoogleApiClient from 'google-client-api';
 
+import styles from '../../../css/components/fragments/Loader.css';
+
 class SignInButton extends Component {
   attachSignInHandler(element) {
     getGoogleApiClient(gapi => {
@@ -10,8 +12,8 @@ class SignInButton extends Component {
 
   render() {
     return (
-      <p id="SignInButton" className="text-xs-center">
-        <a className="btn btn-success-outline" ref={this.attachSignInHandler}>Sign in with Google</a>
+      <p id="SignInButton" className={styles.signInBtn}>
+        <a className="btn" ref={this.attachSignInHandler}>Sign in with Google</a>
       </p>
     );
   }
