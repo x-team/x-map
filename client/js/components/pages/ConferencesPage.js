@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+import R from 'ramda';
 
 import * as ConferenceActions from '../../actions/ConferenceActions';
 
@@ -18,16 +19,6 @@ export class ConferencesPage extends Component {
     this.props.actions.conferenceActiveChanged([]);
   }
 
-  renderAdminMenu() {
-    if (this.props.isAdmin) {
-      return (
-        <div className="btn-group" role="group" aria-label="Actions menu">
-          <Link className="btn btn-secondary btn-sm" to="/conference/new">Add conference</Link>
-        </div>
-      );
-    }
-  }
-
   renderConference(conference) {
     return (
       <li className="list-group-item" key={conference.id}
@@ -38,17 +29,11 @@ export class ConferencesPage extends Component {
   }
 
   render() {
-    const { conferences } = this.props;
-
-    let conferenceProfiles = [];
-    for (const id in conferences) {
-      conferenceProfiles.push(conferences[id]);
-    }
-
-    /*
-    conferenceProfiles.sort(sortConferencesByName);
-    */
-    conferenceProfiles = conferenceProfiles.map(this.renderConference.bind(this));
+    const conferences = R.compose(
+      R.map((team) => this.renderConference(conference)),
+//      R.sort(sortTeamsByName),
+      R.values
+    )(this.props.teams);
 
     return (
       <DocumentTitle title="Conferences | X-Map">
@@ -58,12 +43,16 @@ export class ConferencesPage extends Component {
           <header className="card-header">
             <h2 className="card-title">Conferences</h2>
             <p className="text-muted">Listing all conferences</p>
-            {this.renderAdminMenu()}
+            {(() => this.props.isAdmin ?
+                (<div className="btn-group" role="group" aria-label="Actions menu">
+                  <Link className="btn btn-secondary btn-sm" to="/conference/new">Add conference</Link>
+                </div>) : ''
+            )()}
           </header>
-
-          <ul className="list-group list-group-flush">
-            {conferenceProfiles}
-          </ul>
+          {(() => conferences.length ?
+            <ul className="list-group list-group-flush">{conferences}</ul> :
+            <p className="alert">No conferences yet.</p>
+          )()}
         </article>
       </DocumentTitle>
     );
