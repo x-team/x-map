@@ -10,7 +10,9 @@ import {
   TEAM_DELETE_SUCCESS,
   TEAM_UNLINK_USER_SUCCESS
 } from '../constants/AppConstants';
+
 import assignToEmpty from '../utils/assign';
+import { sortUsersByName } from '../utils/common';
 
 function teamsReducer(teams = {}, action) {
   Object.freeze(teams);
@@ -20,12 +22,14 @@ function teamsReducer(teams = {}, action) {
     case TEAM_LIST_SUCCESS:
       newTeams = {};
       action.teams.forEach((team) => {
+        processTeam(team);
         newTeams[team.id] = team;
       });
       return newTeams;
     case TEAM_GET_SUCCESS:
     case TEAM_CREATE_SUCCESS:
     case TEAM_UPDATE_SUCCESS:
+      processTeam(action.team);
       return assignToEmpty(teams, {
         [action.team.id]: action.team
       });
@@ -49,6 +53,10 @@ function teamsReducer(teams = {}, action) {
     default:
       return teams;
   }
+}
+
+function processTeam(team) {
+  team.users.sort(sortUsersByName);
 }
 
 export default teamsReducer;

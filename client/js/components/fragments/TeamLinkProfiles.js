@@ -44,7 +44,7 @@ class TeamLinkProfiles extends Component {
         <label>Add users:</label>
         <span className="input-group">
           <select className="form-control" onChange={this.onInputChange.bind(this, 'selectedUserId')} defaultValue={null}>
-            <option>Select user:</option>
+            <option value="">Select user:</option>
             {unlinkedProfilesList.map(user => <option key={user.id}
               value={user.id}>{user.firstName} {user.lastName}</option>)}
           </select>

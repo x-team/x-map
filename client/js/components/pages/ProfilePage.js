@@ -44,7 +44,7 @@ export class ProfilePage extends Component {
     if (user.avatar) {
       poster = (
         <figure className="card-img-top figure pull-xs-left">
-          <img className="figure-img"
+          <img className="figure-img img-circle"
             src={user.avatar} data-src={user.avatar}
             alt={`${user.firstName} ${user.lastName}`}/>
         </figure>

@@ -44,7 +44,7 @@ class ProfileLinkTeams extends Component {
         <label>Add user to team:</label>
         <span className="input-group">
           <select className="form-control" onChange={this.onInputChange.bind(this, 'selectedTeamId')} defaultValue={null}>
-            <option>Select team:</option>
+            <option value="">Select team:</option>
             {unlinkedTeamsList.map(team => <option key={team.id} value={team.id}>{team.name}</option>)}
           </select>
           <span className="input-group-btn">
