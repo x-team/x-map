@@ -1,13 +1,6 @@
 import expect from 'expect';
-import sessionReducer from '../../js/reducers/sessionReducer';
+import sessionReducer, { initialState } from '../../js/reducers/sessionReducer';
 import * as AppConstants from '../../js/constants/AppConstants';
-
-const initialState = {
-  activeUserIds: [],
-  mapMode: AppConstants.MAP_MODE_SHOW,
-  isSignedIn: true,
-  currentUserId: null
-};
 
 describe('sessionReducer', () => {
   it('should return initial state on init', () => {
