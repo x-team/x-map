@@ -95,7 +95,7 @@ describe('usersReducer', () => {
     const state = {
       1: {
         ...user,
-        teams: [{   
+        teams: [{
           id: 2,
           name: 'X-Team'
         }]
