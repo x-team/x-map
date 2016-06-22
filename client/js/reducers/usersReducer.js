@@ -15,8 +15,9 @@ import {
 import assignToEmpty from '../utils/assign';
 import { sortTeamsByName } from '../utils/common';
 
+export const initialState = {};
 
-function usersReducer(users = {}, action) {
+function usersReducer(users = initialState, action) {
   Object.freeze(users);
 
   let newUsers;
