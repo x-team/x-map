@@ -19,7 +19,7 @@ import {
 
 import assignToEmpty from './../utils/assign';
 
-const initialState = {
+export const initialState = {
   activeUserIds: [],
   mapMode: MAP_MODE_SHOW,
   isSignedIn: false,
