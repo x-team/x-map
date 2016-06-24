@@ -17,3 +17,8 @@ swiftmailer:
 
 doctrine_mongodb:
   default_database: test
+  connections:
+    default:
+      server: mongodb://%mongodb.host%:%mongodb.port%
+      options:
+        db: %mongodb.database%
