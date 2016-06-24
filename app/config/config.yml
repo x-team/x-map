@@ -97,8 +97,12 @@ fos_http_cache:
 doctrine_mongodb:
   connections:
     default:
-      server: mongodb://%mongodb_host%
-      options: {}
+      server: mongodb://%mongodb.host%:%mongodb.port%
+      options:
+        db: %mongodb.database%
+        username: %mongodb.user%
+        password: %mongodb.pass%
+
   default_database: server
   document_managers:
     default:
