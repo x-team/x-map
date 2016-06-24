@@ -14,11 +14,3 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
-
-doctrine_mongodb:
-  default_database: test
-  connections:
-    default:
-      server: mongodb://%mongodb.host%:%mongodb.port%
-      options:
-        db: %mongodb.database%

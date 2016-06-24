@@ -103,8 +103,12 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml",
             "env-map": {
-                "mongodb_host": "MONGODB_HOST",
-                "key_folder": "KEY_FOLDER"
+                "key_folder": "KEY_FOLDER",
+                "mongodb.host": "SYMFONY__MONGODB__HOST",
+                "mongodb.user": "SYMFONY__MONGODB__USER",
+                "mongodb.pass": "SYMFONY__MONGODB__PASS",
+                "mongodb.database": "SYMFONY__MONGODB__DATABASE",
+                "mongodb.port": "SYMFONY__MONGODB__PORT"
             }
         },
         "branch-alias": {
