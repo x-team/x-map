@@ -41,10 +41,12 @@ class ConferenceDetails extends Component {
 
           {(() => {
             if (conference.data && conference.data.url) {
-              <section className="list-group-item">
-                <h4 className="list-group-item-heading">URL</h4>
-                <a href={conference.data.url}>{conference.data.url}</a>
-              </section>
+              return (
+                <section className="list-group-item">
+                  <h4 className="list-group-item-heading">URL</h4>
+                  <a href={conference.data.url}>{conference.data.url}</a>
+                </section>
+              );
             }
           })}
 

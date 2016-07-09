@@ -13,7 +13,7 @@ class Loader extends Component {
   render() {
     let content = <p className="text-xs-center">Loading application data...</p>;
     if (!this.props.isSignedIn) {
-      content = <SignInButton />;
+      content = <SignInButton auth={this.props.auth}/>;
     }
 
     return (
@@ -40,6 +40,7 @@ Loader.defaultProps = {
 };
 
 Loader.propTypes = {
+  auth: PropTypes.object,
   isSignedIn: PropTypes.bool
 };
 

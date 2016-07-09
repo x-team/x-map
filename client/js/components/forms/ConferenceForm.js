@@ -11,8 +11,7 @@ import ErrorList from '../forms/ErrorList';
 class ConferenceForm extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = props.conference;
-    this.state.url = props.conference.data ? props.conference.data.url : null;
+    this.state = assignToEmpty(props.conference, { url: props.conference.data ? props.conference.data.url : null});
   }
 
   onSubmit(e) {
@@ -23,6 +22,14 @@ class ConferenceForm extends Component {
 
   onInputChange(field, e) {
     this.setState({[field]: e.target.value});
+  }
+
+  onLocationSelected(suggest) {
+    this.setState({
+      lng: suggest.location.lng,
+      lat: suggest.location.lat,
+      location: suggest.label
+    });
   }
 
   handleDateRangeSelect(range) {
@@ -44,14 +51,6 @@ class ConferenceForm extends Component {
         value={moment.range(start, end)}
         onSelect={this.handleDateRangeSelect.bind(this)}/>
     );
-  }
-
-  onLocationSelected(suggest) {
-    this.setState({
-      lng: suggest.location.lng,
-      lat: suggest.location.lat,
-      location: suggest.label
-    });
   }
 
   render() {
@@ -109,7 +108,10 @@ class ConferenceForm extends Component {
 
 ConferenceForm.propTypes = {
   conference: PropTypes.shape({
-    id: PropTypes.string
+    id: PropTypes.string,
+    data: PropTypes.shape({
+      url: PropTypes.string
+    })
   }),
   errors: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,

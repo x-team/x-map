@@ -58,7 +58,6 @@ class Event
 
     /**
      * @MongoDB\String
-     * @Assert\NotBlank
      */
     protected $location;
 

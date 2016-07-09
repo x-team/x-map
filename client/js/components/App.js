@@ -24,6 +24,8 @@ export class App extends Component {
       props.history.listen(props.actions.routeChanged);
     }
 
+    this.state = {};
+
     props.history.listenBefore(this.preventLeavingProfileEditIfNeeded.bind(this));
   }
 
@@ -31,6 +33,7 @@ export class App extends Component {
     getGoogleApiClient(gapi => {
       gapi.load('auth2', () => {
         gapi.auth2.init(process.env.GOOGLE_SETTINGS);
+        this.setState({auth: gapi.auth2});
 
         const { actions } = this.props;
         actions.authenticate(() => {
@@ -94,7 +97,7 @@ export class App extends Component {
     } else {
       content = (
         <DocumentTitle title="Login | X-Map">
-          <Loader isSignedIn={isSignedIn}/>
+          <Loader isSignedIn={isSignedIn} auth={this.state.auth}/>
         </DocumentTitle>
       );
     }
