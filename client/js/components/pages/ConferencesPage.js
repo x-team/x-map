@@ -6,6 +6,7 @@ import DocumentTitle from 'react-document-title';
 import R from 'ramda';
 
 import * as ConferenceActions from '../../actions/ConferenceActions';
+import sortConferencesByName from '../../utils/common';
 
 /* Components */
 import MiniConference from '../fragments/MiniConference';
@@ -30,10 +31,10 @@ export class ConferencesPage extends Component {
 
   render() {
     const conferences = R.compose(
-      R.map((team) => this.renderConference(conference)),
-//      R.sort(sortTeamsByName),
+      R.map((conference) => this.renderConference(conference)),
+      R.sort(sortConferencesByName),
       R.values
-    )(this.props.teams);
+    )(this.props.conferences);
 
     return (
       <DocumentTitle title="Conferences | X-Map">

@@ -2,7 +2,6 @@ import assignToEmpty from './assign';
 
 const request = (url, options = {}) => {
   Object.freeze(options);
-
   const defaults = {
     method: 'GET',
     mode: 'cors',

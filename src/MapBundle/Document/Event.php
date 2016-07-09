@@ -56,6 +56,12 @@ class Event
      */
     protected $data;
 
+    /**
+     * @MongoDB\String
+     * @Assert\NotBlank
+     */
+    protected $location;
+
     //ToDo: find out why creation fails when notBlank constraint is applied
     /**
      * @MongoDB\ReferenceOne(targetDocument="MapBundle\Document\User")
@@ -358,5 +364,27 @@ class Event
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     * @return self
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string $location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

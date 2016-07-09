@@ -15,6 +15,9 @@ class EventType extends BaseAbstractType
             ->add('dateStart', 'date', ['widget' => 'single_text'])
             ->add('dateEnd', 'date', ['widget' => 'single_text'])
             ->add('data', null, ['required' => false])
+            ->add('lat')
+            ->add('lng')
+            ->add('location')
         ;
     }
 }

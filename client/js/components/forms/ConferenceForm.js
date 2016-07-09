@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
 import DateRangePicker from 'react-daterange-picker';
+import Geosuggest from 'react-geosuggest';
+import assignToEmpty from '../../utils/assign';
 
 /* Components */
 import ErrorList from '../forms/ErrorList';
@@ -10,12 +12,13 @@ class ConferenceForm extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = props.conference;
+    this.state.url = props.conference.data ? props.conference.data.url : null;
   }
 
   onSubmit(e) {
     e.preventDefault();
     const { onSubmit, onSuccess } = this.props;
-    onSubmit(this.state, onSuccess);
+    onSubmit(assignToEmpty(this.state, {data: {url: this.state.url}}), onSuccess);
   }
 
   onInputChange(field, e) {
@@ -39,8 +42,16 @@ class ConferenceForm extends Component {
         selectionType="range"
         singleDateRange
         value={moment.range(start, end)}
-        onSelect={this.handleDateRangeSelect.bind(this)} />
+        onSelect={this.handleDateRangeSelect.bind(this)}/>
     );
+  }
+
+  onLocationSelected(suggest) {
+    this.setState({
+      lng: suggest.location.lng,
+      lat: suggest.location.lat,
+      location: suggest.label
+    });
   }
 
   render() {
@@ -55,8 +66,10 @@ class ConferenceForm extends Component {
           <fieldset className="form-group">
             <label>Conference name</label>
             <input type="text" className="form-control" placeholder="Name" value={this.state.name}
-              minLength="2" maxLength="32" onChange={this.onInputChange.bind(this, 'name')} required/>
-            <small className="text-muted"><strong>Required.</strong> Min. length: 2 characters. Max. length: 32 characters.</small>
+                   minLength="2" maxLength="32" onChange={this.onInputChange.bind(this, 'name')} required/>
+            <small className="text-muted"><strong>Required.</strong> Min. length: 2 characters. Max. length: 32
+              characters.
+            </small>
           </fieldset>
 
           <fieldset className="form-group">
@@ -67,8 +80,20 @@ class ConferenceForm extends Component {
           </fieldset>
 
           <fieldset className="form-group">
+            <label>Location</label>
+            <Geosuggest onSuggestSelect={this.onLocationSelected.bind(this)}/>
+          </fieldset>
+
+          <fieldset className="form-group">
             <label>Conference dates</label>
             {this.renderDatePicker()}
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Website</label>
+            <input type="text" className="form-control" placeholder="Website" value={this.state.url}
+                   onChange={this.onInputChange.bind(this, 'url')} required/>
+            <small className="text-muted"><strong>Required.</strong></small>
           </fieldset>
 
           <fieldset className="form-group">
