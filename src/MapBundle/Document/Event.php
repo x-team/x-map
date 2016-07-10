@@ -366,19 +366,21 @@ class Event
     }
 
     /**
-     * Set location
+     * Set location.
      *
      * @param string $location
+     *
      * @return self
      */
     public function setLocation($location)
     {
         $this->location = $location;
+
         return $this;
     }
 
     /**
-     * Get location
+     * Get location.
      *
      * @return string $location
      */

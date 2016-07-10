@@ -3,8 +3,20 @@ import React, { Component, PropTypes } from 'react';
 import styles from '../../../css/components/fragments/Loader.css';
 
 class SignInButton extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      clickHandlerAttached: false
+    };
+  }
+
   attachSignInHandler(element) {
-    this.props.auth.getAuthInstance().attachClickHandler(element);
+    if (!this.state.clickHandlerAttached) {
+      this.setState({
+        clickHandlerAttached: true
+      });
+      this.props.auth.getAuthInstance().attachClickHandler(element);
+    }
   }
 
   render() {
