@@ -3,15 +3,36 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+import { getConferenceMarker } from '../../utils/markers';
 import R from 'ramda';
 
 import * as ConferenceActions from '../../actions/ConferenceActions';
 import sortConferencesByName from '../../utils/common';
 
+/* Assets */
+import confDefaultMarker from '../../../img/xteam_marker.png';
+
 /* Components */
 import MiniConference from '../fragments/MiniConference';
 
 export class ConferencesPage extends Component {
+  constructor(props) {
+    super(props);
+    this.markers = [];
+  }
+
+  componentWillMount() {
+    this.renderConferencesMarkers(this.props.conferences);
+  }
+
+  componentWillUnmount() {
+    this.setConferencesMarkersVisibility(this.markers, false);
+  }
+
+  setConferencesMarkersVisibility(markers, visibility) {
+    R.forEach((marker) => marker.setVisible(visibility), markers);
+  }
+
   markConferenceAsActive(id) {
     this.props.actions.conferenceActiveChanged([id]);
   }
@@ -27,6 +48,12 @@ export class ConferencesPage extends Component {
         <MiniConference conference={conference}/>
       </li>
     );
+  }
+
+  renderConferencesMarkers(conferences) {
+    R.forEach((conference) => {
+      this.markers.push(getConferenceMarker(conference, confDefaultMarker));
+    }, R.values(conferences));
   }
 
   render() {
@@ -63,7 +90,8 @@ export class ConferencesPage extends Component {
 ConferencesPage.propTypes = {
   actions: PropTypes.object.isRequired,
   conferences: PropTypes.object.isRequired,
-  isAdmin: PropTypes.bool.isRequired
+  isAdmin: PropTypes.bool.isRequired,
+  params: PropTypes.object
 };
 
 ConferencesPage.defaultProps = {
@@ -79,7 +107,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(ConferenceActions, dispatch)
+    actions: bindActionCreators({
+      ...ConferenceActions
+    }, dispatch)
   };
 }
 
