@@ -3,10 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+import { getConferenceMarker } from '../../utils/markers';
 
 import * as ConferenceActions from '../../actions/ConferenceActions';
 import * as UserActions from '../../actions/UserActions';
-import assignToEmpty from '../../utils/assign';
+
+/* Assets */
+import confDefaultMarker from '../../../img/xteam_marker.png';
 
 /* Components */
 import ConferenceForm from '../forms/ConferenceForm';
@@ -15,7 +18,9 @@ export class ConferenceEditPage extends Component {
   componentDidMount() {
     this.validateProps();
     const { actions, params, conferences } = this.props;
-    actions.userActiveChanged(conferences[params.id].users.map(user => user.id));
+    const conference = conferences[params.id];
+    actions.userActiveChanged(conference.users.map(user => user.id));
+    this.renderConferenceMarker(conference);
   }
 
   componentWillUpdate(props) {
@@ -29,6 +34,7 @@ export class ConferenceEditPage extends Component {
 
   componentWillUnmount() {
     this.props.actions.userActiveChanged([]);
+    this.marker.setVisible(false);
   }
 
   redirectToConferencePage(id) {
@@ -41,6 +47,10 @@ export class ConferenceEditPage extends Component {
       history.pushState(null, '/404');
       return <span/>;
     }
+  }
+
+  renderConferenceMarker(conference) {
+    this.marker = getConferenceMarker(conference, confDefaultMarker);
   }
 
   render() {
@@ -77,19 +87,24 @@ ConferenceEditPage.propTypes = {
   history: PropTypes.object.isRequired,
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  usersVisible: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
     conferences: state.conferences,
-    errors: state.errors.conferenceUpdate
+    errors: state.errors.conferenceUpdate,
+    usersVisible: state.users.visible
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(assignToEmpty(ConferenceActions, UserActions), dispatch)
+    actions: bindActionCreators({
+      ...ConferenceActions,
+      ...UserActions
+    }, dispatch)
   };
 }
 
