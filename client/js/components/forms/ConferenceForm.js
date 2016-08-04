@@ -5,6 +5,9 @@ import DateRangePicker from 'react-daterange-picker';
 import Geosuggest from 'react-geosuggest';
 import assignToEmpty from '../../utils/assign';
 
+/* CSS Module */
+import styles from '../../../css/components/form/ConferenceForm.css';
+
 /* Components */
 import ErrorList from '../forms/ErrorList';
 
@@ -44,18 +47,19 @@ class ConferenceForm extends Component {
     const end = this.state.dateEnd ? moment(this.state.dateEnd, 'YYYY-MM-DD') : start;
 
     return (
-      <DateRangePicker
-        firstOfWeek={1}
-        selectionType="range"
-        singleDateRange
-        value={moment.range(start, end)}
-        onSelect={this.handleDateRangeSelect.bind(this)}/>
+      <div className={styles.datepicker}>
+        <DateRangePicker
+          firstOfWeek={1}
+          selectionType="range"
+          singleDateRange
+          value={moment.range(start, end)}
+          onSelect={this.handleDateRangeSelect.bind(this)} />
+      </div>
     );
   }
 
   render() {
     const { errors } = this.props;
-
     const cancelLink = (this.state.id) ? ('/conference/' + this.state.id) : '/conferences';
 
     return (
@@ -80,7 +84,11 @@ class ConferenceForm extends Component {
 
           <fieldset className="form-group">
             <label>Location</label>
-            <Geosuggest onSuggestSelect={this.onLocationSelected.bind(this)}/>
+            <Geosuggest
+              inputClassName={styles.location}
+              initialValue={this.state.location}
+              onSuggestSelect={this.onLocationSelected.bind(this)}
+            />
           </fieldset>
 
           <fieldset className="form-group">
