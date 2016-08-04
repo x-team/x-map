@@ -1,0 +1,17 @@
+@import '../../vendor/react-calendar.css';
+
+:global(.geosuggest__suggests--hidden) {
+  max-height: 0;
+  overflow: hidden;
+  border-width: 0;
+}
+
+.location {
+  color: black;
+  width: 100%;
+}
+
+.datepicker {
+  display: flex;
+  justify-content: center;
+}
