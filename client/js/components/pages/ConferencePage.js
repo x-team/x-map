@@ -3,15 +3,30 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
+import { getConferenceMarker } from '../../utils/markers';
 
 import * as ConferenceActions from '../../actions/ConferenceActions';
 import * as UserActions from '../../actions/UserActions';
-import assignToEmpty from '../../utils/assign';
+
+/* Assets */
+import confDefaultMarker from '../../../img/xteam_marker.png';
 
 /* Components */
 import Conference from '../fragments/Conference';
 
 export class ConferencePage extends Component {
+  constructor(props) {
+    super(props);
+    this.marker = null;
+  }
+
+  componentWillMount() {
+    const { conferences, params } = this.props;
+    const conference = conferences[params.id];
+    this.renderConferenceMarker(conference);
+    this.panToConferenceMarker(conference);
+  }
+
   componentDidMount() {
     this.validateProps();
     const { actions, params, conferences } = this.props;
@@ -29,6 +44,19 @@ export class ConferencePage extends Component {
 
   componentWillUnmount() {
     this.props.actions.userActiveChanged([]);
+    this.marker.setVisible(false);
+  }
+
+  setZoom(zoom) {
+    window.map.setZoom(zoom);
+  }
+
+  panToConferenceMarker(conference) {
+    const { lat, lng } = conference;
+    if (lat && lng) {
+      window.map.panTo({ lat, lng });
+      this.setZoom(6);
+    }
   }
 
   deleteConference(id) {
@@ -47,6 +75,10 @@ export class ConferencePage extends Component {
       history.pushState(null, '/404');
       return <span/>;
     }
+  }
+
+  renderConferenceMarker(conference) {
+    this.marker = getConferenceMarker(conference, confDefaultMarker);
   }
 
   render() {
@@ -98,20 +130,25 @@ ConferencePage.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  users: PropTypes.object.isRequired
+  users: PropTypes.object.isRequired,
+  usersVisible: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
     conferences: state.conferences,
     users: state.users,
+    usersVisible: state.users.visible,
     isAdmin: state.session.isAdmin
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(assignToEmpty(ConferenceActions, UserActions), dispatch)
+    actions: bindActionCreators({
+      ...ConferenceActions,
+      ...UserActions
+    }, dispatch)
   };
 }
 
