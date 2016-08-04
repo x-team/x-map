@@ -28,11 +28,18 @@ export class Map extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!deepEqual(this.props.users, prevProps.users)) {
-      this.loadData(this.props.users, prevProps.users);
+    const { users, usersVisible } = this.props;
+    if (!deepEqual(users, prevProps.users)) {
+      this.loadData(users, prevProps.users);
     }
     this.updateCurrentLocationMarker();
     this.updateMapStyle();
+
+    if (usersVisible) {
+      this.showUsers(users);
+    } else {
+      this.hideUsers();
+    }
   }
 
   getCenterLatLng(lat, lng) {
@@ -97,6 +104,7 @@ export class Map extends Component {
 
     this.loadData(this.props.users);
     this.updateMapStyle();
+    window.map = window.map || this.map;
   }
 
   loadData(users, prevUsers) {
@@ -111,6 +119,14 @@ export class Map extends Component {
       });
     }
 
+    this.showUsers(users);
+  }
+
+  hideUsers() {
+    this.map.data.forEach(feature => this.map.data.remove(feature));
+  }
+
+  showUsers(users) {
     this.map.data.addGeoJson(users);
   }
 
@@ -161,7 +177,8 @@ Map.propTypes = {
   }),
   mapMode: PropTypes.oneOf([MAP_MODE_SELECT, MAP_MODE_SHOW]).isRequired,
   onFeatureClick: PropTypes.func,
-  users: PropTypes.object.isRequired
+  users: PropTypes.object.isRequired,
+  usersVisible: PropTypes.bool
 };
 
 Map.defaultProps = {
@@ -173,7 +190,8 @@ function mapStateToProps(state) {
     users: state.geoData,
     activeUserIds: state.session.activeUserIds,
     currentLocation: state.session.currentLocation,
-    mapMode: state.session.mapMode
+    mapMode: state.session.mapMode,
+    usersVisible: state.users.visible
   };
 }
 
