@@ -16,6 +16,8 @@ export const USER_GET = 'USER_GET';
 export const USER_GET_SUCCESS = 'USER_GET_SUCCESS';
 export const USER_GET_FAILURE = 'USER_GET_FAILURE';
 
+export const USER_SET_VISIBILITY = 'USER_SET_VISIBILITY';
+
 export const USER_LIST = 'USER_LIST';
 export const USER_LIST_SUCCESS = 'USER_LIST_SUCCESS';
 export const USER_LIST_FAILURE = 'USER_LIST_FAILURE';
