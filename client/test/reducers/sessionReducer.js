@@ -21,7 +21,13 @@ describe('sessionReducer', () => {
 
   it('should remove current user on APP_LOGOUT action', () => {
     const state = { currentUserId: 42, isAdmin: false, teamsLoaded: false, usersLoaded: false };
-    const expected = { currentUserId: null, isAdmin: false, teamsLoaded: false, usersLoaded: false};
+    const expected = {
+      currentUserId: null,
+      isAdmin: false,
+      teamsLoaded: false,
+      usersLoaded: false,
+      conferencesLoaded: false
+    };
     expect(sessionReducer(state, {type: AppConstants.APP_LOGOUT})).toEqual(expected);
   });
 });
