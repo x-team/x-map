@@ -104,8 +104,8 @@ export class App extends Component {
     return (
       <div>
         <h1 className="sr-only sr-only-focusable">X-Map</h1>
-        {content}
         {isSignedIn ? this.renderMap() : null}
+        {content}
       </div>
     );
   }
