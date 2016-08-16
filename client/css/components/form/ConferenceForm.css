@@ -6,9 +6,14 @@
   border-width: 0;
 }
 
+:global(.geosuggest__suggests) {
+  background-color: hsla(0, 0%, 100%, 0.1);
+}
+
 .location {
   color: black;
   width: 100%;
+  background-color: hsla(0, 0%, 100%, 0.8);
 }
 
 .datepicker {
