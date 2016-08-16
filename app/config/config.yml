@@ -120,7 +120,7 @@ nelmio_cors:
     hosts: []
     origin_regex: false
   paths:
-    '^/api/':
+    '/api/':
       allow_credentials: true
       allow_origin: ['*']
       allow_headers: ['*']

@@ -11,11 +11,14 @@
     "history": "^1.0.0",
     "ramda": "^0.21.0",
     "react": "^0.14.0",
+    "react-daterange-picker": "^1.0.0",
     "react-document-title": "^2.0.1",
     "react-dom": "^0.14.0",
+    "react-geosuggest": "^1.20.1",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0",
     "redux": "^3.0.0",
+    "redux-logger": "^2.6.1",
     "redux-thunk": "^1.0.0"
   },
   "devDependencies": {

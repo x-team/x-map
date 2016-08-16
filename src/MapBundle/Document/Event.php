@@ -27,6 +27,12 @@ class Event
 
     /**
      * @MongoDB\String
+     * @Assert\Length(max=1024)
+     */
+    protected $description;
+
+    /**
+     * @MongoDB\String
      * @Assert\NotBlank
      * @Assert\Length(min=3,max=64)
      */
@@ -49,6 +55,11 @@ class Event
      * @MongoDB\Hash
      */
     protected $data;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $location;
 
     //ToDo: find out why creation fails when notBlank constraint is applied
     /**
@@ -328,5 +339,53 @@ class Event
     public function getCreator()
     {
         return $this->creator;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     *
+     * @return self
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string $description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set location.
+     *
+     * @param string $location
+     *
+     * @return self
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location.
+     *
+     * @return string $location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

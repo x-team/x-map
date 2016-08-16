@@ -33,7 +33,10 @@ describe('usersReducer', () => {
       users: [user]
     });
 
-    expect(usersReducer(undefined, action)).toEqual({ 1: user });
+    expect(usersReducer(undefined, action)).toEqual({
+      1: user,
+      visible: true
+    });
   });
 
   it('should update user info on state when called with USER_GET_SUCCESS or USER_UPDATE_SUCCESS', () => {
@@ -74,17 +77,22 @@ describe('usersReducer', () => {
     const actionPayload = {id: 1};
     const actionGetFailure = getAction(constants.USER_GET_FAILURE, actionPayload);
     const actionDeleteSuccess = getAction(constants.USER_DELETE_SUCCESS, actionPayload);
-    const expected = { 2: user2 };
+    const expected = {
+      1: user,
+      2: user2
+    };
 
     expect(usersReducer(state, actionGetFailure)).toEqual(expected);
-    expect(Object.keys(usersReducer(state, actionGetFailure)).length).toBe(1);
+    expect(Object.keys(usersReducer(state, actionGetFailure)).length).toBe(2);
 
     expect(usersReducer(state, actionDeleteSuccess)).toEqual(expected);
-    expect(Object.keys(usersReducer(state, actionDeleteSuccess)).length).toBe(1);
+    expect(Object.keys(usersReducer(state, actionDeleteSuccess)).length).toBe(2);
   });
 
   it('should return an empty object when called for APP_LOGIN_FAILURE, APP_LOGOUT and USER_LIST_FAILURE actions', () => {
-    const expected = {};
+    const expected = {
+      visible: true
+    };
 
     expect(usersReducer(undefined, getAction(constants.APP_LOGIN_FAILURE, {}))).toEqual(expected);
     expect(usersReducer(undefined, getAction(constants.APP_LOGOUT, {}))).toEqual(expected);
