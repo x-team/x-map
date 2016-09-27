@@ -1,32 +1,68 @@
 $size: 500px;
-#Loader {
+.loader {
   width: $size;
-  min-height: $size;
+  max-width: $size;
+  max-height: $size;
   position: fixed;
   top: calc(50% - ($size / 2));
-  left: calc(50% - ($size / 2));
+  right: calc(50% - ($size / 2));
   z-index: 2;
-  background-image: url(../img/shinyworldglobe.png);
-  box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.55);
-  padding-top: 20px;
+  padding-top: 50px;
   padding-bottom: 20px;
-  color: white;
   border: none;
+  font-size: 1rem;
+  background-image: none;
+  border-radius: .5rem;
 }
 
-#Loader a {
+.loader p {
+  color: #fff;
+  font-size: 1.65em;
+  margin: 0;
+}
+
+.loader h2 {
+  margin-bottom: 30px;
+}
+
+.loader h2 svg {
+  width: 320px;
+  height: 230px;
+}
+
+.loader h2 svg g {
+  transform: scale(0.5);
+}
+
+.loader a {
   color: white;
   font-weight: bolder;
 }
 
-#Loader a:hover {
+.loader a:hover {
   text-decoration: underline;
 }
 
-#Loader h2 {
-  margin-bottom: 30px;
+.signInBtn{
+  text-align: center;
+  padding-top: 10px;
+
 }
 
-.gmnoprint.gm-style-mtc {
-  top: 60px !important;
+.signInBtn a {
+  font-size: .8em;
+  border-width: 2px;
+  border-color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.loaderBg{
+  color: #000;
+  position: fixed;
+  height: 100%;
+  width: 177.77777778vh;
+  min-width: 100%;
+  min-height: 56.25vw;
+  background: #000;
 }

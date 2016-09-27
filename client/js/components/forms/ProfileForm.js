@@ -20,6 +20,10 @@ class ProfileForm extends Component {
     this.setState({[field]: e.target.value});
   }
 
+  onSlackIdChange(e) {
+    this.setState({slackId: e.target.value.replace('@', '')});
+  }
+
   render() {
     const { errors } = this.props;
 
@@ -44,8 +48,14 @@ class ProfileForm extends Component {
           <fieldset className="form-group">
             <label>Slack ID</label>
             <input type="text" className="form-control" placeholder="Slack ID" value={this.state.slackId}
-              onChange={this.onInputChange.bind(this, 'slackId')} maxLength="64" required/>
+              onChange={this.onSlackIdChange.bind(this)} maxLength="64" required/>
             <small className="text-muted"><strong>Required.</strong></small>
+          </fieldset>
+
+          <fieldset className="form-group">
+            <label>Role</label>
+            <input type="text" className="form-control" placeholder="Role" value={this.state.role}
+                   onChange={this.onInputChange.bind(this, 'role')} maxLength="64"/>
           </fieldset>
 
           <fieldset className="form-group">

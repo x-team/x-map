@@ -8,7 +8,8 @@
     "ecmaFeatures": {
         "forOf": true,
         "jsx": true,
-        "es6": true
+        "es6": true,
+        "experimentalObjectRestSpread": true
     },
     "rules": {
         "guard-for-in": 0,

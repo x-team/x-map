@@ -87,10 +87,10 @@
             "cd client && npm run lint"
         ],
         "lint-backend": [
-            "vendor/fabpot/php-cs-fixer/php-cs-fixer fix . --dry-run --config-file=.php_cs"
+            "vendor/fabpot/php-cs-fixer/php-cs-fixer fix . --dry-run"
         ],
         "lint-fix-backend": [
-            "vendor/fabpot/php-cs-fixer/php-cs-fixer fix . --config-file=.php_cs"
+            "vendor/fabpot/php-cs-fixer/php-cs-fixer fix ."
         ]
     },
     "config": {

@@ -45,10 +45,8 @@ export class ProfileEditPage extends Component {
 
     let header = (
       <header className="card-header">
-        <h3 className="card-title">{user.firstName} {user.lastName}</h3>
-        <p className="card-subtitle">Edit profile</p>
-        <Link className="text-muted" to={`/profile/${user.id}`}
-          title={`Go to ${user.firstName} ${user.lastName} profile page`}>#{user.id}</Link>
+        <h2 className="card-title">Edit profile</h2>
+        <Link className="text-muted" to={`/profile/${user.id}`} title={`Go to ${user.firstName} ${user.lastName} profile page`}>{user.firstName} {user.lastName}</Link>
       </header>
     );
     if (!isProfileFilled && currentUserId === params.id) {
@@ -61,7 +59,7 @@ export class ProfileEditPage extends Component {
     return (
       <DocumentTitle title={`Edit profile: ${user.firstName || ''} ${user.lastName || ''} | X-Map`}>
         <article id="TeamEditPage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary" title="close page">&times;</Link>
 
           {header}
 

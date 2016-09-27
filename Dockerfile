@@ -1,9 +1,9 @@
-FROM php:5.6-apache
+FROM php:5.6-fpm
 
 MAINTAINER Jędrzej Kuryło <jedrzej@x-team.com>
 
 ADD . /var/www/x-map
-ADD vhost.conf /etc/apache2/sites-available/x-map.conf
+ADD nginx /etc/nginx/conf.d
 ADD php.ini /usr/local/etc/php/
 
 # install dependencies
@@ -33,7 +33,6 @@ RUN mkdir -p /var/keys && \
 RUN usermod -u 1000 www-data
 RUN mkdir -p /var/www/x-map/app/cache /var/www/x-map/app/logs /var/keys
 RUN chown -R www-data:www-data /var/www/x-map/app/cache /var/www/x-map/app/logs /var/keys
-RUN a2ensite x-map && a2enmod rewrite
 
 # configure environment variables
 ENV MONGODB_HOST=mongo

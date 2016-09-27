@@ -7,26 +7,39 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import * as UserActions from '../../actions/UserActions';
+
 import GoogleMapsLoader from 'google-maps';
 import deepEqual from 'deep-equal';
-
-import * as UserActions from '../../actions/UserActions';
+import nite from '../../utils/nite';
 
 /* Assets */
 import blueMarker from '../../../img/blueMarker.png';
-import 'file?name=[name].[ext]!../../../img/blueMarker.png';
+
+/* CSS Module */
+import styles from '../../../css/components/fragments/Map.css';
 
 export class Map extends Component {
   componentDidMount() {
+    GoogleMapsLoader.KEY = process.env.MAPS_KEY;
+    GoogleMapsLoader.LANGUAGE = 'en';
+    GoogleMapsLoader.LIBRARIES = ['places'];
     GoogleMapsLoader.load(this.configureMap.bind(this));
   }
 
   componentDidUpdate(prevProps) {
-    if (!deepEqual(this.props.users, prevProps.users)) {
-      this.loadData(this.props.users, prevProps.users);
+    const { users, usersVisible } = this.props;
+    if (!deepEqual(users, prevProps.users)) {
+      this.loadData(users, prevProps.users);
     }
     this.updateCurrentLocationMarker();
     this.updateMapStyle();
+
+    if (usersVisible) {
+      this.showUsers(users);
+    } else {
+      this.hideUsers();
+    }
   }
 
   getCenterLatLng(lat, lng) {
@@ -53,17 +66,20 @@ export class Map extends Component {
       scaleControl: true,
       mapTypeControl: true,
       mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+        style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+        position: google.maps.ControlPosition.LEFT_BOTTOM
       },
       streetViewControl: true,
       streetViewControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER
+        position: google.maps.ControlPosition.LEFT_BOTTOM
       },
       zoomControl: true,
       zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER
+        position: google.maps.ControlPosition.LEFT_BOTTOM
       }
     });
+
+    nite.init(this.map);
 
     this.currentLocationMarker = new google.maps.Marker({
       icon: blueMarker
@@ -82,12 +98,13 @@ export class Map extends Component {
           this.props.onFeatureClick(event.feature.getId());
         }
 
-        this.map.panTo(this.getCenterLatLng(event.latLng.lat(), event.latLng.lng()));
+        // this.map.panTo(this.getCenterLatLng(event.latLng.lat(), event.latLng.lng()));
       }
     });
 
     this.loadData(this.props.users);
     this.updateMapStyle();
+    window.map = window.map || this.map;
   }
 
   loadData(users, prevUsers) {
@@ -102,6 +119,14 @@ export class Map extends Component {
       });
     }
 
+    this.showUsers(users);
+  }
+
+  hideUsers() {
+    this.map.data.forEach(feature => this.map.data.remove(feature));
+  }
+
+  showUsers(users) {
     this.map.data.addGeoJson(users);
   }
 
@@ -122,7 +147,7 @@ export class Map extends Component {
 
       if (this.props.activeUserIds.indexOf(feature.getId()) !== -1) {
         if (this.props.activeUserIds.length === 1) {
-          this.map.panTo(this.getCenterLatLng(feature.getGeometry().get().lat(), feature.getGeometry().get().lng()));
+          // this.map.panTo(this.getCenterLatLng(feature.getGeometry().get().lat(), feature.getGeometry().get().lng()));
         }
 
         return {
@@ -138,7 +163,7 @@ export class Map extends Component {
 
   render() {
     return (
-      <div id="Map"></div>
+      <div id="Map" className={styles.map}></div>
     );
   }
 }
@@ -152,7 +177,8 @@ Map.propTypes = {
   }),
   mapMode: PropTypes.oneOf([MAP_MODE_SELECT, MAP_MODE_SHOW]).isRequired,
   onFeatureClick: PropTypes.func,
-  users: PropTypes.object.isRequired
+  users: PropTypes.object.isRequired,
+  usersVisible: PropTypes.bool
 };
 
 Map.defaultProps = {
@@ -164,7 +190,8 @@ function mapStateToProps(state) {
     users: state.geoData,
     activeUserIds: state.session.activeUserIds,
     currentLocation: state.session.currentLocation,
-    mapMode: state.session.mapMode
+    mapMode: state.session.mapMode,
+    usersVisible: state.users.visible
   };
 }
 

@@ -50,12 +50,11 @@ export class TeamEditPage extends Component {
     return (
       <DocumentTitle title={`Edit team: ${team.name} | X-Map`}>
         <article id="TeamEditPage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary" title="close page">&times;</Link>
 
           <header className="card-header">
-            <h3 className="card-title">{team.name}</h3>
-            <p className="card-subtitle">Edit team</p>
-            <Link className="text-muted" to={`/team/${team.id}`} title={`Go to ${team.name} team page`}>#{team.id}</Link>
+            <h2 className="card-title">Edit team</h2>
+            <Link className="text-muted" to={`/team/${team.id}`} title={`Go to ${team.name} team page`}>{team.name}</Link>
           </header>
 
           <div className="card-block">

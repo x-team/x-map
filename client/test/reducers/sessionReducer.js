@@ -1,13 +1,6 @@
 import expect from 'expect';
-import sessionReducer from '../../js/reducers/sessionReducer';
+import sessionReducer, { initialState } from '../../js/reducers/sessionReducer';
 import * as AppConstants from '../../js/constants/AppConstants';
-
-const initialState = {
-  activeUserIds: [],
-  mapMode: AppConstants.MAP_MODE_SHOW,
-  isSignedIn: true,
-  currentUserId: null
-};
 
 describe('sessionReducer', () => {
   it('should return initial state on init', () => {
@@ -28,7 +21,13 @@ describe('sessionReducer', () => {
 
   it('should remove current user on APP_LOGOUT action', () => {
     const state = { currentUserId: 42, isAdmin: false, teamsLoaded: false, usersLoaded: false };
-    const expected = { currentUserId: null, isAdmin: false, teamsLoaded: false, usersLoaded: false};
+    const expected = {
+      currentUserId: null,
+      isAdmin: false,
+      teamsLoaded: false,
+      usersLoaded: false,
+      conferencesLoaded: false
+    };
     expect(sessionReducer(state, {type: AppConstants.APP_LOGOUT})).toEqual(expected);
   });
 });

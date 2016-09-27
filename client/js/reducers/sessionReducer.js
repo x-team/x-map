@@ -8,6 +8,8 @@ import {
   USER_LIST_FAILURE,
   TEAM_LIST_SUCCESS,
   TEAM_LIST_FAILURE,
+  CONFERENCE_LIST_SUCCESS,
+  CONFERENCE_LIST_FAILURE,
   USER_ACTIVE_CHANGED,
   USER_UPDATES_LOCATION,
   USER_UPDATED_LOCATION,
@@ -19,10 +21,10 @@ import {
 
 import assignToEmpty from './../utils/assign';
 
-const initialState = {
+export const initialState = {
   activeUserIds: [],
   mapMode: MAP_MODE_SHOW,
-  isSignedIn: true,
+  isSignedIn: false,
   currentUserId: null
 };
 
@@ -41,7 +43,8 @@ function sessionReducer(session = initialState, action) {
         currentUserId: null,
         isAdmin: false,
         usersLoaded: false,
-        teamsLoaded: false
+        teamsLoaded: false,
+        conferencesLoaded: false
       });
     case APP_GOOGLE_SIGNED_IN:
       return assignToEmpty(session, {
@@ -51,7 +54,8 @@ function sessionReducer(session = initialState, action) {
       return assignToEmpty(session, {
         isSignedIn: false,
         usersLoaded: false,
-        teamsLoaded: false
+        teamsLoaded: false,
+        conferencesLoaded: false
       });
     case USER_LIST_SUCCESS:
     case USER_LIST_FAILURE:
@@ -62,6 +66,11 @@ function sessionReducer(session = initialState, action) {
     case TEAM_LIST_FAILURE:
       return assignToEmpty(session, {
         teamsLoaded: true
+      });
+    case CONFERENCE_LIST_SUCCESS:
+    case CONFERENCE_LIST_FAILURE:
+      return assignToEmpty(session, {
+        conferencesLoaded: true
       });
     case APP_LOGIN_FAILURE:
       return assignToEmpty(session, {

@@ -20,7 +20,8 @@ import {
   USER_ACTIVE_CHANGED,
   USER_UPDATES_LOCATION,
   USER_UPDATED_LOCATION,
-  USER_SELECTED_LOCATION
+  USER_SELECTED_LOCATION,
+  USER_SET_VISIBILITY
 } from '../constants/AppConstants';
 
 import request from '../utils/request';
@@ -37,6 +38,13 @@ export function userGet(id, onSuccess) {
 
 function doUserGet(id) {
   return {type: USER_GET, id};
+}
+
+export function setUsersVisibility(visible) {
+  return {
+    type: USER_SET_VISIBILITY,
+    visible
+  };
 }
 
 export function userGetSuccess(user) {

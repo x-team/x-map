@@ -61,7 +61,7 @@ export class TeamPage extends Component {
       );
 
       deleteButton = (
-        <button className="btn btn-secondary btn-sm" type="button"
+        <button className="btn btn-danger btn-sm" type="button"
           onClick={this.deleteTeam.bind(this, team.id)}>Delete</button>
       );
     }
@@ -74,20 +74,16 @@ export class TeamPage extends Component {
     return (
       <DocumentTitle title={`Team: ${team.name} | X-Map`}>
         <article id="TeamPage" className="page card">
-          <Link to="/" className="close btn btn-sm btn-secondary">&times;</Link>
+          <Link to="/" className="close btn btn-sm btn-secondary" title="close page">&times;</Link>
 
           <header className="card-header">
-            <h3 className="card-title">{team.name}</h3>
-            <p className="card-subtitle">Team profile</p>
-            <p className="text-muted">#{team.id}</p>
+            <h2 className="card-title">{team.name}</h2>
             <div className="btn-group" role="group" aria-label="Actions menu">
               {editLink}{deleteButton}
             </div>
           </header>
 
-          <div className="card-block">
-            <Team team={team} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} users={users}/>
-          </div>
+          <Team team={team} canLink={canLink} canUnlink={canUnlink} onLink={onLink} onUnlink={onUnlink} users={users}/>
         </article>
       </DocumentTitle>
     );

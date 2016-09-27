@@ -74,6 +74,12 @@ class User implements UserInterface
 
     /**
      * @MongoDB\String
+     * @Assert\Length(max=64)
+     */
+    protected $role;
+
+    /**
+     * @MongoDB\String
      * @Assert\Url
      */
     protected $avatar;
@@ -560,7 +566,7 @@ class User implements UserInterface
      */
     public function setSlackId($slackId)
     {
-        $this->slackId = $slackId;
+        $this->slackId = str_replace('@', '', $slackId);
 
         return $this;
     }
@@ -585,5 +591,29 @@ class User implements UserInterface
      */
     public function getPassword()
     {
+    }
+
+    /**
+     * Set role.
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role.
+     *
+     * @return string $role
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

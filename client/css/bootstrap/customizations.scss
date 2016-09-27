@@ -1,11 +1,20 @@
-// Customize variables
+// Custom variables
+//
+// Copy variables from:
+// https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss
+// Last version checked bf73425
 
-// This gets loaded after bootstrap/variables is loaded, so you can refer to
-// bootstrap variables configured by bootstrap. For example, the _variables.scss contains:
-// $btn-primary-bg: $brand-primary !default;
-
-// Here we're adjusting the hue of that default:
-// $btn-primary-bg: adjust-hue($btn-primary-bg, +20deg);
-
-// NOTE: $gray-dark is defined in _variables.scss
-// $body-bg: $gray-dark;
+@import 'variables/_colors';
+@import 'variables/_options';
+@import 'variables/_spacing';
+@import 'variables/_body';
+@import 'variables/_links';
+@import 'variables/_typography';
+@import 'variables/_components';
+@import 'variables/_buttons';
+@import 'variables/_forms';
+@import 'variables/_dropdowns';
+@import 'variables/_navbar';
+@import 'variables/_cards';
+@import 'variables/_media';
+@import 'variables/_list-group';

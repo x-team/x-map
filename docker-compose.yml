@@ -1,14 +1,27 @@
 web:
   build: .
-  ports:
-    - "80:80"
   volumes:
     - .:/var/www/x-map
+    - /mnt/sda1/var/lib/x-map/logs/x-map:/var/www/x-map/app/logs
+    - ./nginx:/etc/nginx/conf.d
   links:
     - mongo
+  environment:
+    SYMFONY__ROLLBAR__TOKEN:
+    SYMFONY__ROLLBAR__ENVIRONMENT: production
+nginx:
+  image: nginx
+  volumes:
+    - /mnt/sda1/var/lib/x-map/logs/nginx:/var/log/nginx
+  volumes_from:
+    - web
+  links:
+    - web
+  ports:
+    - "80:80"
 mongo:
   image: mongo
   ports:
     - "27017:27017"
   volumes:
-    - /mnt/sda1/var/lib/x-map:/data/db
+    - /mnt/sda1/var/lib/x-map/data:/data/db

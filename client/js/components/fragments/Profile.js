@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 /* Components */
 import ProfileDetails from './ProfileDetails';
 import ProfileLinkedTeams from './ProfileLinkedTeams';
+import ProfileLinkedConferences from './ProfileLinkedConferences';
 
 class Profile extends Component {
   render() {
@@ -10,6 +11,7 @@ class Profile extends Component {
       <div id="Profile" className="list-group">
         <ProfileDetails user={this.props.user}/>
         <ProfileLinkedTeams {...this.props}/>
+        <ProfileLinkedConferences {...this.props}/>
       </div>
     );
   }

@@ -2,12 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import getGoogleApiClient from 'google-client-api';
 
 import * as AppActions from '../actions/AppActions';
 import * as UserActions from '../actions/UserActions';
 import * as TeamActions from '../actions/TeamActions';
+import * as ConferenceActions from '../actions/ConferenceActions';
 import assignToEmpty from '../utils/assign';
 
 /* Components */
@@ -22,6 +24,8 @@ export class App extends Component {
       props.history.listen(props.actions.routeChanged);
     }
 
+    this.state = {};
+
     props.history.listenBefore(this.preventLeavingProfileEditIfNeeded.bind(this));
   }
 
@@ -29,11 +33,13 @@ export class App extends Component {
     getGoogleApiClient(gapi => {
       gapi.load('auth2', () => {
         gapi.auth2.init(process.env.GOOGLE_SETTINGS);
+        this.setState({auth: gapi.auth2});
 
         const { actions } = this.props;
         actions.authenticate(() => {
           actions.userList();
           actions.teamList();
+          actions.conferenceList();
           this.redirectToProfileFormIfNeeded();
         }, this.redirectToHomePage.bind(this));
       });
@@ -64,29 +70,42 @@ export class App extends Component {
     }
   }
 
+  renderMap() {
+    return <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>;
+  }
+
   render() {
-    const { currentUserId, isSignedIn, usersLoaded, teamsLoaded, users, actions } = this.props;
+    const { currentUserId, isSignedIn, usersLoaded, teamsLoaded, conferencesLoaded, users, actions } = this.props;
 
     let content;
-    if (currentUserId && usersLoaded && teamsLoaded) {
+    if (currentUserId && usersLoaded && teamsLoaded && conferencesLoaded) {
       content = (
         <div>
           <Header user={users[currentUserId]} onLogout={actions.logout.bind(null, this.redirectToHomePage.bind(this))}/>
-          {this.props.children}
+          <ReactCSSTransitionGroup
+            transitionName="transition"
+            transitionAppear
+            transitionAppearTimeout={450}
+            transitionEnterTimeout={450}
+            transitionLeaveTimeout={150}>
+            {React.cloneElement(this.props.children, {
+              key: this.props.location.pathname
+            })}
+          </ReactCSSTransitionGroup>
         </div>
       );
     } else {
       content = (
         <DocumentTitle title="Login | X-Map">
-          <Loader isSignedIn={isSignedIn}/>
+          <Loader isSignedIn={isSignedIn} auth={this.state.auth}/>
         </DocumentTitle>
       );
     }
     return (
       <div>
         <h1 className="sr-only sr-only-focusable">X-Map</h1>
+        {isSignedIn ? this.renderMap() : null}
         {content}
-        <Map onFeatureClick={this.redirectToProfilePage.bind(this)}/>
       </div>
     );
   }
@@ -98,10 +117,14 @@ App.propTypes = {
     routeChanged: PropTypes.func
   }).isRequired,
   children: PropTypes.object,
+  conferencesLoaded: PropTypes.bool,
   currentUserId: PropTypes.string,
   history: PropTypes.object.isRequired,
   isProfileFilled: PropTypes.bool.isRequired,
   isSignedIn: PropTypes.bool,
+  location: PropTypes.shape({
+    pathname: PropTypes.string
+  }),
   teamsLoaded: PropTypes.bool,
   users: PropTypes.object,
   usersLoaded: PropTypes.bool
@@ -109,6 +132,7 @@ App.propTypes = {
 
 App.defaultProps = {
   isSignedIn: false,
+  conferencesLoaded: false,
   usersLoaded: false,
   teamsLoaded: false,
   users: {},
@@ -121,6 +145,7 @@ function mapStateToProps(state) {
     isSignedIn: state.session.isSignedIn,
     usersLoaded: state.session.usersLoaded,
     teamsLoaded: state.session.teamsLoaded,
+    conferencesLoaded: state.session.conferencesLoaded,
     users: state.users,
     isProfileFilled: state.session.isProfileFilled
   };
@@ -128,7 +153,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(assignToEmpty(AppActions, UserActions, TeamActions), dispatch)
+    actions: bindActionCreators(assignToEmpty(AppActions, UserActions, TeamActions, ConferenceActions), dispatch)
   };
 }
 
